@@ -3,912 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAPSD Arcade Edition | Quien quiere, puede, y quien quiere, debe</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: #08080c;
-            color: #ffffff;
-            font-family: 'Press Start 2P', monospace;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 15px 20px;
-            text-align: center;
-            overflow-x: hidden;
-        }
-
-        /* Pantalla de Inicio Arcade */
-        #arcade-splash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(8, 8, 12, 0.98);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            cursor: pointer;
-            transition: opacity 0.5s ease;
-            padding: 20px;
-        }
-
-        #arcade-splash::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
-            background-size: 100% 4px;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .arcade-splash-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 560px;
-            width: 100%;
-        }
-
-        .arcade-title-pixel {
-            font-size: 0.95rem;
-            color: #ffcc00;
-            text-shadow: 3px 3px #d6249f, 0 0 20px rgba(255, 204, 0, 0.6);
-            margin-bottom: 25px;
-            line-height: 1.6;
-            text-align: center;
-        }
-
-        .arcade-image-container {
-            position: relative;
-            width: 100%;
-            max-width: 260px;
-            aspect-ratio: 1 / 1;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 3px solid #ffcc00;
-            box-shadow: 0 10px 40px rgba(214, 36, 159, 0.5), 0 0 25px rgba(255, 204, 0, 0.3);
-            margin-bottom: 25px;
-            background: #111;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nurse-pixel-sprite {
-            width: 80px;
-            height: 90px;
-            position: relative;
-            image-rendering: pixelated;
-            animation: arcadeWalk 2.5s ease-in-out infinite alternate;
-        }
-
-        .pixel-cap {
-            position: absolute; top: 0px; left: 20px; width: 40px; height: 20px;
-            background: #fff; border-top: 4px solid #ff3366;
-        }
-        .pixel-head {
-            position: absolute; top: 18px; left: 22px; width: 36px; height: 30px;
-            background: #ffdbac;
-        }
-        .pixel-body {
-            position: absolute; top: 46px; left: 16px; width: 48px; height: 35px;
-            background: #fff; box-shadow: inset 0 -8px 0 #00d2ff;
-        }
-        .pixel-legs {
-            position: absolute; top: 78px; left: 22px; width: 36px; height: 12px;
-            background: #333;
-        }
-
-        @keyframes arcadeWalk {
-            0% { transform: translateX(-35px) scaleX(1); }
-            50% { transform: translateX(35px) scaleX(1); }
-            51% { transform: translateX(35px) scaleX(-1); }
-            100% { transform: translateX(-35px) scaleX(-1); }
-        }
-
-        .press-start-text {
-            font-size: 0.85rem;
-            color: #ffffff;
-            animation: blink 1s infinite;
-            letter-spacing: 2px;
-            border: 2px dashed #ffcc00;
-            padding: 12px 20px;
-            border-radius: 8px;
-            background: rgba(255, 204, 0, 0.12);
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0.2; }
-        }
-
-        /* Ventana Intermedia con tipografía Arcade */
-        #story-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(8, 8, 12, 0.96);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 150;
-            padding: 20px;
-        }
-
-        .story-box {
-            background: #12121c;
-            border: 3px solid #00ffc8;
-            border-radius: 12px;
-            padding: 30px;
-            max-width: 540px;
-            width: 100%;
-            box-shadow: 0 0 35px rgba(0, 255, 200, 0.4);
-            text-align: center;
-        }
-
-        .story-box h3 {
-            font-size: 0.85rem;
-            color: #ffcc00;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .story-text {
-            font-size: 0.7rem;
-            line-height: 1.8;
-            color: #fff;
-            margin-bottom: 25px;
-            text-align: left;
-            font-family: 'Press Start 2P', monospace;
-        }
-
-        .story-text span {
-            color: #00ffc8;
-        }
-
-        .action-btn {
-            font-family: 'Press Start 2P', monospace;
-            background: #00ffc8;
-            color: #000;
-            border: none;
-            padding: 14px 22px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.7rem;
-            box-shadow: 0 0 15px rgba(0, 255, 200, 0.6);
-            transition: transform 0.2s;
-            position: relative;
-            z-index: 350;
-        }
-
-        .action-btn:hover {
-            transform: scale(1.05);
-            background: #ffcc00;
-        }
-
-        #game-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 600px;
-            position: relative;
-        }
-
-        .game-header {
-            font-size: 0.75rem;
-            color: #ffcc00;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0 10px;
-        }
-
-        canvas {
-            background-color: #000;
-            border: 3px solid #00ffc8;
-            border-radius: 8px;
-            box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
-            max-width: 100%;
-            height: auto;
-        }
-
-        .instructions-hud {
-            font-size: 0.65rem;
-            color: #aaa;
-            margin-top: 10px;
-        }
-
-        #quiz-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 200;
-            padding: 20px;
-        }
-
-        .quiz-box {
-            background: #12121c;
-            border: 3px solid #ffcc00;
-            border-radius: 12px;
-            padding: 25px;
-            max-width: 520px;
-            width: 100%;
-            box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
-            text-align: left;
-        }
-
-        .quiz-box h3 {
-            font-size: 0.7rem;
-            color: #ffcc00;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
-        .quiz-question {
-            font-size: 0.65rem;
-            margin-bottom: 20px;
-            line-height: 1.6;
-            font-family: 'Press Start 2P', monospace;
-            color: #fff;
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .quiz-btn {
-            background: #1f1f2e;
-            color: #fff;
-            border: 1px solid #00ffc8;
-            padding: 12px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 0.55rem;
-            line-height: 1.5;
-            text-align: left;
-            transition: all 0.2s ease;
-        }
-
-        .quiz-btn:hover {
-            background: #00ffc8;
-            color: #000;
-        }
-
-        #feedback-banner {
-            margin-top: 15px;
-            font-size: 0.6rem;
-            color: #ff3366;
-            text-align: center;
-            min-height: 20px;
-        }
-
-        #victory-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(8, 8, 12, 0.95);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 300;
-            padding: 20px;
-            overflow: hidden;
-        }
-
-        #victory-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 305;
-        }
-
-        .victory-content {
-            position: relative;
-            z-index: 310;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #victory-screen h2 {
-            font-size: 1.3rem;
-            color: #00ffc8;
-            text-shadow: 0 0 20px #00ffc8;
-            margin-bottom: 20px;
-            animation: blink 0.8s infinite;
-        }
-
-        #victory-screen p {
-            font-size: 0.65rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            color: #fff;
-            max-width: 500px;
-        }
-    </style>
+    <title>Test de Atención Sanitaria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-slate-100 min-h-screen flex flex-col justify-between font-sans">
 
-    <!-- Pantalla de Inicio Arcade -->
-    <div id="arcade-splash" onclick="openStory()">
-        <div class="arcade-splash-content">
-            <div class="arcade-title-pixel">TAPSD: RETO SOCIOSANITARIO</div>
-            
-            <div class="arcade-image-container">
-                <div class="nurse-pixel-sprite">
-                    <div class="pixel-cap"></div>
-                    <div class="pixel-head"></div>
-                    <div class="pixel-body"></div>
-                    <div class="pixel-legs"></div>
+    <!-- Header -->
+    <header class="bg-emerald-700 text-white shadow-md py-4 px-6">
+        <div class="max-w-3xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">Atención Sanitaria - Evaluador</h1>
+            <span id="progress-indicator" class="text-sm bg-emerald-800 px-3 py-1 rounded-full">Pregunta 1 de 10</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-3xl w-full mx-auto p-4 sm:p-6 my-auto">
+        
+        <!-- Card de Pregunta -->
+        <div id="quiz-card" class="bg-white rounded-2xl shadow-lg p-6 sm:p-8 transition-all">
+            <div id="question-container">
+                <h2 id="question-text" class="text-lg sm:text-xl font-semibold text-slate-800 mb-6">Cargando pregunta...</h2>
+                <div id="options-container" class="space-y-3">
+                    <!-- Opciones generadas dinámicamente -->
                 </div>
             </div>
 
-            <div class="press-start-text">PRESS START</div>
-        </div>
-    </div>
-
-    <!-- Ventana Intermedia con Relato (Estilo Arcade) -->
-    <div id="story-modal">
-        <div class="story-box">
-            <h3>MISIÓN TAPSD</h3>
-            <div class="story-text">
-                Estás estudiando para ser una <span>Técnico en Atención a Personas Dependientes (TAPSD)</span> y vas a demostrar que es cierto el lema que dice: <span>"Quien quiere, puede, y quien quiere, debe"</span>.<br><br>¿Estás preparada para el reto?
+            <!-- Botón Siguiente -->
+            <div class="mt-8 flex justify-end">
+                <button id="next-btn" onclick="handleNextQuestion()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-2.5 rounded-xl shadow transition hidden cursor-pointer">
+                    Siguiente pregunta
+                </button>
             </div>
-            <button class="action-btn" onclick="startGame()">CONTINUAR</button>
         </div>
-    </div>
 
-    <!-- Contenedor del Juego Principal -->
-    <div id="game-container">
-        <div class="game-header">
-            <span id="score-board">OBJETIVOS: 0 / 10</span>
-            <span>NIVEL 1: LABERINTO</span>
+        <!-- Pantalla de Resultados (Oculta por defecto) -->
+        <div id="result-card" class="bg-white rounded-2xl shadow-lg p-8 text-center hidden">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">¡Test completado!</h2>
+            <p class="text-slate-600 mb-6">Has respondido a todas las preguntas del bloque actual.</p>
+            <div class="text-4xl font-extrabold text-emerald-600 mb-6" id="score-text">0 / 10</div>
+            <button onclick="restartQuiz()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-8 py-3 rounded-xl shadow transition cursor-pointer">
+                Realizar otro test
+            </button>
         </div>
-        <canvas id="gameCanvas" width="480" height="480"></canvas>
-        <div class="instructions-hud">Usa las FLECHAS del teclado para guiar a la Enfermera por el laberinto</div>
-    </div>
 
-    <!-- Modal de Preguntas -->
-    <div id="quiz-modal">
-        <div class="quiz-box">
-            <h3 id="quiz-title">PREGUNTA DE EVALUACIÓN TAPSD</h3>
-            <div class="quiz-question" id="quiz-question-text">Cargando pregunta...</div>
-            <div class="quiz-options" id="quiz-options-container"></div>
-            <div id="feedback-banner"></div>
-        </div>
-    </div>
+    </main>
 
-    <!-- Pantalla de Victoria con Fuegos Artificiales -->
-    <div id="victory-screen">
-        <canvas id="victory-canvas"></canvas>
-        <div class="victory-content">
-            <h2>¡ENHORABUENA!</h2>
-            <p>¡Has superado con éxito las 10 misiones del Tema 1 y demostrado tu valía como TAPSD!<br><br><em>"Quien quiere, puede, y quien quiere, debe"</em></p>
-            <button class="action-btn" onclick="restartGame()">VOLVER A JUGAR</button>
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer class="text-center py-4 text-xs text-slate-500">
+        Módulo de Atención Sanitaria &bull; Formación Profesional
+    </footer>
 
     <script>
-        const splash = document.getElementById('arcade-splash');
-        const storyModal = document.getElementById('story-modal');
-        const gameContainer = document.getElementById('game-container');
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const quizModal = document.getElementById('quiz-modal');
-        const victoryScreen = document.getElementById('victory-screen');
-        const scoreBoard = document.getElementById('score-board');
-
-        let gameStarted = false;
-        let score = 0;
-        const totalObjectives = 10;
-        let activeQuestions = [];
-
-        let player = {
-            x: 40,
-            y: 40,
-            size: 20,
-            speed: 2,
-            dx: 0,
-            dy: 0
-        };
-
-        let ghost = {
-            x: 400,
-            y: 400,
-            size: 20,
-            speed: 0.75,
-            dx: 0,
-            dy: -0.75
-        };
-
-        // 10 Objetivos distribuidos por todo el mapa del laberinto
-        let objectives = [
-            { x: 140, y: 70, collected: false, id: 0 },
-            { x: 340, y: 70, collected: false, id: 1 },
-            { x: 70,  y: 240, collected: false, id: 2 },
-            { x: 410, y: 240, collected: false, id: 3 },
-            { x: 140, y: 410, collected: false, id: 4 },
-            { x: 340, y: 410, collected: false, id: 5 },
-            { x: 230, y: 40,  collected: false, id: 6 },
-            { x: 40,  y: 410, collected: false, id: 7 },
-            { x: 410, y: 40,  collected: false, id: 8 },
-            { x: 230, y: 430, collected: false, id: 9 }
-        ];
-
-        // Muros estrictos del laberinto clásico
-        const walls = [
-            { x: 0, y: 0, w: 480, h: 20 },
-            { x: 0, y: 460, w: 480, h: 20 },
-            { x: 0, y: 0, w: 20, h: 480 },
-            { x: 460, y: 0, w: 20, h: 480 },
-            { x: 60, y: 60, w: 60, h: 60 },
-            { x: 160, y: 60, w: 160, h: 30 },
-            { x: 360, y: 60, w: 60, h: 60 },
-            { x: 60, y: 160, w: 100, h: 40 },
-            { x: 200, y: 140, w: 80, h: 80 },
-            { x: 320, y: 160, w: 100, h: 40 },
-            { x: 60, y: 260, w: 40, h: 100 },
-            { x: 140, y: 260, w: 200, h: 40 },
-            { x: 380, y: 260, w: 40, h: 100 },
-            { x: 160, y: 380, w: 160, h: 30 }
-        ];
-
-        // Banco total ampliando a 100 preguntas técnicas oficiales TAPSD
+        // Banco de preguntas ceñido estrictamente al temario práctico (Atención Sanitaria)
         const questionBank = [
-            { title: "PREG. 1: Autonomía", question: "¿Cómo se define la autonomía personal en el ámbito de la dependencia?", options: ["La capacidad de controlar y tomar decisiones sobre la propia vida", "La obligación exclusiva de recibir asistencia médica domiciliaria", "La dependencia absoluta de los servicios sociales públicos"], correct: 0 },
-            { title: "PREG. 2: Abreviatura TAPSD", question: "¿A qué corresponde exactamente la abreviatura TAPSD en el ámbito formativo?", options: ["Técnico en Atención a Personas con Secuelas y Dolencias", "Técnico en Atención a Personas en Situación de Dependencia", "Tutoría Activa para Prestaciones Sociosanitarias a Domicilio"], correct: 1 },
-            { title: "PREG. 3: Cuidados de Sosiego", question: "Si un usuario requiere apoyo emocional, escucha activa y alivio de la angustia cotidiana, ¿qué tipo de cuidados predominan?", options: ["Cuidados de compensación motora quirúrgica", "Cuidados de sosiego y acompañamiento", "Cuidados de alta intensidad farmacológica"], correct: 1 },
-            { title: "PREG. 4: AVD Instrumentales", question: "¿Qué caracteriza principalmente a las actividades de la vida diaria (AVD) instrumentales?", options: ["Son tareas básicas como la higiene personal y la alimentación", "Implican tareas complejas para la vida autónoma como la gestión del hogar o compras", "Se realizan únicamente en centros hospitalarios de agudos"], correct: 1 },
-            { title: "PREG. 5: Seguridad en el Hogar", question: "En el análisis de riesgos en el hogar de una persona dependiente, ¿qué medida preventiva es fundamental frente a caídas?", options: ["Retirar alfombras deslizantes y asegurar una iluminación adecuada", "Cerrar con llave todas las puertas interiores de la vivienda", "Sustituir los suelos por superficies totalmente pulidas y brillantes"], correct: 0 },
-            { title: "PREG. 6: Promoción Autocuidado", question: "¿Cuál es el propósito fundamental de promover el autocuidado en una persona dependiente?", options: ["Reducir por completo la implicación del equipo profesional", "Mantener y potenciar al máximo las capacidades físicas y psíquicas remanentes", "Delegar todas las responsabilidades cotidianas en los familiares directos"], correct: 1 },
-            { title: "PREG. 7: Situación Dependencia", question: "¿Cómo se define el estado de carácter permanente en el que se encuentran las personas que precisan atención?", options: ["Situación de dependencia", "Patología aguda transitoria", "Convalecencia hospitalaria breve"], correct: 0 },
-            { title: "PREG. 8: Abreviatura AVD", question: "¿Qué significan las siglas AVD en el contexto de la valoración sociosanitaria?", options: ["Áreas Vitales de Descanso", "Actividades de la Vida Diaria", "Asistencia y Vigilancia a Domicilio"], correct: 1 },
-            { title: "PREG. 9: Enfoque ACP", question: "Desde la perspectiva del TAPSD, ¿qué implica un enfoque de atención centrado en la persona (ACP)?", options: ["Priorizar la comodidad de la organización por encima de los gustos del usuario", "Respetar la dignidad, preferencias, historia de vida y deseos del individuo", "Aplicar un protocolo estricto e inflexible idéntico para todos los residentes"], correct: 1 },
-            { title: "PREG. 10: Bienestar Emocional", question: "Si fomentamos que un usuario decore su entorno con objetos significativos y fotografías, ¿qué tipo de bienestar apoyamos?", options: ["Únicamente el metabolismo calórico basal", "El bienestar emocional, la identidad y la vinculación afectiva", "La resistencia aerodinámica pulmonar"], correct: 1 },
-            { title: "PREG. 11: Abreviatura SAAD", question: "¿Qué significa el acrónimo SAAD dentro del sistema de atención a la dependencia en España?", options: ["Servicio de Ayuda y Apoyo a Domicilio", "Sistema para la Autonomía y Atención a la Dependencia", "Sociedad Andaluza de Ayuda a la Dependencia"], correct: 1 },
-            { title: "PREG. 12: Ley de Dependencia", question: "¿Qué norma reguló por primera vez con carácter básico el SAAD en España (Ley 39/2006)?", options: ["Ley de Promoción de la Autonomía Personal y Atención a las personas en situación de dependencia", "Ley General de Sanidad", "Ley de Ordenación de las Profesiones Sanitarias"], correct: 0 },
-            { title: "PREG. 13: AVD Básicas", question: "¿Cuál de las siguientes opciones se considera una Actividad Básica de la Vida Diaria (ABVD)?", options: ["Preparar la comida y cocinar", "Utilizar el transporte público o conducir", "Alimentarse e ingerir alimentos por sí mismo"], correct: 2 },
-            { title: "PREG. 14: Accesibilidad", question: "Se entiende por diseño para todos o accesibilidad universal:", options: ["La adaptación exclusiva de edificios públicos singulares", "El diseño de productos y entornos utilizables por todas las personas en la mayor medida posible", "La restricción del acceso a zonas urbanas complejas"], correct: 1 },
-            { title: "PREG. 15: Postura Antidéficit", question: "En la movilización de encamados, ¿qué objetivo persiguen los cambios posturales frecuentes?", options: ["Evitar la aparición de úlceras por presión (UPP)", "Acelerar el metabolismo general del paciente", "Garantizar el sueño profundo ininterrumpido"], correct: 0 },
-            { title: "PREG. 16: Abreviatura UPP", question: "¿Qué significan las siglas UPP en el cuidado e higiene de personas dependientes?", options: ["Unidades de Primera Plantilla", "Úlceras por Presión", "Urgencias Psiquiátricas Primarias"], correct: 1 },
-            { title: "PREG. 17: Barreras Arquitectónicas", question: "¿Qué elemento del hogar constituye una barrera arquitectónica vertical crítica para una persona en silla de ruedas?", options: ["Una alfombra de pelo corto", "Una escalera o ausencia de ascensor adaptado", "Un interruptor de luz situado a 1,20 metros de altura"], correct: 1 },
-            { title: "PREG. 18: Higiene Matutina", question: "Durante el aseo parcial en cama, ¿por qué zona corporal se debe comenzar habitualmente por criterios de higiene?", options: ["Por la zona genital y perianal", "Por los ojos y la cara", "Por los pies y extremidades inferiores"], correct: 1 },
-            { title: "PREG. 19: Comunicación Empática", question: "La escucha activa en la relación de ayuda con un usuario dependiente implica:", options: ["Asentir sin prestar atención real a lo que relata", "Escuchar mostrando comprensión, respeto y sin interrumpir ni juzgar", "Interrumpir frecuentemente para ofrecer soluciones rápidas"], correct: 1 },
-            { title: "PREG. 20: Ayudas Técnicas", question: "¿Cómo se denominan los productos de apoyo destinados a facilitar la deambulación autónoma?", options: ["Ortesis correctoras rígidas", "Ayudas técnicas para la movilidad (bastones, andadores, sillas)", "Prótesis quirúrgicas internas"], correct: 1 },
-            { title: "PREG. 21: Prevención de Riesgos", question: "Al realizar una transferencia de un paciente de la cama a la silla, el TAPSD debe proteger especialmente:", options: ["Su columna vertebral aplicando una correcta mecánica corporal", "Sus extremidades superiores con guantes estériles", "Su capacidad visual directa"], correct: 0 },
-            { title: "PREG. 22: Dependencia Moderada", question: "El Grado I de dependencia según la legislación vigente se corresponde con:", options: ["Dependencia moderada cuando la persona necesita ayuda al menos una vez al día", "Dependencia severa cuando necesita ayuda para varios actos básicos", "Gran dependencia cuando necesita apoyo continuo de otra persona"], correct: 0 },
-            { title: "PREG. 23: Dependencia Severa", question: "El Grado II de dependencia se define cuando la persona necesita ayuda:", options: ["Para realizar varias actividades básicas dos o tres veces al día", "Exclusivamente para gestiones bancarias complejas", "Para todas las actividades vitales sin excepción"], correct: 0 },
-            { title: "PREG. 24: Gran Dependencia", question: "El Grado III de dependencia se asigna cuando la persona necesita ayuda:", options: ["Para realizar varias actividades básicas varias veces al día y pérdida total de autonomía", "Para tareas instrumentales de limpieza del hogar una vez por semana", "Para pasear al aire libre ocasionalmente"], correct: 0 },
-            { title: "PREG. 25: Apoyo Psicosocial", question: "El apoyo psicosocial prestado por el TAPSD abarca áreas como:", options: ["La estimulación cognitiva, las relaciones sociales y el fomento del ocio", "La prescripción y dosificación de fármacos analgésicos", "La intervención quirúrgica menor domiciliaria"], correct: 0 },
-            { title: "PREG. 26: Estimulación Cognitiva", question: "¿Qué objetivo persiguen los ejercicios de orientación a la realidad?", options: ["Mantener activas las funciones mentales y frenar el deterioro cognitivo", "Aumentar la masa muscular de los miembros superiores", "Reducir la presión arterial sistólica"], correct: 0 },
-            { title: "PREG. 27: Relación de Ayuda", question: "En la relación profesional entre el TAPSD y el usuario, el límite ético principal es:", options: ["Evitar la sobreprotección y fomentar la autonomía sin perder la calidez profesional", "Mantener una distancia fría y evitar cualquier tipo de conversación personal", "Delegar todas las decisiones en la familia del usuario"], correct: 0 },
-            { title: "PREG. 28: Ergonomía", question: "La ciencia que estudia la adaptación del entorno y las tareas a las capacidades humanas se denomina:", options: ["Ergonomía", "Tanatología", "Gerontología clínica"], correct: 0 },
-            { title: "PREG. 29: Incontinencia", question: "Ante una situación de incontinencia urinaria en un usuario dependiente, la intervención adecuada incluye:", options: ["Mantener la piel siempre limpia, seca e hidratada previniendo irritaciones", "Restringir totalmente la ingesta de líquidos diarios", "Cambiar los pañales una vez al día por la noche"], correct: 0 },
-            { title: "PREG. 30: Cuidados Paliativos", question: "Los cuidados paliativos dirigidos a personas en situación terminal tienen como fin principal:", options: ["Mejorar la calidad de vida y asegurar el confort y alivio del sufrimiento", "Curar la enfermedad de base a corto plazo", "Prolongar artificialmente la vida a cualquier precio"], correct: 0 },
-            { title: "PREG. 31: Accesibilidad Cognitiva", question: "La accesibilidad cognitiva hace referencia a:", options: ["La facilidad para comprender los entornos, señales e información escrita o visual", "La capacidad intelectual innata de los cuidadores", "La velocidad de procesamiento informático"], correct: 0 },
-            { title: "PREG. 32: Hidratación", question: "Un signo frecuente de deshidratación en personas mayores dependientes es:", options: ["Sequedad en mucosas, piel acartonada y confusión o mareo", "Aumento repentino de la agilidad física", "Exceso de salivación continua"], correct: 0 },
-            { title: "PREG. 33: Intimidad y Dignidad", question: "Durante la realización de tareas de aseo y vestituras, el TAPSD debe salvaguardar siempre:", options: ["La intimidad y la dignidad del usuario cerrando puertas y tapando zonas no implicadas", "La rapidez cronometrada de la tarea por encima de todo", "La presencia de familiares en la estancia"], correct: 0 },
-            { title: "PREG. 34: Escalas Funcionales", question: "Las escalas de valoración funcional estandarizadas (como Barthel o Lawton) sirven para:", options: ["Medir el grado de autonomía en la realización de las AVD", "Diagnosticar enfermedades infecciosas agudas", "Calcular el coste económico de los medicamentos"], correct: 0 },
-            { title: "PREG. 35: Productos de Apoyo", question: "Una grúa de movilización de pacientes se clasifica técnicamente como:", options: ["Un producto de apoyo para la protección, cuidado personal y movilidad", "Un medicamento de uso hospitalario exclusivo", "Una ortesis de miembro inferior"], correct: 0 },
-            { title: "PREG. 36: Abreviatura PAI", question: "¿Qué significa el acrónimo PAI en los centros residenciales sociosanitarios?", options: ["Plan de Atención Individualizada", "Protocolo de Aislamiento Inmediato", "Programa de Actividades Interiores"], correct: 0 },
-            { title: "PREG. 37: Trabajo en Equipo", question: "La coordinación del TAPSD con el equipo interdisciplinar es clave porque:", options: ["Garantiza una atención integral, coordinada y de calidad al usuario", "Evita que el TAPSD tenga que tomar decisiones cotidianas", "Permite delegar toda la responsabilidad en un solo profesional"], correct: 0 },
-            { title: "PREG. 38: Autodeterminación", question: "El derecho del usuario dependiente a tomar sus propias decisiones sobre su plan de vida se conoce como:", options: ["Principio de autonomía y autodeterminación", "Principio de beneficencia obligatoria", "Tutela judicial permanente"], correct: 0 },
-            { title: "PREG. 39: Prevención Quemaduras", question: "En el baño de un usuario con sensibilidad térmica alterada, el TAPSD debe comprobar el agua usando:", options: ["Un termómetro de baño o el dorso de la mano antes de introducir al usuario", "La mano de un familiar directo", "Directamente la ducha a máxima potencia"], correct: 0 },
-            { title: "PREG. 40: Ética Profesional", question: "El secreto profesional al que está obligado el TAPSD implica:", options: ["Guardar confidencialidad absoluta sobre los datos personales y de salud del usuario", "Publicar los avances terapéuticos en redes sociales sin nombres", "Informar a los vecinos de las dolencias del residente"], correct: 0 },
-            { title: "PREG. 41: Comunicación", question: "En personas con afasia motora, la estrategia comunicativa más idónea es:", options: ["Emplear preguntas cerradas de respuesta sí/no y sistemas aumentativos visuales", "Hablar en un tono muy elevado gritando al oído", "Evitar cualquier intento de interacción verbal"], correct: 0 },
-            { title: "PREG. 42: Termorregulación", question: "El rango de temperatura corporal axilar considerado normotermia en adultos es:", options: ["Entre 36,0 ºC y 37,2 ºC", "Entre 38,0 ºC y 39,0 ºC", "Menos de 35,0 ºC"], correct: 0 },
-            { title: "PREG. 43: Constantes Vitales", question: "La medición de la frecuencia cardíaca periférica se realiza habitualmente palpando el pulso:", options: ["Radial", "Femoral profundo", "Carotideo interno"], correct: 0 },
-            { title: "PREG. 44: Úlceras por Presión", question: "La zona anatómica con mayor riesgo de UPP en decúbito supino es:", options: ["Sacro y talones", "Hombros anteriores", "Pabellón auricular externo"], correct: 0 },
-            { title: "PREG. 45: Aseo en Cama", question: "Durante el cambio de sábanas con paciente encamado, la prioridad técnica es:", options: ["Mantener la alineación corporal y evitar fricciones en la piel", "Hacerlo en el menor tiempo posible sin importar las arrugas", "Levantar al paciente bruscamente"], correct: 0 },
-            { title: "PREG. 46: Deambulación", question: "Al caminar junto a un usuario que utiliza un bastón inglés, el TAPSD debe situarse:", options: ["En el lado afectado o débil del usuario para ofrecer soporte", "Delante caminando de espaldas", "A varios metros de distancia"], correct: 0 },
-            { title: "PREG. 47: Medicación", question: "En la administración de medicamentos vía oral, el TAPSD debe:", options: ["Verificar la pauta, la identidad del usuario y registrar la administración", "Modificar la dosis si el usuario se queja de sabor amargo", "Triturar siempre todas las pastillas sin consultar"], correct: 0 },
-            { title: "PREG. 48: Demencias", question: "En las fases iniciales de la enfermedad de Alzheimer, el síntoma cognitivo más característico es:", options: ["La pérdida de memoria reciente y despistes cotidianos", "La pérdida absoluta de movilidad motora", "El coma vigil permanente"], correct: 0 },
-            { title: "PREG. 49: Trastornos de Conducta", question: "Ante una reacción de agitación o deambulación errante en demencias, se debe:", options: ["Validar sus emociones, redirigir la atención y ofrecer un entorno seguro", "Aislar al usuario en una habitación oscura a llave", "Gritar para exigir obediencia inmediata"], correct: 0 },
-            { title: "PREG. 50: Apoyo Nutricional", question: "Si un usuario presenta disfagia a líquidos, el TAPSD debe utilizar habitualmente:", options: ["Espesantes autorizados para modificar la textura de los líquidos", "Agua a chorro directamente de la botella", "Sustitutos líquidos sin control de consistencia"], correct: 0 },
-            { title: "PREG. 51: Prevención Infecciones", question: "La medida higiénica universal más eficaz para evitar la transmisión cruzada de gérmenes es:", options: ["El lavado frecuente de manos con agua y jabón o solución hidroalcohólica", "El uso continuo de mascarilla en exteriores", "La ventilación nocturna exclusivamente"], correct: 0 },
-            { title: "PREG. 52: Movilidad", question: "La posición de Fowler o semifowler en la cama consiste en una elevación del cabecero de:", options: ["Entre 45º y 60º", "Exactamente 0º horizontal", "180º vertical completo"], correct: 0 },
-            { title: "PREG. 53: Prevención de Caídas", question: "Uno de los factores intrínsecos de riesgo de caídas en ancianos es:", options: ["El uso de fármacos sedantes o polifarmacia", "El color de las paredes de la habitación", "La presencia de timbres de llamada"], correct: 0 },
-            { title: "PREG. 54: Cuidados Post-Mortem", question: "Ante el fallecimiento de un usuario en un centro, el TAPSD interviene:", options: ["Colaborando en el respeto, higiene y preparación digna del cadáver", "Abandonando la habitación inmediatamente", "Avisando a los medios de comunicación"], correct: 0 },
-            { title: "PREG. 55: Participación Social", question: "Fomentar que el usuario acuda a talleres ocupacionales y actividades del centro promueve:", options: ["Su integración social y sentimiento de pertenencia", "El aislamiento obligatorio", "La dependencia funcional estricta"], correct: 0 },
-            { title: "PREG. 56: Abreviatura CIF", question: "¿Qué significa el acrónimo CIF en el contexto de la discapacidad y salud?", options: ["Clasificación Internacional del Funcionamiento, de la Discapacidad y de la Salud", "Centro de Información Farmacológica", "Comité de Inspección Funcional"], correct: 0 },
-            { title: "PREG. 57: Cuidador Principal", question: "El síndrome del cuidador quemado (burnout) se caracteriza por:",options: ["Exhaustión física, psíquica y desgaste emocional crónico", "Un aumento repentino de la energía vital y alegría", "Interés nulo por el descanso nocturno"], correct: 0 },
-            { title: "PREG. 58: Respiro Familiar", question: "Los programas de 'respiro familiar' tienen como finalidad:", options: ["Ofrecer descanso temporal al cuidador principal mediante estancias o ayuda domiciliaria", "Expulsar definitivamente al usuario del núcleo familiar", "Reducir los presupuestos públicos"], correct: 0 },
-            { title: "PREG. 59: Derechos de los Usuarios", question: "Todo usuario de servicios sociales tiene derecho fundamental a:", options: ["La confidencialidad, el respeto a su intimidad y trato digno", "Exigir atención médica privada a coste cero en centros extranjeros", "Modificar las normativas de las instituciones a su antojo"], correct: 0 },
-            { title: "PREG. 60: Planificación", question: "El documento que recoge las actuaciones asistenciales concretas para un usuario en ayuda a domicilio es:", options: ["El plan de trabajo o intervención individualizado", "La receta médica electrónica", "El parte meteorológico diario"], correct: 0 },
-            { title: "PREG. 61: Accesibilidad Física", question: "Una rampa accesible para sillas de ruedas no debe superar una pendiente recomendada del:", options: ["6% al 10%", "50%", "90%"], correct: 0 },
-            { title: "PREG. 62: Ayudas Técnicas Baño", question: "Un asiento elevado para inodoro y barras de apoyo laterales se consideran:", options: ["Productos de apoyo para el baño y aseo personal", "Elementos decorativos de salón", "Ortesis para miembros inferiores"], correct: 0 },
-            { title: "PREG. 63: Abreviatura CE", question: "En el marcado de productos sanitarios y de apoyo, las siglas CE significan:",options: ["Conformidad Europea", "Control Estadístico", "Certificado Estándar"], correct: 0 },
-            { title: "PREG. 64: Eliminación Fecal", question: "Ante un cuadro de estreñimiento crónico en encamados, se recomienda:", options: ["Aumentar fibra, hidratación y movilización activa o pasiva dentro de sus posibilidades", "Administrar laxantes fuertes sin supervisión médica indefinidamente", "Reducir totalmente la ingesta de agua"], correct: 0 },
-            { title: "PREG. 65: Oxigenoterapia", question: "Cuando un usuario precisa gafas nasales de oxígeno, el TAPSD debe vigilar:", options: ["Que las fosas nasales estén limpias y evitar rozaduras en las orejas", "Que el flujo de oxígeno supere los 50 litros por minuto", "Que el dispositivo se sumerja en agua caliente"], correct: 0 },
-            { title: "PREG. 66: Primeros Auxilios", question: "Ante una obstrucción completa de la vía aérea por cuerpo extraño (OVACE) en un adulto consciente, se aplica:", options: ["La maniobra de Heimlich (compresiones abdominales)", "Masaje cardíaco externo inmediato", "Inyección intravenosa de suero"], correct: 0 },
-            { title: "PREG. 67: Posición de Seguridad", question: "Si un usuario se encuentra inconsciente pero respira con pulso, la postura preventiva recomendada es:", options: ["Posición lateral de seguridad (PLS)", "Decúbito supino estricto con piernas elevadas 90 grados", "Posición de pie apoyado en la pared"], correct: 0 },
-            { title: "PREG. 68: Reanimación", question: "En soporte vital básico, la relación de compresiones torácicas y ventilaciones en adultos es:", options: ["30 compresiones y 2 ventilaciones", "10 compresiones y 5 ventilaciones", "100 compresiones continuas sin parar"], correct: 0 },
-            { title: "PREG. 69: Higiene de Manos", question: "La duración mínima frotando con solución hidroalcohólica para una correcta higiene de manos es de:", options: ["20 a 30 segundos", "1 segundo", "5 minutos"], correct: 0 },
-            { title: "PREG. 70: Residencias Geriátricas", question: "Un centro residencial asistido se define técnicamente como:", options: ["Un recurso de alojamiento y convivencia sustitutivo del hogar con atención integral", "Un hospital de alta tecnología quirúrgica", "Un centro de ocio juvenil nocturno"], correct: 0 },
-            { title: "PREG. 71: Centros de Día", question: "El centro de día es un servicio de carácter sociosanitario y rehabilitador que opera en horario:", options: ["Diurno", "Exclusivamente nocturno de madrugada", "De 24 horas continuas"], correct: 0 },
-            { title: "PREG. 72: Teleasistencia", question: "El servicio de teleasistencia domiciliaria permite a los usuarios:",options: ["Obtener ayuda inmediata pulsando un botón conectado a una central las 24 horas", "Realizar videollamadas con cadenas de televisión", "Controlar la domótica industrial de la calle"], correct: 0 },
-            { title: "PREG. 73: Ayuda a Domicilio (SAD)", question: "El Servicio de Ayuda a Domicilio (SAD) ofrece atención en el propio hogar centrada en:", options: ["El apoyo personal, doméstico y socioeducativo", "La reforma estructural integral de la fachada", "La seguridad policial privada del barrio"], correct: 0 },
-            { title: "PREG. 74: Confort Térmico", question: "La temperatura ambiental recomendada en invierno en las estancias de personas dependientes es de:", options: ["20 ºC a 22 ºC", "10 ºC a 12 ºC", "32 ºC a 35 ºC"], correct: 0 },
-            { title: "PREG. 75: Prevención de Incendios", question: "En caso de conato de incendio en una vivienda tutelada, la norma prioritaria de actuación es:", options: ["Garantizar la evacuación segura de los usuarios y alertar a emergencias", "Intentar rescatar objetos de valor personal primero", "Abrir todas las ventanas para avivar el aire"], correct: 0 },
-            { title: "PREG. 76: Hábitos Saludables", question: "Promover una correcta higiene bucodental en dependientes evita:", options: ["Infecciones locales, halitosis y problemas digestivos derivados", "La pérdida de cabello capilar", "El insomnio crónico severo"], correct: 0 },
-            { title: "PREG. 77: Actividades Lúdicas", question: "El juego y las dinámicas recreativas en la tercera edad fomentan:", options: ["La socialización, el estado de ánimo positivo y la agilidad mental", "El aislamiento social y la apatía", "La fatiga muscular extrema"], correct: 0 },
-            { title: "PREG. 78: Silla de Ruedas", question: "Al propulsar una silla de ruedas por una rampa muy pronunciada hacia abajo, el TAPSD debe:", options: ["Descender de espaldas controlando el peso de la silla", "Soltar la silla para que ruede libremente", "Correr hacia adelante a gran velocidad"], correct: 0 },
-            { title: "PREG. 79: Valoración Social", question: "La trabajadora social del equipo valora principalmente:", options: ["Los recursos sociofamiliares, económicos y de entorno del usuario", "La graduación óptica de la vista", "La presión arterial sistólica"], correct: 0 },
-            { title: "PREG. 80: Rol del TAPSD", question: "El profesional TAPSD actúa como un pilar fundamental en el bienestar porque:", options: ["Acompaña en el día a día cubriendo necesidades físicas, sociales y emocionales", "Prescribe tratamientos farmacológicos complejos en solitario", "Dirige la dirección general del centro hospitalario"], correct: 0 },
-            { title: "PREG. 81: Apoyo Psicológico", question: "Ante expresiones de tristeza o duelo por pérdidas de seres queridos, el TAPSD debe:", options: ["Ofrecer escucha empática y permitir la expresión de sentimientos sin minimizar", "Decirle que no debe llorar y cambiar de tema bruscamente", "Aislar al residente en su habitación"], correct: 0 },
-            { title: "PREG. 82: Sueño y Descanso", question: "Para favorecer el descanso nocturno en residencias, se aconseja:", options: ["Reducir ruidos e iluminación ambiental y mantener rutinas relajantes", "Poner música alta a medianoche", "Dar café cargado antes de dormir"], correct: 0 },
-            { title: "PREG. 83: Alimentación Equilibrada", question: "Una dieta adecuada para personas mayores dependientes debe ser:", options: ["Adaptada a sus necesidades calóricas, texturas seguras y rica en nutrientes", "Rica en grasas saturadas y azúcares refinados", "Monótona y basada en un solo alimento"], correct: 0 },
-            { title: "PREG. 84: Cuidados de la Piel", question: "La hidratación cutánea diaria mediante cremas emolientes ayuda a prevenir:", options: ["La sequedad, descamación y fragilidad de la piel", "Las fracturas óseas expuestas", "Las infecciones respiratorias agudas"], correct: 0 },
-            { title: "PREG. 85: Ayudas Técnicas Comida", question: "Un plato con Reborde y cubiertos adaptados con mangos gruesos son:", options: ["Productos de apoyo para la alimentación autónoma", "Herramientas de jardinería comunitaria", "Dispositivos de oficina digital"], correct: 0 },
-            { title: "PREG. 86: Prevención de Atragantamientos", question: "Para prevenir atragantamientos en personas con disfagia, la postura al comer debe ser:", options: ["Sentada a 90 grados o con el cabecero totalmente incorporado", "Tumbada totalmente en horizontal", "Boca abajo en decúbito prono"], correct: 0 },
-            { title: "PREG. 87: Autonomía Financiera", question: "Si un usuario conserva capacidad legal, la gestión de su dinero y cuentas corresponde:", options: ["Exclusivamente al propio usuario o a quien él designe legalmente", "Al TAPSD por iniciativa propia", "Al centro de forma obligatoria"], correct: 0 },
-            { title: "PREG. 88: Plan de Cuidados", question: "El registro diario de incidencias y observaciones en el plan de cuidados sirve para:", options: ["Garantizar la continuidad asistencial entre los diferentes turnos de trabajo", "Publicar un libro de ficción", "Ocultar información relevante al equipo"], correct: 0 },
-            { title: "PREG. 89: Escucha Activa", question: "Una señal de que estamos practicando la escucha activa es:", options: ["Mantener contacto visual, asentir y parafrasear para confirmar que hemos entendido", "Mirar el teléfono móvil mientras nos hablan", "Interrumpir con nuestras propias anécdotas"], correct: 0 },
-            { title: "PREG. 90: Discapacidad Intelectual", question: "El principio fundamental al atender a personas con discapacidad intelectual es:", options: ["Promover su inclusión, autodeterminación y desarrollo de capacidades", "Tratarles como niños pequeños de manera infantilizada", "Impedir cualquier toma de decisiones propia"], correct: 0 },
-            { title: "PREG. 91: Prevención de Lesiones", question: "Para levantar un objeto pesado del suelo, el TAPSD debe doblar las:", options: ["Rodillas manteniendo la espalda recta y el peso cerca del cuerpo", "Caderas arqueando fuertemente la zona lumbar", "Muñecas sin doblar las piernas"], correct: 0 },
-            { title: "PREG. 92: Integración Sensorial", question: "En usuarios con deficiencias visuales graves, es importante:", options: ["Identificarse al entrar en la estancia y no mover los muebles de sitio sin avisar", "Apagar todas las luces de la casa de repente", "Esconderse para ver cómo reaccionan"], correct: 0 },
-            { title: "PREG. 93: Envejecimiento Activo", question: "El concepto de envejecimiento activo propugna:", options: ["Optimizar oportunidades de salud, participación y seguridad para mejorar la calidad de vida", "El cese absoluto de toda actividad física y mental", "El aislamiento residencial obligatorio"], correct: 0 },
-            { title: "PREG. 94: Productos Ortopédicos", question: "Una férula de descanso nocturno para evitar deformidades articulares es:", options: ["Una ortesis", "Una prótesis interna", "Un fármaco analgésico"], correct: 0 },
-            { title: "PREG. 95: Dependencia y Familia", question: "La familia del dependiente ante la intervención del TAPSD suele requerir:", options: ["Orientación, respiro, apoyo y asesoramiento profesional", "Sanciones administrativas constantes", "Obligación de realizar turnos de noche sanitarios"], correct: 0 },
-            { title: "PREG. 96: Relaciones Interpersonales", question: "Mantener los vínculos afectivos con amigos y familiares en la tercera edad contribuye a:", options: ["Evitar la soledad no deseada y mejorar la autoestima", "Aumentar el riesgo de depresión clínica", "Generar dependencia absoluta del exterior"], correct: 0 },
-            { title: "PREG. 97: Abreviatura OISS", question: "¿Qué representa la Organización Iberoamericana de Seguridad Social (OISS)?", options: ["Un organismo internacional de cooperación en materia de seguridad social y protección", "Un centro de estética avanzada", "Una marca de calzado ortopédico"], correct: 0 },
-            { title: "PREG. 98: Calidad Asistencial", question: "La mejora continua de la calidad en la atención a la dependencia busca siempre:", options: ["Maximizar la satisfacción, seguridad y bienestar integral de los usuarios", "Reducir el personal técnico al mínimo imprescindible", "Eliminar los protocolos de higiene"], correct: 0 },
-            { title: "PREG. 99: Ética y Secreto", question: "Comentar detalles íntimos de la salud de un residente con personas ajenas al servicio vulnera:",options: ["El derecho a la intimidad y el secreto profesional", "Ninguna norma ética", "El protocolo de limpieza"], correct: 0 },
-            { title: "PREG. 100: Lema TAPSD", question: "Recordando el espíritu formativo de este módulo, el lema central es:", options: ["Quien quiere, puede, y quien quiere, debe", "Quien no arriesga, no gana dinero", "La paciencia es la única virtud posible"], correct: 0 }
+            {
+                q: "Al medir la temperatura axilar a un paciente encamado, ¿cuánto tiempo se recomienda mantener el termómetro digital clásico colocado correctamente?",
+                options: [
+                    "Hasta que emita la señal acústica característica.",
+                    "Exactamente 30 segundos.",
+                    "Al menos 5 minutos fijos.",
+                    "10 minutos obligatorios."
+                ],
+                correct: 0
+            },
+            {
+                q: "Si al realizar la técnica de desinfección de manos con solución hidroalcohólica observamos suciedad visible en las palmas, ¿qué procedimiento debemos seguir según los protocolos higiénico-sanitarios?",
+                options: [
+                    "Aplicar el doble de gel hidroalcohólico sin retirar la suciedad.",
+                    "Lavar las manos previamente con agua y jabón y luego secarlas bien.",
+                    "Continuar con el proceso de fricción habitual ignorando la suciedad.",
+                    "Utilizar guantes estériles directamente."
+                ],
+                correct: 1
+            },
+            {
+                q: "¿Cuál es el valor considerado como presión arterial sistólica normal (estándar clínico en reposo para adultos)?",
+                options: [
+                    "Menor de 120 mmHg.",
+                    "Entre 140 y 160 mmHg.",
+                    "Exactamente 150 mmHg.",
+                    "Menor de 80 mmHg."
+                ],
+                correct: 0
+            },
+            {
+                q: "Durante la movilización de un paciente encamado para evitar úlceras por presión (UPP), ¿con qué frecuencia estándar se deben realizar los cambios posturales?",
+                options: [
+                    "Cada 8 horas.",
+                    "Cada 2 a 3 horas.",
+                    "Una vez al día por la mañana.",
+                    "Únicamente cuando el paciente lo solicite."
+                ],
+                correct: 1
+            },
+            {
+                q: "Ante una situación de obstrucción completa de la vía aérea por cuerpo extraño (OVACE) en un adulto consciente, la maniobra inicial de primeros auxilios recomendada es:",
+                options: [
+                    "Dar compresiones abdominales continuas (Maniobra de Heimlich).",
+                    "Dar 5 golpes interescapulares firmes seguidos de compresiones abdominales.",
+                    "Introducir los dedos a ciegas en la boca para extraer el objeto.",
+                    "Colocar al paciente en posición lateral de seguridad inmediatamente."
+                ],
+                correct: 1
+            },
+            {
+                q: "En la técnica de higiene de un paciente encamado, ¿qué zona corporal debe lavarse en primer lugar para mantener los principios de asepsia correctos?",
+                options: [
+                    "La zona genital y anal.",
+                    "Las extremidades inferiores.",
+                    "Los ojos y la cara (sin jabón en los ojos).",
+                    "El tórax y el abdomen."
+                ],
+                correct: 2
+            },
+            {
+                q: "Al preparar un carro de curas, ¿cómo debe clasificarse el material de desecho biocontaminado o punzante (como agujas usadas)?",
+                options: [
+                    "En el contenedor general de residuos urbanos.",
+                    "En el contenedor específico rígido de riesgos biológicos y punzantes.",
+                    "En una bolsa de plástico negra común bien cerrada.",
+                    "Directamente en el lavabo con abundante agua."
+                ],
+                correct: 1
+            },
+            {
+                q: "Al realizar la técnica de traslado desde la cama a una silla de ruedas, lo primero que debemos comprobar por seguridad es:",
+                options: [
+                    "Que las ruedas de la silla estén frenadas y los reposapiés retirados o abatidos.",
+                    "Que la silla sea de color azul.",
+                    "Que el paciente tenga los zapatos puestos obligatoriamente.",
+                    "Que la ventana de la habitación esté abierta."
+                ],
+                correct: 0
+            },
+            {
+                q: "¿Qué nombre recibe el pulso periférico que se palpa en la zona de la muñeca, sobre la arteria radial?",
+                options: [
+                    "Pulso carotídeo.",
+                    "Pulso radial.",
+                    "Pulso apical.",
+                    "Pulso pedio."
+                ],
+                correct: 1
+            },
+            {
+                q: "En la administración de medicación por vía tópica cutánea, es una buena práctica clínica:",
+                options: [
+                    "Extender la crema con la mano descubierta sin protección.",
+                    "Utilizar guantes limpios y aplicar la pomada realizando un suave masaje según prescripción.",
+                    "Mezclar varios medicamentos tópicos en el mismo envase antes de aplicarlos.",
+                    "Limpiar la zona previamente con alcohol de 96 grados de forma enérgica."
+                ],
+                correct: 1
+            },
+            // Se pueden añadir más preguntas manteniendo esta misma estructura basada en el temario práctico...
         ];
 
-        let activeQuestionIndex = null;
+        let currentQuizQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let selectedOptionIndex = null;
 
-        function openStory() {
-            splash.style.opacity = '0';
-            setTimeout(() => {
-                splash.style.display = 'none';
-                storyModal.style.display = 'flex';
-            }, 500);
-        }
-
-        function startGame() {
-            storyModal.style.opacity = '0';
-            setTimeout(() => {
-                storyModal.style.display = 'none';
-                initNewGame();
-                gameContainer.style.display = 'flex';
-                gameStarted = true;
-                requestAnimationFrame(updateGame);
-            }, 300);
-        }
-
-        // Selecciona 10 preguntas aleatorias únicas del banco de 100 cada vez que se inicia
-        function initNewGame() {
+        // Inicializar el test seleccionando 10 preguntas aleatorias del banco
+        function initQuiz() {
+            // Mezclar el banco completo y tomar 10
+            const shuffledBank = [...questionBank].sort(() => Math.random() - 0.5);
+            currentQuizQuestions = shuffledBank.slice(0, 10);
+            currentIndex = 0;
             score = 0;
-            scoreBoard.innerText = `OBJETIVOS: ${score} / ${totalObjectives}`;
             
-            // Barajar el banco completo y tomar 10
-            let shuffled = [...questionBank].sort(() => 0.5 - Math.random());
-            activeQuestions = shuffled.slice(0, 10);
-
-            // Reiniciar objetivos
-            objectives.forEach(obj => obj.collected = false);
-
-            // Posición inicial de la enfermera y fantasma
-            player.x = 40;
-            player.y = 40;
-            player.dx = 0;
-            player.dy = 0;
-
-            ghost.x = 400;
-            ghost.y = 400;
-            ghost.dx = 0;
-            ghost.dy = -ghost.speed;
-
-            victoryScreen.style.display = 'none';
+            document.getElementById('quiz-card').classList.remove('hidden');
+            document.getElementById('result-card').classList.add('hidden');
+            loadQuestion();
         }
 
-        // Botón Volver a jugar desde la pantalla final (lleva directamente al laberinto)
-        function restartGame() {
-            victoryScreen.style.display = 'none';
-            initNewGame();
-            gameContainer.style.display = 'flex';
-            gameStarted = true;
-        }
-
-        window.addEventListener('keydown', e => {
-            if (!gameStarted || activeQuestionIndex !== null) return;
-            if (e.key === 'ArrowUp') { player.dx = 0; player.dy = -player.speed; }
-            if (e.key === 'ArrowDown') { player.dx = 0; player.dy = player.speed; }
-            if (e.key === 'ArrowLeft') { player.dx = -player.speed; player.dy = 0; }
-            if (e.key === 'ArrowRight') { player.dx = player.speed; player.dy = 0; }
-        });
-
-        window.addEventListener('keyup', e => {
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                player.dx = 0;
-                player.dy = 0;
-            }
-        });
-
-        function checkWallCollision(nx, ny, size) {
-            for (let w of walls) {
-                if (nx < w.x + w.w && nx + size > w.x && ny < w.y + w.h && ny + size > w.y) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        function updateGame() {
-            if (!gameStarted) return;
-
-            if (activeQuestionIndex === null) {
-                // Movimiento jugador
-                let nextX = player.x + player.dx;
-                let nextY = player.y + player.dy;
-                if (!checkWallCollision(nextX, player.y, player.size)) player.x = nextX;
-                if (!checkWallCollision(player.x, nextY, player.size)) player.y = nextY;
-
-                // IA Estricta por cuadrícula para el Fantasma
-                let nextGX = ghost.x + ghost.dx;
-                let nextGY = ghost.y + ghost.dy;
-
-                if (checkWallCollision(nextGX, nextGY, ghost.size) || (ghost.x % 10 === 0 && ghost.y % 10 === 0 && Math.random() < 0.35)) {
-                    const candidateDirs = [
-                        {dx: 0, dy: -ghost.speed},
-                        {dx: 0, dy: ghost.speed},
-                        {dx: -ghost.speed, dy: 0},
-                        {dx: ghost.speed, dy: 0}
-                    ];
-                    const validDirs = candidateDirs.filter(d => !checkWallCollision(ghost.x + d.dx * 2, ghost.y + d.dy * 2, ghost.size));
-                    
-                    if (validDirs.length > 0) {
-                        validDirs.sort((a, b) => {
-                            let distA = Math.hypot((ghost.x + a.dx*10) - player.x, (ghost.y + a.dy*10) - player.y);
-                            let distB = Math.hypot((ghost.x + b.dx*10) - player.x, (ghost.y + b.dy*10) - player.y);
-                            return distA - distB;
-                        });
-                        const chosen = validDirs[0];
-                        ghost.dx = chosen.dx;
-                        ghost.dy = chosen.dy;
-                    } else {
-                        ghost.dx = -ghost.dx;
-                        ghost.dy = -ghost.dy;
-                    }
-                } else {
-                    ghost.x = nextGX;
-                    ghost.y = nextGY;
-                }
-
-                // Comprobar colisión con objetivos
-                objectives.forEach(obj => {
-                    if (!obj.collected) {
-                        let dist = Math.hypot(player.x - obj.x, player.y - obj.y);
-                        if (dist < 22) {
-                            obj.collected = true;
-                            triggerQuiz(obj.id);
-                        }
-                    }
-                });
-            }
-
-            drawGame();
-            requestAnimationFrame(updateGame);
-        }
-
-        function drawGame() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#111133';
-            for (let w of walls) {
-                ctx.fillRect(w.x, w.y, w.w, w.h);
-                ctx.strokeStyle = '#222266';
-                ctx.strokeRect(w.x, w.y, w.w, w.h);
-            }
-
-            objectives.forEach(obj => {
-                if (!obj.collected) {
-                    ctx.fillStyle = '#ffcc00';
-                    ctx.beginPath();
-                    ctx.arc(obj.x + 10, obj.y + 10, 7, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.shadowColor = '#ffcc00';
-                    ctx.shadowBlur = 10;
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                }
-            });
-
-            // Enfermera
-            ctx.fillStyle = '#00ffc8';
-            ctx.fillRect(player.x, player.y, player.size, player.size);
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(player.x + 4, player.y - 4, 12, 6);
-            ctx.fillStyle = '#ff3366';
-            ctx.fillRect(player.x + 8, player.y - 4, 4, 6);
-
-            // Fantasma
-            ctx.fillStyle = '#ff3366';
-            ctx.beginPath();
-            ctx.arc(ghost.x + 10, ghost.y + 10, 10, Math.PI, 0, false);
-            ctx.lineTo(ghost.x + 20, ghost.y + 20);
-            ctx.lineTo(ghost.x, ghost.y + 20);
-            ctx.closePath();
-            ctx.fill();
-        }
-
-        function triggerQuiz(id) {
-            activeQuestionIndex = id;
-            const q = activeQuestions[id];
-            document.getElementById('quiz-title').innerText = q.title;
-            document.getElementById('quiz-question-text').innerText = q.question;
+        // Cargar la pregunta actual y mezclar sus respuestas aleatoriamente
+        function loadQuestion() {
+            selectedOptionIndex = null;
+            document.getElementById('next-btn').classList.add('hidden');
             
-            const optionsContainer = document.getElementById('quiz-options-container');
+            const qData = currentQuizQuestions[currentIndex];
+            document.getElementById('progress-indicator').innerText = `Pregunta ${currentIndex + 1} de ${currentQuizQuestions.length}`;
+            document.getElementById('question-text').innerText = qData.q;
+
+            // Crear array de opciones con sus índices originales para rastrear la correcta tras el mezclado
+            let indexedOptions = qData.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
+            
+            // REQUISITO 3: Aleatorizar el orden de las respuestas cada vez que se carga la pregunta
+            indexedOptions.sort(() => Math.random() - 0.5);
+
+            const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
-            document.getElementById('feedback-banner').innerText = '';
 
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'quiz-btn';
-                btn.innerText = (idx + 1) + ". " + opt;
-                btn.onclick = () => evaluateAnswer(idx, q.correct);
-                optionsContainer.appendChild(btn);
+            indexedOptions.forEach((item, displayIdx) => {
+                const button = document.createElement('button');
+                button.className = "w-full text-left p-4 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition font-medium text-slate-700 cursor-pointer flex items-center justify-between";
+                button.innerHTML = `<span>${item.text}</span>`;
+                
+                button.onclick = () => selectOption(button, item.originalIndex, qData.correct);
+                optionsContainer.appendChild(button);
             });
-
-            quizModal.style.display = 'flex';
         }
 
-        function evaluateAnswer(selected, correct) {
-            const feedback = document.getElementById('feedback-banner');
-            if (selected === correct) {
-                feedback.style.color = '#00ffc8';
-                feedback.innerText = "¡CORRECTO! LA ENFERMERA AVANZA.";
-                setTimeout(() => {
-                    quizModal.style.display = 'none';
-                    activeQuestionIndex = null;
-                    score++;
-                    scoreBoard.innerText = `OBJETIVOS: ${score} / ${totalObjectives}`;
+        // Seleccionar una opción
+        function selectOption(buttonElement, originalIdx, correctIdx) {
+            const allButtons = document.getElementById('options-container').children;
+            
+            // Desmarcar todas visualmente
+            for (let btn of allButtons) {
+                btn.classList.remove('border-emerald-600', 'bg-emerald-50', 'ring-2', 'ring-emerald-600');
+            }
 
-                    // Se comprueba estrictamente que se hayan completado los 10 hitos para mostrar la victoria
-                    if (score === totalObjectives) {
-                        triggerVictory();
-                    }
-                }, 1000);
+            // Marcar la seleccionada
+            buttonElement.classList.add('border-emerald-600', 'bg-emerald-50', 'ring-2', 'ring-emerald-600');
+            
+            selectedOptionIndex = originalIdx;
+            
+            // Comprobar si es correcta de inmediato para sumar puntos
+            buttonElement.dataset.isCorrect = (originalIdx === correctIdx);
+
+            // Mostrar botón siguiente
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        // Pasar a la siguiente pregunta (REQUISITO 2: Control estricto para evitar salto prematuro a página final)
+        function handleNextQuestion() {
+            if (selectedOptionIndex === null) return;
+
+            const qData = currentQuizQuestions[currentIndex];
+            if (selectedOptionIndex === qData.correct) {
+                score++;
+            }
+
+            currentIndex++;
+
+            // Verificación estricta de fin de test (Exactamente cuando se completan las 10 preguntas)
+            if (currentIndex < currentQuizQuestions.length) {
+                loadQuestion();
             } else {
-                feedback.style.color = '#ff3366';
-                feedback.innerText = "Vuelve a intentarlo";
+                showResults();
             }
         }
 
-        function triggerVictory() {
-            gameContainer.style.display = 'none';
-            victoryScreen.style.display = 'flex';
-            initFireworks();
+        // Mostrar pantalla final de resultados
+        function showResults() {
+            document.getElementById('quiz-card').classList.add('hidden');
+            document.getElementById('result-card').classList.remove('hidden');
+            document.getElementById('score-text').innerText = `${score} / ${currentQuizQuestions.length}`;
         }
 
-        // Sistema de Fuegos Artificiales para la pantalla de victoria
-        function initFireworks() {
-            const fCanvas = document.getElementById('victory-canvas');
-            const fCtx = fCanvas.getContext('2d');
-            fCanvas.width = window.innerWidth;
-            fCanvas.height = window.innerHeight;
-
-            let particles = [];
-            let fireworks = [];
-
-            class Firework {
-                constructor() {
-                    this.x = Math.random() * fCanvas.width;
-                    this.y = fCanvas.height;
-                    this.targetY = Math.random() * (fCanvas.height / 2);
-                    this.speed = 4;
-                    this.angle = -Math.PI / 2 + (Math.random() * 0.4 - 0.2);
-                    this.vx = Math.cos(this.angle) * this.speed;
-                    this.vy = Math.sin(this.angle) * this.speed;
-                    this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
-                    this.exploded = false;
-                }
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    if (this.y <= this.targetY) {
-                        this.exploded = true;
-                        createParticles(this.x, this.y, this.color);
-                    }
-                }
-                draw() {
-                    fCtx.fillStyle = this.color;
-                    fCtx.fillRect(this.x, this.y, 3, 10);
-                }
-            }
-
-            class Particle {
-                constructor(x, y, color) {
-                    this.x = x;
-                    this.y = y;
-                    this.color = color;
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * 6 + 1;
-                    this.vx = Math.cos(angle) * speed;
-                    this.vy = Math.sin(angle) * speed;
-                    this.alpha = 1;
-                    this.decay = Math.random() * 0.015 + 0.01;
-                }
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    this.vy += 0.08;
-                    this.alpha -= this.decay;
-                }
-                draw() {
-                    fCtx.save();
-                    fCtx.globalAlpha = Math.max(this.alpha, 0);
-                    fCtx.fillStyle = this.color;
-                    fCtx.beginPath();
-                    fCtx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
-                    fCtx.fill();
-                    fCtx.restore();
-                }
-            }
-
-            function createParticles(x, y, color) {
-                for (let i = 0; i < 50; i++) {
-                    particles.push(new Particle(x, y, color));
-                }
-            }
-
-            function loop() {
-                fCtx.fillStyle = 'rgba(8, 8, 12, 0.2)';
-                fCtx.fillRect(0, 0, fCanvas.width, fCanvas.height);
-
-                if (Math.random() < 0.04) {
-                    fireworks.push(new Firework());
-                }
-
-                for (let i = fireworks.length - 1; i >= 0; i--) {
-                    fireworks[i].update();
-                    fireworks[i].draw();
-                    if (fireworks[i].exploded) {
-                        fireworks.splice(i, 1);
-                    }
-                }
-
-                for (let i = particles.length - 1; i >= 0; i--) {
-                    particles[i].update();
-                    particles[i].draw();
-                    if (particles[i].alpha <= 0) {
-                        particles.splice(i, 1);
-                    }
-                }
-
-                requestAnimationFrame(loop);
-            }
-
-            loop();
+        // Reiniciar test
+        function restartQuiz() {
+            initQuiz();
         }
+
+        // Arrancar al cargar la página por primera vez
+        window.onload = initQuiz;
     </script>
 </body>
 </html>
