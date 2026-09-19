@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <!-- ================= PANTALLA 3: LABERINTO CON FLECHAS & ENEMIGO ================= -->
+        <!-- ================= PANTALLA 3 ================= -->
         <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl">
             
             <div id="maze-view" class="space-y-3">
@@ -140,32 +140,23 @@
                 </div>
 
                 <p class="font-pixel text-lg text-center text-cyan-200">
-                    Usa las <span class="text-yellow-300 font-bold">FLECHAS DE DIRECCIÓN</span> del teclado para mover a la enfermera 👩‍⚕️ y esquivar al virus 👾 hasta alcanzar los 10 puntos:
+                    Usa las <span class="text-yellow-300 font-bold">FLECHAS DE DIRECCIÓN</span> para mover a la enfermera 👩‍⚕️ y esquivar al virus 👾:
                 </p>
 
-                <!-- Tablero -->
-                <div id="pacman-board" class="maze-board">
-                    <!-- Generado por JS -->
-                </div>
+                <div id="pacman-board" class="maze-board"></div>
 
                 <div class="font-pixel text-lg text-center text-yellow-400" id="maze-status-text">
                     &gt; ¡Usa ⬅️ ➡️ ⬆️ ⬇️ para moverte!
                 </div>
             </div>
 
-            <!-- Panel de Pregunta -->
             <div id="question-panel" class="hidden space-y-6">
                 <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
                     <span class="text-yellow-300" id="question-counter-label">PREGUNTA 1 / 10</span>
                     <span class="text-cyan-400">MODO EXAMEN</span>
                 </div>
-
-                <h2 id="question-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed tracking-wide">
-                    Cargando pregunta...
-                </h2>
-
+                <h2 id="question-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed tracking-wide"></h2>
                 <div id="options-container" class="space-y-3"></div>
-
                 <div class="flex justify-end pt-2">
                     <button id="submit-ans-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 transition hidden cursor-pointer arcade-glow-btn">
                         COMPROBAR &gt;&gt;
@@ -175,22 +166,18 @@
 
         </div>
 
-        <!-- ================= PANTALLA 4: VICTORIA / FUEGOS ARTIFICIALES ================= -->
+        <!-- ================= PANTALLA 4 ================= -->
         <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6 relative overflow-hidden">
             <div class="absolute inset-0 pointer-events-none flex justify-around items-center opacity-30 text-4xl animate-pulse">
                 🎆 ✨ 🎇 🌟 🎆 ✨ 🎇
             </div>
-            
             <h2 class="font-arcade text-lg sm:text-2xl text-yellow-400 animate-bounce">ENHORABUENA</h2>
-            
             <p class="font-pixel text-2xl sm:text-3xl text-cyan-100">
-                ¡Has completado con éxito todos los hitos del laberinto sociosanitario y demostrado que "Quien quiere, puede, y quien quiere, debe"!
+                ¡Has completado con éxito todos los hitos del laberinto sociosanitario!
             </p>
-
             <div class="font-arcade text-3xl text-cyan-300 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8">
                 10 / 10 HITOS
             </div>
-
             <div>
                 <button onclick="restartGame()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">
                     VOLVER A PROBAR &gt;&gt;
@@ -200,7 +187,6 @@
 
     </main>
 
-    <!-- FOOTER -->
     <footer class="text-center py-3 font-pixel text-lg text-slate-500 tracking-wider">
         MÓDULO TAPSD &bull; ARCADE EDITION
     </footer>
@@ -223,171 +209,88 @@
         }
 
         const questionBank = [
-            {
-                q: "A la hora de planificar actividades para un usuario, debemos entender a la persona como un ser multidimensional que comprende las siguientes esferas:",
-                options: ["Biológica, psíquica y social.", "Únicamente física y económica.", "Motora, intelectual y laboral.", "Genética, clínica y farmacológica."],
-                correct: 0
-            },
-            {
-                q: "Cuando en un centro residencial se programan actividades dirigidas a despertar las capacidades motrices y los sentidos, nos referimos a:",
-                options: ["Cuidados de estimulación.", "Cuidados de compensación.", "Cuidados de sosiego.", "Cuidados de autoimagen."],
-                correct: 0
-            },
-            {
-                q: "Si un profesional aplica intervenciones orientadas a calmar el dolor y aportar serenidad y liberación de tensiones al usuario, está prestando:",
-                options: ["Cuidados de sosiego.", "Cuidados de estimulación.", "Cuidados de conservación.", "Cuidados de confirmación."],
-                correct: 0
-            },
-            {
-                q: "Cuando realizamos actividades asistenciales destinadas a suplir aquellas funciones o capacidades que el usuario no adquirió o perdió, empleamos:",
-                options: ["Cuidados de compensación.", "Cuidados de conservación de la vida.", "Cuidados de estimulación sensorial.", "Cuidados de autoimagen."],
-                correct: 0
-            },
-            {
-                q: "Para mantener las capacidades adquiridas y asegurar la autonomía el mayor tiempo posible en personas dependientes, el tipo de cuidado indicado es:",
-                options: ["Conservación y continuidad de la vida.", "Compensación total de funciones.", "Estimulación psicomotriz infantil.", "Sosiego y alivio del dolor agudo."],
-                correct: 0
-            },
-            {
-                q: "Al adecuar el domicilio de una persona mayor con movilidad reducida, ¿cómo deben ser preferiblemente los suelos para prevenir accidentes?",
-                options: ["Antideslizantes, evitando alfombras u objetos que entorpezcan el paso.", "De parqué encerado muy brillante y pulido.", "Cubiertos completamente de alfombras gruesas.", "De moqueta suelta sin fijar al suelo."],
-                correct: 0
-            },
-            {
-                q: "Respecto a la climatización y regulación de la temperatura en la vivienda de un usuario dependiente, se desaconseja expresamente el uso de:",
-                options: ["Braseros tradicionales, debido al riesgo de monóxido de carbono.", "Sistemas de aire acondicionado digitales.", "Radiadores de aceite eléctricos homologados.", "Humidificadores ambientales."],
-                correct: 0
-            },
-            {
-                q: "En relación con las condiciones de iluminación en el hogar de un usuario anciano, esta debe asegurar que:",
-                options: ["Exista luz suficiente para ver sin forzar la vista y interruptores accesibles.", "Las bombillas sean de intensidad muy baja.", "Los interruptores estén solo en el exterior.", "Se dependa exclusivamente de la luz natural."],
-                correct: 0
-            },
-            {
-                q: "Dentro de las estrategias para promover los autocuidados en los usuarios, una de las líneas clave consiste en:",
-                options: ["Desarrollar la autoestima y favorecer la responsabilidad individual y comunitaria.", "Imponer normas estrictas obligatorias.", "Sustituir por completo al usuario en sus decisiones.", "Evitar cualquier participación social."],
-                correct: 0
-            },
-            {
-                q: "Cuál es una de las herramientas fundamentales que utiliza el profesional de atención sociosanitaria para educar y orientar los hábitos de autocuidado:",
-                options: ["La educación para la salud.", "La restricción farmacológica nocturna.", "El aislamiento preventivo domiciliario.", "La simplificación administrativa."],
-                correct: 0
-            }
+            { q: "A la hora de planificar actividades para un usuario, debemos entender a la persona como un ser multidimensional que comprende las siguientes esferas:", options: ["Biológica, psíquica y social.", "Únicamente física y económica.", "Motora, intelectual y laboral.", "Genética, clínica y farmacológica."], correct: 0 },
+            { q: "Cuando en un centro residencial se programan actividades dirigidas a despertar las capacidades motrices y los sentidos, nos referimos a:", options: ["Cuidados de estimulación.", "Cuidados de compensación.", "Cuidados de sosiego.", "Cuidados de autoimage."], correct: 0 },
+            { q: "Si un profesional aplica intervenciones orientadas a calmar el dolor y aportar serenidad y liberación de tensiones al usuario, está prestando:", options: ["Cuidados de sosiego.", "Cuidados de estimulación.", "Cuidados de conservación.", "Cuidados de confirmación."], correct: 0 },
+            { q: "Cuando realizamos actividades asistenciales destinadas a suplir aquellas funciones o capacidades que el usuario no adquirió o perdió, empleamos:", options: ["Cuidados de compensación.", "Cuidados de conservación de la vida.", "Cuidados de estimulación sensorial.", "Cuidados de autoimagen."], correct: 0 },
+            { q: "Para mantener las capacidades adquiridas y asegurar la autonomía el mayor tiempo posible en personas dependientes, el tipo de cuidado indicado es:", options: ["Conservación y continuidad de la vida.", "Compensación total de funciones.", "Estimulación psicomotriz infantil.", "Sosiego y alivio del dolor agudo."], correct: 0 },
+            { q: "Al adecuar el domicilio de una persona mayor con movilidad reducida, ¿cómo deben ser preferiblemente los suelos para prevenir accidentes?", options: ["Antideslizantes, evitando alfombras u objetos que entorpezcan el paso.", "De parqué encerado muy brillante y pulido.", "Cubiertos completamente de alfombras gruesas.", "De moqueta suelta sin fijar al suelo."], correct: 0 },
+            { q: "Respecto a la climatización y regulación de la temperatura en la vivienda de un usuario dependiente, se desaconseja expresamente el uso de:", options: ["Braseros tradicionales, debido al riesgo de monóxido de carbono.", "Sistemas de aire acondicionado digitales.", "Radiadores de aceite eléctricos homologados.", "Humidificadores ambientales."], correct: 0 },
+            { q: "En relación con las condiciones de iluminación en el hogar de un usuario anciano, esta debe asegurar que:", options: ["Exista luz suficiente para ver sin forzar la vista y interruptores accesibles.", "Las bombillas sean de intensidad muy baja.", "Los interruptores estén solo en el exterior.", "Se dependa exclusivamente de la luz natural."], correct: 0 },
+            { q: "Dentro de las estrategias para promover los autocuidados en los usuarios, una de las líneas clave consiste en:", options: ["Desarrollar la autoestima y favorecer la responsabilidad individual y comunitaria.", "Imponer normas estrictas obligatorias.", "Sustituir por completo al usuario en sus decisiones.", "Evitar cualquier participación social."], correct: 0 },
+            { q: "Cuál es una de las herramientas fundamentales que utiliza el profesional de atención sociosanitaria para educar y orientar los hábitos de autocuidado:", options: ["La educación para la salud (EpS).", "La restricción farmacológica directa.", "El aislamiento preventivo domiciliario.", "La delegación absoluta de responsabilidades."], correct: 0 }
         ];
 
-        let gameQuestions = [];
-        let currentMilestone = 0;
-        let selectedOptionIndex = null;
-        let currentActiveQuestion = null;
-        let gameActive = false;
-
-        // Laberinto 11x11 y 10 puntos exactos distribuidos
-        const mazeLayout = [
+        // 1 = Pared, 0 = Camino libre, 2 = Hito
+        const initialMap = [
             [1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,1,0,0,0,0,0,1],
+            [1,2,0,0,1,0,0,0,0,2,1],
             [1,0,1,0,1,0,1,1,1,0,1],
-            [1,0,1,0,0,0,1,0,0,0,1],
-            [1,0,1,1,1,0,1,0,1,1,1],
-            [1,0,0,0,1,0,0,0,0,0,1],
-            [1,1,1,0,1,1,1,1,1,0,1],
-            [1,0,0,0,0,0,0,0,1,0,1],
-            [1,0,1,1,1,1,1,0,1,0,1],
-            [1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,1,0,0,0,1,2,1,0,1],
+            [1,0,1,1,1,0,1,1,1,0,1],
+            [1,0,0,0,2,0,0,0,0,0,1],
+            [1,0,1,1,1,1,1,0,1,1,1],
+            [1,2,0,0,0,0,0,0,2,0,1],
+            [1,1,1,0,1,1,1,0,1,1,1],
+            [1,2,0,0,0,0,0,0,0,2,1],
             [1,1,1,1,1,1,1,1,1,1,1]
         ];
 
-        // 10 coordenadas exactas de los hitos
-        const milestoneCoords = [
-            [1, 1], [1, 2], [1, 3], [1, 5], [1, 9],
-            [3, 3], [3, 7], [5, 1], [7, 1], [9, 9]
-        ];
-
-        // Posiciones de la enfermera y del enemigo (virus)
+        let mapData = [];
         let nursePos = { r: 1, c: 1 };
-        let enemyPos = { r: 9, c: 1 };
-        let enemyInterval = null;
-
-        function initGameData() {
-            const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
-            gameQuestions = shuffled.slice(0, 10);
-            currentMilestone = 0;
-            nursePos = { r: 1, c: 1 };
-            enemyPos = { r: 9, c: 1 };
-        }
-
-        function goToScreen1() {
-            stopEnemy();
-            hideAllScreens();
-            document.getElementById('screen-1').classList.remove('hidden');
-            document.getElementById('header-status').innerText = "TAPSD ARCADE";
-        }
+        let virusPos = { r: 9, c: 1 };
+        let score = 0;
+        let gameActive = false;
+        let selectedOption = null;
+        let currentQuestionIndex = 0;
+        let virusInterval = null;
 
         function goToScreen2() {
-            hideAllScreens();
+            document.getElementById('screen-1').classList.add('hidden');
             document.getElementById('screen-2').classList.remove('hidden');
-            document.getElementById('header-status').innerText = "MISIÓN 0";
         }
 
         function goToScreen3() {
-            hideAllScreens();
-            initGameData();
-            document.getElementById('screen-3').classList.remove('hidden');
-            gameActive = true;
-            renderMaze();
-            startEnemy();
-            document.getElementById('header-status').innerText = "LABERINTO FASE";
-        }
-
-        function goToScreen4() {
-            stopEnemy();
-            gameActive = false;
-            hideAllScreens();
-            document.getElementById('screen-4').classList.remove('hidden');
-            document.getElementById('header-status').innerText = "¡VICTORIA!";
-        }
-
-        function hideAllScreens() {
-            document.getElementById('screen-1').classList.add('hidden');
             document.getElementById('screen-2').classList.add('hidden');
-            document.getElementById('screen-3').classList.add('hidden');
-            document.getElementById('screen-4').classList.add('hidden');
+            document.getElementById('screen-3').classList.remove('hidden');
+            initGame();
         }
 
-        function renderMaze() {
-            document.getElementById('maze-view').classList.remove('hidden');
+        function initGame() {
+            mapData = JSON.parse(JSON.stringify(initialMap));
+            nursePos = { r: 1, c: 1 };
+            virusPos = { r: 9, c: 1 };
+            score = 0;
+            gameActive = true;
             document.getElementById('question-panel').classList.add('hidden');
-            document.getElementById('maze-progress').innerText = `HITOS: ${currentMilestone} / 10`;
+            document.getElementById('maze-view').classList.remove('hidden');
+            updateMazeUI();
+            
+            if (virusInterval) clearInterval(virusInterval);
+            virusInterval = setInterval(moveVirus, 1200);
 
+            window.addEventListener('keydown', handleKeyInput);
+        }
+
+        function updateMazeUI() {
             const board = document.getElementById('pacman-board');
             board.innerHTML = '';
+            document.getElementById('maze-progress').innerText = `HITOS: ${score} / 10`;
 
-            for (let r = 0; r < mazeLayout.length; r++) {
-                for (let c = 0; c < mazeLayout[r].length; c++) {
+            for (let r = 0; r < mapData.length; r++) {
+                for (let c = 0; c < mapData[r].length; c++) {
                     const cell = document.createElement('div');
-                    cell.className = "maze-cell ";
-
-                    if (mazeLayout[r][c] === 1) {
-                        cell.className += "wall";
+                    cell.className = 'maze-cell';
+                    if (mapData[r][c] === 1) {
+                        cell.classList.add('wall');
                     } else {
-                        cell.className += "path";
-                        
-                        // Si está la enfermera
-                        if (nursePos.r === r && nursePos.c === c) {
-                            cell.innerHTML = `<span class="text-xl">👩‍⚕️</span>`;
-                        } 
-                        // Si está el enemigo virus
-                        else if (enemyPos.r === r && enemyPos.c === c) {
-                            cell.innerHTML = `<span class="text-xl animate-pulse">👾</span>`;
-                        } else {
-                            // Comprobar si es un hito pendiente o completado
-                            const pointIndex = milestoneCoords.findIndex(coord => coord[0] === r && coord[1] === c);
-                            if (pointIndex !== -1) {
-                                if (pointIndex < currentMilestone) {
-                                    cell.innerHTML = `<span class="text-xs text-green-500">✔️</span>`;
-                                } else {
-                                    cell.innerHTML = `<span class="w-2.5 h-2.5 bg-yellow-400 rounded-full inline-block animate-ping"></span>`;
-                                }
-                            }
+                        cell.classList.add('path');
+                        if (r === nursePos.r && c === nursePos.c) {
+                            cell.innerHTML = '👩‍⚕️';
+                        } else if (r === virusPos.r && c === virusPos.c) {
+                            cell.innerHTML = '👾';
+                        } else if (mapData[r][c] === 2) {
+                            cell.innerHTML = '🟡';
                         }
                     }
                     board.appendChild(cell);
@@ -395,10 +298,8 @@
             }
         }
 
-        // Control por teclado (Flechas de dirección)
-        window.addEventListener('keydown', (e) => {
+        function handleKeyInput(e) {
             if (!gameActive) return;
-            
             let newR = nursePos.r;
             let newC = nursePos.c;
 
@@ -410,145 +311,137 @@
 
             e.preventDefault();
 
-            // Comprobar límites y paredes
-            if (newR >= 0 && newR < mazeLayout.length && newC >= 0 && newC < mazeLayout[0].length) {
-                if (mazeLayout[newR][newC] !== 1) {
-                    nursePos.r = newR;
-                    nursePos.c = newC;
-                    checkCellInteraction();
-                    renderMaze();
-                }
+            if (mapData[newR] && mapData[newR][newC] !== undefined && mapData[newR][newC] !== 1) {
+                nursePos.r = newR;
+                nursePos.c = newC;
+                checkCellInteraction();
+                updateMazeUI();
             }
-        });
+        }
 
-        function checkCellInteraction() {
-            // Comprobar si la enfermera cae en el hito actual
-            const currentTargetCoord = milestoneCoords[currentMilestone];
-            if (currentTargetCoord && nursePos.r === currentTargetCoord[0] && nursePos.c === currentTargetCoord[1]) {
-                stopEnemy();
-                openQuestion(currentMilestone);
+        function moveVirus() {
+            if (!gameActive) return;
+
+            let rowDiff = nursePos.r - virusPos.r;
+            let colDiff = nursePos.c - virusPos.c;
+
+            let possibleMoves = [];
+            if (rowDiff > 0) possibleMoves.push({ r: virusPos.r + 1, c: virusPos.c });
+            if (rowDiff < 0) possibleMoves.push({ r: virusPos.r - 1, c: virusPos.c });
+            if (colDiff > 0) possibleMoves.push({ r: virusPos.r, c: virusPos.c + 1 });
+            if (colDiff < 0) possibleMoves.push({ r: virusPos.r, c: virusPos.c - 1 });
+
+            // Añadir movimientos aleatorios como alternativas si choca con pared
+            let allDirs = [
+                { r: virusPos.r + 1, c: virusPos.c },
+                { r: virusPos.r - 1, c: virusPos.c },
+                { r: virusPos.r, c: virusPos.c + 1 },
+                { r: virusPos.r, c: virusPos.c - 1 }
+            ];
+            allDirs.forEach(d => {
+                if (mapData[d.r] && mapData[d.r][d.c] !== 1) {
+                    possibleMoves.push(d);
+                }
+            });
+
+            for (let move of possibleMoves) {
+                if (mapData[move.r] && mapData[move.r][move.c] !== 1) {
+                    virusPos.r = move.r;
+                    virusPos.c = move.c;
+                    break;
+                }
             }
 
             // Comprobar si el virus atrapa a la enfermera
-            if (nursePos.r === enemyPos.r && nursePos.c === enemyPos.c) {
-                const feedback = document.getElementById('maze-status-text');
-                feedback.innerText = "> ¡El virus te atrapó! Vuelves al inicio.";
-                feedback.className = "font-pixel text-lg text-red-400 animate-bounce";
+            if (virusPos.r === nursePos.r && virusPos.c === nursePos.c) {
+                alert("¡El virus te ha atrapado! Vuelves al inicio del laberinto.");
                 nursePos = { r: 1, c: 1 };
-                setTimeout(() => {
-                    feedback.innerText = "> ¡Usa ⬅️ ➡️ ⬆️ ⬇️ para moverte!";
-                    feedback.className = "font-pixel text-lg text-yellow-400";
-                }, 2000);
+            }
+
+            updateMazeUI();
+        }
+
+        function checkCellInteraction() {
+            if (mapData[nursePos.r][nursePos.c] === 2) {
+                mapData[nursePos.r][nursePos.c] = 0; // Consumir hito
+                gameActive = false; // Pausar juego para pregunta
+                window.removeEventListener('keydown', handleKeyInput);
+                if (virusInterval) clearInterval(virusInterval);
+                triggerQuestion();
             }
         }
 
-        function startEnemy() {
-            stopEnemy();
-            enemyInterval = setInterval(() => {
-                if (!gameActive) return;
-                
-                // Movimiento básico del virus hacia la enfermera
-                let dr = 0, dc = 0;
-                if (enemyPos.r < nursePos.r) dr = 1;
-                else if (enemyPos.r > nursePos.r) dr = -1;
-                else if (enemyPos.c < nursePos.c) dc = 1;
-                else if (enemyPos.c > nursePos.c) dc = -1;
-
-                let nextR = enemyPos.r + dr;
-                let nextC = enemyPos.c + dc;
-
-                if (mazeLayout[nextR] && mazeLayout[nextR][nextC] !== 1) {
-                    enemyPos.r = nextR;
-                    enemyPos.c = nextC;
-                }
-
-                checkCellInteraction();
-                renderMaze();
-            }, 1200); // Velocidad del enemigo
-        }
-
-        function stopEnemy() {
-            if (enemyInterval) clearInterval(enemyInterval);
-        }
-
-        function openQuestion(index) {
-            currentActiveQuestion = gameQuestions[index];
-            selectedOptionIndex = null;
-
+        function triggerQuestion() {
             document.getElementById('maze-view').classList.add('hidden');
             document.getElementById('question-panel').classList.remove('hidden');
+
+            currentQuestionIndex = score % questionBank.length;
+            const qData = questionBank[currentQuestionIndex];
+
+            document.getElementById('question-counter-label').innerText = `HITO ALCANZADO: ${score + 1} / 10`;
+            document.getElementById('question-text').innerText = qData.q;
+
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+            selectedOption = null;
             document.getElementById('submit-ans-btn').classList.add('hidden');
 
-            document.getElementById('question-counter-label').innerText = `PREGUNTA ${index + 1} / 10`;
-            document.getElementById('question-text').innerText = currentActiveQuestion.q;
-
-            let indexedOpts = currentActiveQuestion.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
-            indexedOpts.sort(() => Math.random() - 0.5);
-
-            const optContainer = document.getElementById('options-container');
-            optContainer.innerHTML = '';
-
-            indexedOpts.forEach((item) => {
+            qData.options.forEach((opt, index) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full text-left font-pixel text-xl sm:text-2xl p-4 rounded-lg border-2 border-cyan-800 bg-black/60 text-cyan-300 hover:border-yellow-400 hover:bg-cyan-950/80 hover:text-yellow-300 transition cursor-pointer flex items-center justify-between shadow";
-                btn.innerHTML = `<span>&gt; ${item.text}</span>`;
-                btn.onclick = () => selectOption(btn, item.originalIndex);
-                optContainer.appendChild(btn);
+                btn.className = "w-full text-left font-pixel text-xl sm:text-2xl p-4 rounded bg-cyan-950/60 border border-cyan-700 hover:border-yellow-400 hover:bg-cyan-900 text-cyan-100 transition cursor-pointer";
+                btn.innerText = `${String.fromCharCode(65 + index)}. ${opt}`;
+                btn.onclick = () => selectOption(index, btn);
+                optsContainer.appendChild(btn);
             });
         }
 
-        function selectOption(btnElement, origIdx) {
+        function selectOption(index, btnElement) {
             const allBtns = document.getElementById('options-container').children;
             for (let b of allBtns) {
-                b.classList.remove('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
+                b.classList.remove('border-yellow-400', 'bg-yellow-950/40');
+                b.classList.add('border-cyan-700', 'bg-cyan-950/60');
             }
-            btnElement.classList.add('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
-            selectedOptionIndex = origIdx;
+            btnElement.classList.remove('border-cyan-700', 'bg-cyan-950/60');
+            btnElement.classList.add('border-yellow-400', 'bg-yellow-950/40');
+            selectedOption = index;
             document.getElementById('submit-ans-btn').classList.remove('hidden');
         }
 
         function checkAnswer() {
-            if (selectedOptionIndex === null) return;
+            if (selectedOption === null) return;
+            const qData = questionBank[currentQuestionIndex];
 
-            if (selectedOptionIndex === currentActiveQuestion.correct) {
-                currentMilestone++;
-                if (currentMilestone >= 10) {
-                    goToScreen4();
+            if (selectedOption === qData.correct) {
+                score++;
+                alert("¡Respuesta Correcta! Sumas 1 hito.");
+                document.getElementById('question-panel').classList.add('hidden');
+
+                if (score >= 10) {
+                    document.getElementById('screen-3').classList.add('hidden');
+                    document.getElementById('screen-4').classList.remove('hidden');
                 } else {
-                    document.getElementById('question-panel').classList.add('hidden');
                     document.getElementById('maze-view').classList.remove('hidden');
-                    renderMaze();
-                    startEnemy();
-                    
-                    const feedback = document.getElementById('maze-status-text');
-                    feedback.innerText = "> ¡Enhorabuena, es correcto!";
-                    feedback.className = "font-pixel text-lg text-green-400 animate-bounce";
-                    setTimeout(() => {
-                        feedback.innerText = "> ¡Usa ⬅️ ➡️ ⬆️ ⬇️ para moverte al siguiente hito!";
-                        feedback.className = "font-pixel text-lg text-yellow-400";
-                    }, 3000);
+                    gameActive = true;
+                    window.addEventListener('keydown', handleKeyInput);
+                    virusInterval = setInterval(moveVirus, 1200);
+                    updateMazeUI();
                 }
             } else {
+                alert("Respuesta incorrecta. Sigue intentándolo en el laberinto.");
                 document.getElementById('question-panel').classList.add('hidden');
                 document.getElementById('maze-view').classList.remove('hidden');
-                renderMaze();
-                startEnemy();
-                
-                const feedback = document.getElementById('maze-status-text');
-                feedback.innerText = "> ¡Lo siento, no es correcto! Prueba de nuevo.";
-                feedback.className = "font-pixel text-lg text-red-400 animate-bounce";
-                setTimeout(() => {
-                    feedback.innerText = "> ¡Usa ⬅️ ➡️ ⬆️ ⬇️ para moverte!";
-                    feedback.className = "font-pixel text-lg text-yellow-400";
-                }, 3000);
+                gameActive = true;
+                window.addEventListener('keydown', handleKeyInput);
+                virusInterval = setInterval(moveVirus, 1200);
+                updateMazeUI();
             }
         }
 
         function restartGame() {
-            goToScreen1();
+            document.getElementById('screen-4').classList.add('hidden');
+            document.getElementById('screen-3').classList.remove('hidden');
+            initGame();
         }
-
-        window.onload = goToScreen1;
     </script>
 </body>
 </html>
