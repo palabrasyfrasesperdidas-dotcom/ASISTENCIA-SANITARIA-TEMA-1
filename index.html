@@ -67,9 +67,20 @@
             </div>
         </div>
 
-        <!-- PANTALLA 3 -->
+        <!-- PANTALLA 3: LABERINTO / JUEGO -->
         <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl space-y-4">
-            <div id="quiz-container" class="space-y-6">
+            <div id="maze-container" class="space-y-4 text-center">
+                <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
+                    <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
+                    <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITOS: 0 / 5</span>
+                </div>
+                <p class="font-pixel text-lg text-cyan-200">¡La enfermera avanza hacia el conocimiento! Prepárate para las cuestiones del tema.</p>
+                <div class="py-4">
+                    <button onclick="startQuizFromMaze()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn">ACCEDER A LOS HITOS &gt;&gt;</button>
+                </div>
+            </div>
+
+            <div id="quiz-container" class="space-y-6 hidden">
                 <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
                     <span class="text-yellow-300" id="q-counter">PREGUNTA 1 / 5</span>
                     <span class="text-cyan-400">MODO EXAMEN</span>
@@ -111,6 +122,11 @@
         function goToScreen3() {
             document.getElementById('screen-2').classList.add('hidden');
             document.getElementById('screen-3').classList.remove('hidden');
+        }
+
+        function startQuizFromMaze() {
+            document.getElementById('maze-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
             loadQuestion();
         }
 
@@ -156,6 +172,7 @@
         function checkAnswer() {
             if(selectedOpt === questions[currentQ].correct) {
                 currentQ++;
+                document.getElementById('maze-progress').innerText = `HITOS: ${currentQ} / 5`;
                 loadQuestion();
             } else {
                 alert("Incorrecto. ¡Prueba otra vez!");
