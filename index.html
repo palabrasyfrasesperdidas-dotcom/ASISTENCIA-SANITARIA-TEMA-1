@@ -84,6 +84,7 @@
             padding: 0 10px;
         }
 
+        /* Contenedor del Personaje Pixel Art 80s con Animación de Movimiento */
         .arcade-image-container {
             position: relative;
             width: 100%;
@@ -100,30 +101,37 @@
             justify-content: center;
         }
 
-        /* Ilustración / Animación CSS de la Enfermera 80s */
-        .nurse-avatar {
-            width: 120px;
-            height: 140px;
+        .nurse-pixel-sprite {
+            width: 80px;
+            height: 90px;
             position: relative;
-            animation: nurseBounce 1s ease-in-out infinite alternate;
+            image-rendering: pixelated;
+            animation: arcadeWalk 2.5s ease-in-out infinite alternate;
         }
-        .nurse-head {
-            width: 60px; height: 60px; background: #ffdbac; border-radius: 50%;
-            position: absolute; top: 10px; left: 30px;
+
+        /* Sprite puramente hecho con CSS estilo Pixel Art de los 80s */
+        .pixel-cap {
+            position: absolute; top: 0px; left: 20px; width: 40px; height: 20px;
+            background: #fff; border-top: 4px solid #ff3366;
         }
-        .nurse-cap {
-            width: 40px; height: 25px; background: #fff; border-radius: 5px 5px 0 0;
-            position: absolute; top: 0px; left: 40px;
-            box-shadow: inset 0 -8px 0 #ff3366;
+        .pixel-head {
+            position: absolute; top: 18px; left: 22px; width: 36px; height: 30px;
+            background: #ffdbac;
         }
-        .nurse-body {
-            width: 80px; height: 70px; background: #fff; border-radius: 15px 15px 5px 5px;
-            position: absolute; top: 65px; left: 20px;
-            box-shadow: inset 0 -15px 0 #00d2ff;
+        .pixel-body {
+            position: absolute; top: 46px; left: 16px; width: 48px; height: 35px;
+            background: #fff; box-shadow: inset 0 -8px 0 #00d2ff;
         }
-        @keyframes nurseBounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-8px); }
+        .pixel-legs {
+            position: absolute; top: 78px; left: 22px; width: 36px; height: 12px;
+            background: #333;
+        }
+
+        @keyframes arcadeWalk {
+            0% { transform: translateX(-35px) scaleX(1); }
+            50% { transform: translateX(35px) scaleX(1); }
+            51% { transform: translateX(35px) scaleX(-1); }
+            100% { transform: translateX(-35px) scaleX(-1); }
         }
 
         .press-start-text {
@@ -142,6 +150,68 @@
         @keyframes blink {
             0%, 50% { opacity: 1; }
             51%, 100% { opacity: 0.2; }
+        }
+
+        /* Ventana Intermedia de Historia / Relato */
+        #story-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(8, 8, 12, 0.96);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 150;
+            padding: 20px;
+        }
+
+        .story-box {
+            background: #12121c;
+            border: 3px solid #00ffc8;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: 0 0 35px rgba(0, 255, 200, 0.4);
+            text-align: center;
+        }
+
+        .story-box h3 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.8rem;
+            color: #ffcc00;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .story-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #fff;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .story-text span {
+            color: #00ffc8;
+            font-weight: 600;
+        }
+
+        .action-btn {
+            font-family: 'Press Start 2P', monospace;
+            background: #00ffc8;
+            color: #000;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            box-shadow: 0 0 15px rgba(0, 255, 200, 0.6);
+            transition: transform 0.2s;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+            background: #ffcc00;
         }
 
         /* Contenedor del Juego Principal */
@@ -278,38 +348,22 @@
             margin-bottom: 30px;
             color: #fff;
         }
-
-        .restart-btn {
-            font-family: 'Press Start 2P', monospace;
-            background: #ffcc00;
-            color: #000;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
-            transition: transform 0.2s;
-        }
-
-        .restart-btn:hover {
-            transform: scale(1.05);
-        }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla de Inicio Estilo Arcade -->
-    <div id="arcade-splash" onclick="startGame()">
+    <!-- Pantalla de Inicio Arcade -->
+    <div id="arcade-splash" onclick="openStory()">
         <div class="arcade-splash-content">
             <div class="arcade-title-pixel">TAPSD: RETO SOCIOSANITARIO</div>
             <div class="arcade-subtitle-quote">"Quien quiere, puede, y quien quiere, debe"</div>
             
             <div class="arcade-image-container">
-                <div class="nurse-avatar">
-                    <div class="nurse-cap"></div>
-                    <div class="nurse-head"></div>
-                    <div class="nurse-body"></div>
+                <div class="nurse-pixel-sprite">
+                    <div class="pixel-cap"></div>
+                    <div class="pixel-head"></div>
+                    <div class="pixel-body"></div>
+                    <div class="pixel-legs"></div>
                 </div>
             </div>
 
@@ -317,14 +371,25 @@
         </div>
     </div>
 
+    <!-- Ventana Intermedia con el Relato -->
+    <div id="story-modal">
+        <div class="story-box">
+            <h3>MISIÓN TAPSD</h3>
+            <div class="story-text">
+                Estás estudiando para ser una <span>Técnico en Atención a Personas Dependientes (TAPSD)</span> y vas a demostrar que es cierto el lema que dice: <span>"Quien quiere, puede, y quien quiere, debe"</span>.<br><br>¿Estás preparada para el reto?
+            </div>
+            <button class="action-btn" onclick="startGame()">CONTINUAR</button>
+        </div>
+    </div>
+
     <!-- Contenedor del Juego Principal -->
     <div id="game-container">
         <div class="game-header">
             <span id="score-board">OBJETIVOS: 0 / 6</span>
-            <span>NIVEL 1: ARCADE</span>
+            <span>NIVEL 1: LABERINTO</span>
         </div>
         <canvas id="gameCanvas" width="480" height="480"></canvas>
-        <div class="instructions-hud">Usa las FLECHAS del teclado o desliza para mover a la Enfermera</div>
+        <div class="instructions-hud">Usa las FLECHAS del teclado para guiar a la Enfermera por el laberinto</div>
     </div>
 
     <!-- Modal de Preguntas del Tema 1 -->
@@ -341,11 +406,12 @@
     <div id="victory-screen">
         <h2>¡ENHORABUENA!</h2>
         <p>¡Has superado con éxito todos los retos del Tema 1 y demostrado tu valía como TAPSD!</p>
-        <button class="restart-btn" onclick="location.reload()">JUGAR OTRA VEZ</button>
+        <button class="action-btn" onclick="location.reload()">JUGAR OTRA VEZ</button>
     </div>
 
     <script>
         const splash = document.getElementById('arcade-splash');
+        const storyModal = document.getElementById('story-modal');
         const gameContainer = document.getElementById('game-container');
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -361,17 +427,17 @@
             x: 40,
             y: 40,
             size: 20,
-            speed: 3,
+            speed: 2.8,
             dx: 0,
             dy: 0
         };
 
-        // Fantasma dinámico (Alta velocidad para dificultad)
+        // Fantasma enemigo ajustado a velocidad moderada para permitir juego fluido
         let ghost = {
             x: 400,
             y: 400,
             size: 20,
-            speed: 2.3
+            speed: 1.15
         };
 
         // 6 Objetivos distribuidos por el laberinto
@@ -384,22 +450,22 @@
             { x: 380, y: 400, collected: false, id: 5 }
         ];
 
-        // Obstáculos del laberinto (Paredes)
+        // Estructura de laberinto con pasillos amplios y accesibles
         const walls = [
             { x: 0, y: 0, w: 480, h: 20 },
             { x: 0, y: 460, w: 480, h: 20 },
             { x: 0, y: 0, w: 20, h: 480 },
             { x: 460, y: 0, w: 20, h: 480 },
-            { x: 60, y: 60, w: 120, h: 40 },
-            { x: 240, y: 60, w: 180, h: 40 },
-            { x: 60, y: 160, w: 40, h: 160 },
-            { x: 160, y: 140, w: 160, h: 40 },
-            { x: 380, y: 160, w: 40, h: 160 },
-            { x: 60, y: 360, w: 140, h: 40 },
-            { x: 260, y: 340, w: 160, h: 40 }
+            { x: 70, y: 70, w: 100, h: 30 },
+            { x: 230, y: 70, w: 180, h: 30 },
+            { x: 70, y: 150, w: 30, h: 180 },
+            { x: 150, y: 150, w: 180, h: 30 },
+            { x: 370, y: 150, w: 30, h: 180 },
+            { x: 70, y: 380, w: 130, h: 30 },
+            { x: 250, y: 350, w: 150, h: 30 }
         ];
 
-        // Preguntas basadas estrictamente en el Tema 1 revisado
+        // Preguntas basadas estrictamente en el Tema 1
         const questions = [
             {
                 title: "PREGUNTA 1: Plan de Cuidados",
@@ -441,14 +507,22 @@
 
         let activeQuestionIndex = null;
 
-        function startGame() {
+        function openStory() {
             splash.style.opacity = '0';
             setTimeout(() => {
                 splash.style.display = 'none';
+                storyModal.style.display = 'flex';
+            }, 500);
+        }
+
+        function startGame() {
+            storyModal.style.opacity = '0';
+            setTimeout(() => {
+                storyModal.style.display = 'none';
                 gameContainer.style.display = 'flex';
                 gameStarted = true;
                 requestAnimationFrame(updateGame);
-            }, 500);
+            }, 300);
         }
 
         // Controles de Teclado
@@ -486,7 +560,7 @@
                 if (!checkWallCollision(nextX, player.y, player.size)) player.x = nextX;
                 if (!checkWallCollision(player.x, nextY, player.size)) player.y = nextY;
 
-                // Movimiento dinámico del fantasma hacia el jugador
+                // Movimiento equilibrado del fantasma (velocidad ajustada)
                 if (ghost.x < player.x) ghost.x += ghost.speed;
                 if (ghost.x > player.x) ghost.x -= ghost.speed;
                 if (ghost.y < player.y) ghost.y += ghost.speed;
@@ -511,7 +585,7 @@
         function drawGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Dibujar paredes
+            // Dibujar paredes del laberinto
             ctx.fillStyle = '#1e1e3f';
             for (let w of walls) {
                 ctx.fillRect(w.x, w.y, w.w, w.h);
@@ -536,7 +610,6 @@
             // Dibujar Enfermera (Jugador)
             ctx.fillStyle = '#00ffc8';
             ctx.fillRect(player.x, player.y, player.size, player.size);
-            // Gorro de enfermera miniatura en canvas
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(player.x + 4, player.y - 4, 12, 6);
             ctx.fillStyle = '#ff3366';
