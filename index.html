@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAPSD Arcade Edition - Tema 1: Prácticas Sociosanitarias</title>
+    <title>TAPSD Arcade Edition - Tema 1: Práctica Sociosanitaria</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Press Start 2P para la estética Arcade Retro -->
+    <!-- Google Fonts: Press Start 2P y VT323 para estética retro -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
         .font-arcade {
@@ -26,82 +26,173 @@
             box-shadow: 0 0 15px rgba(34, 211, 238, 0.4), inset 0 0 15px rgba(34, 211, 238, 0.2);
         }
         .arcade-glow-btn:hover {
-            box-shadow: 0 0 12px rgba(250, 204, 21, 0.8);
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.9);
+        }
+        @keyframes nurseWalk {
+            0% { transform: translateX(0px); }
+            50% { transform: translateX(25px) translateY(-3px); }
+            100% { transform: translateX(50px); }
+        }
+        .nurse-anim {
+            animation: nurseWalk 1.5s infinite alternate ease-in-out;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between text-cyan-400 selection:bg-yellow-400 selection:text-black p-4">
 
     <!-- Audio de fondo en bucle -->
-    <audio autoplay loop hidden>
+    <audio id="bg-audio" autoplay loop hidden>
         <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
-    <!-- Header Arcade -->
-    <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex flex-col sm:flex-row justify-between items-center gap-4 arcade-glow">
+    <!-- HEADER GENERAL -->
+    <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow">
         <div class="flex items-center gap-3">
             <span class="inline-block w-4 h-4 bg-yellow-400 animate-pulse"></span>
             <h1 class="font-arcade text-xs sm:text-sm tracking-wider text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
         </div>
-        <div id="progress-indicator" class="font-pixel text-xl sm:text-2xl text-cyan-300 bg-cyan-950/60 px-4 py-1 border border-cyan-700 rounded">
-            FASE 1 / 10
+        <div id="header-status" class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">
+            TAPSD ARCADE
         </div>
     </header>
 
-    <!-- Main Container -->
+    <!-- MAIN CONTAINER (PANTALLAS) -->
     <main class="max-w-3xl w-full mx-auto my-auto py-2">
-        
-        <!-- Card de Pregunta Estilo Consola Retro -->
-        <div id="quiz-card" class="bg-slate-950/90 border-2 border-cyan-500 rounded-xl p-6 sm:p-8 arcade-glow shadow-2xl relative">
-            <div class="absolute -top-3 left-6 bg-black px-2 font-arcade text-[10px] text-cyan-400 border border-cyan-500">
-                PANTALLA DE PREGUNTA
-            </div>
 
-            <div id="question-container" class="mt-2">
-                <h2 id="question-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 mb-6 leading-relaxed tracking-wide">
-                    Cargando datos del sistema...
-                </h2>
-                <div id="options-container" class="space-y-3">
-                    <!-- Opciones generadas dinámicamente -->
+        <!-- ================= PANTALLA 1: INICIO CON ENFERMERA ARCADE ================= -->
+        <div id="screen-1" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-8 text-center arcade-glow shadow-2xl space-y-6">
+            <div class="font-arcade text-xs text-yellow-400 tracking-widest animate-pulse">INSERT COIN TO START</div>
+            
+            <h2 class="font-arcade text-lg sm:text-xl text-cyan-100 leading-relaxed">
+                ATENCIÓN SOCIOSANITARIA<br><span class="text-yellow-300 text-sm">EDICIÓN RETRO ARCADE</span>
+            </h2>
+
+            <!-- Sprite animado de la enfermera -->
+            <div class="py-6 flex justify-center items-center">
+                <div class="nurse-anim bg-cyan-950/80 border-2 border-cyan-400 p-6 rounded-xl flex flex-col items-center shadow-lg">
+                    <span class="text-5xl mb-2">👩‍⚕️💊</span>
+                    <span class="font-pixel text-xl text-yellow-300">&gt; NURSE.EXE READY</span>
                 </div>
             </div>
 
-            <!-- Botón Siguiente -->
-            <div class="mt-8 flex justify-end">
-                <button id="next-btn" onclick="handleNextQuestion()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 transition hidden cursor-pointer arcade-glow-btn">
-                    SIGUIENTE &gt;&gt;
+            <div>
+                <button onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">
+                    EMPEZAR AVENTURA &gt;&gt;
                 </button>
             </div>
         </div>
 
-        <!-- Pantalla de Resultados (Oculta por defecto) -->
-        <div id="result-card" class="bg-slate-950/90 border-2 border-yellow-500 rounded-xl p-8 text-center hidden shadow-2xl">
-            <h2 class="font-arcade text-sm sm:text-base text-yellow-400 mb-4 animate-bounce">¡MISIÓN CUMPLIDA!</h2>
-            <p class="font-pixel text-xl text-slate-300 mb-6">Has superado el test práctico del Tema 1.</p>
-            <div class="font-arcade text-3xl sm:text-4xl text-cyan-300 mb-8 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8" id="score-text">
-                0 / 10
+        <!-- ================= PANTALLA 2: LEMA MOTIVACIONAL ================= -->
+        <div id="screen-2" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6">
+            <div class="font-arcade text-xs text-cyan-400 tracking-widest">MISIÓN 0: PREPARACIÓN</div>
+            
+            <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg">
+                <p class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">
+                    Estudiando para ser una profesional en <span class="text-yellow-300">Atención a Personas Dependientes (TAPSD)</span> y vas a demostrar que es cierto el lema que dice:
+                </p>
+                <p class="font-arcade text-sm sm:text-base text-yellow-400 my-6 tracking-wide bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">
+                    "Quien quiere, puede, y quien quiere, debe"
+                </p>
+                <p class="font-pixel text-2xl text-cyan-200">
+                    ¿Estás preparada para el reto?
+                </p>
             </div>
+
             <div>
-                <button onclick="restartQuiz()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">
-                    JUGAR DE NUEVO
+                <button onclick="goToScreen3()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">
+                    ¡ESTOY PREPARADA! &gt;&gt;
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= PANTALLA 3: LABERINTO TIPO COMECOCOS & PREGUNTAS ================= -->
+        <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl">
+            
+            <!-- Vista de Laberinto / Mapa de Hitos -->
+            <div id="maze-view" class="space-y-6">
+                <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
+                    <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
+                    <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITO 1 / 10</span>
+                </div>
+
+                <p class="font-pixel text-xl text-center text-cyan-200">
+                    Guía a la enfermera a través del laberinto para alcanzar el siguiente hito de conocimiento:
+                </p>
+
+                <!-- Cuadrícula del Laberinto estilo Comecocos -->
+                <div class="bg-black border-2 border-cyan-600 p-4 rounded-xl flex flex-col items-center justify-center gap-4">
+                    <div id="pacman-grid" class="grid grid-cols-5 gap-3 sm:gap-4 my-2">
+                        <!-- Generado por JS -->
+                    </div>
+                    <div class="font-pixel text-lg text-yellow-400 animate-pulse" id="maze-status-text">
+                        &gt; Haz clic en el hito activo para desbloquear la pregunta
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de Pregunta (Se activa al pulsar el hito del laberinto) -->
+            <div id="question-panel" class="hidden space-y-6">
+                <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
+                    <span class="text-yellow-300" id="question-counter-label">PREGUNTA 1 / 10</span>
+                    <span class="text-cyan-400">MODO EXAMEN</span>
+                </div>
+
+                <h2 id="question-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed tracking-wide">
+                    Cargando pregunta...
+                </h2>
+
+                <div id="options-container" class="space-y-3">
+                    <!-- Opciones -->
+                </div>
+
+                <!-- Feedback de error (Upss) -->
+                <div id="error-feedback" class="hidden bg-red-950/80 border-2 border-red-500 p-4 rounded-lg text-center animate-bounce">
+                    <p class="font-arcade text-xs text-red-300 mb-2">¡UPSS LO SIENTO!</p>
+                    <p class="font-pixel text-xl text-white">Vuelve a intentarlo en el laberinto.</p>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                    <button id="submit-ans-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 transition hidden cursor-pointer arcade-glow-btn">
+                        COMPROBAR &gt;&gt;
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= PANTALLA 4: VICTORIA / FUEGOS ARTIFICIALES ================= -->
+        <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6 relative overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none flex justify-around items-center opacity-30 text-4xl animate-pulse">
+                🎆 ✨ 🎇 🌟 🎆 ✨ 🎇
+            </div>
+            
+            <h2 class="font-arcade text-lg sm:text-2xl text-yellow-400 animate-bounce">¡ENHORABUENA!</h2>
+            
+            <p class="font-pixel text-2xl sm:text-3xl text-cyan-100">
+                ¡Has completado con éxito todos los hitos del laberinto sociosanitario y demostrado que "Quien quiere, puede, y quien quiere, debe"!
+            </p>
+
+            <div class="font-arcade text-3xl text-cyan-300 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8">
+                10 / 10 HITOS
+            </div>
+
+            <div>
+                <button onclick="restartGame()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">
+                    VOLVER A JUGAR &gt;&gt;
                 </button>
             </div>
         </div>
 
     </main>
 
-    <!-- Footer Retro -->
+    <!-- FOOTER -->
     <footer class="text-center py-3 font-pixel text-lg text-slate-500 tracking-wider">
         MÓDULO TAPSD &bull; ARCADE EDITION
     </footer>
 
-    <span class="hidden">
-        <!-- Citations placeholder for compliance if needed -->
-    </span>
-
     <script>
-        // Banco de preguntas práctico basado en todo el Tema 1 (sin autores ni teorías explícitas)
+        // Banco completo de preguntas prácticas (15 preguntas sin autores ni teorías)
         const questionBank = [
             {
                 q: "A la hora de planificar actividades para un usuario, debemos entender a la persona como un ser multidimensional que comprende las siguientes esferas:",
@@ -255,96 +346,156 @@
             }
         ];
 
-        let currentQuizQuestions = [];
-        let currentIndex = 0;
-        let score = 0;
+        let gameQuestions = [];
+        let currentMilestone = 0; // De 0 a 9 (10 hitos)
         let selectedOptionIndex = null;
+        let currentActiveQuestion = null;
 
-        // Inicializar el test seleccionando 10 preguntas aleatorias
-        function initQuiz() {
-            const shuffledBank = [...questionBank].sort(() => Math.random() - 0.5);
-            currentQuizQuestions = shuffledBank.slice(0, 10);
-            currentIndex = 0;
-            score = 0;
-            
-            document.getElementById('quiz-card').classList.remove('hidden');
-            document.getElementById('result-card').classList.add('hidden');
-            loadQuestion();
+        // Iniciar juego seleccionando 10 preguntas aleatorias
+        function initGameData() {
+            const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
+            gameQuestions = shuffled.slice(0, 10);
+            currentMilestone = 0;
         }
 
-        // Cargar pregunta y mezclar aleatoriamente las opciones
-        function loadQuestion() {
-            selectedOptionIndex = null;
-            document.getElementById('next-btn').classList.add('hidden');
-            
-            const qData = currentQuizQuestions[currentIndex];
-            document.getElementById('progress-indicator').innerText = `FASE ${currentIndex + 1} / ${currentQuizQuestions.length}`;
-            document.getElementById('question-text').innerText = qData.q;
+        // Navegación entre pantallas
+        function goToScreen1() {
+            hideAllScreens();
+            document.getElementById('screen-1').classList.remove('hidden');
+            document.getElementById('header-status').innerText = "TAPSD ARCADE";
+        }
 
-            // Mapear opciones con índice original para rastrear la correcta
-            let indexedOptions = qData.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
-            
-            // Aleatorizar el orden de las respuestas en cada carga
-            indexedOptions.sort(() => Math.random() - 0.5);
+        function goToScreen2() {
+            hideAllScreens();
+            document.getElementById('screen-2').classList.remove('hidden');
+            document.getElementById('header-status').innerText = "MISIÓN 0";
+        }
 
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
+        function goToScreen3() {
+            hideAllScreens();
+            initGameData();
+            document.getElementById('screen-3').classList.remove('hidden');
+            renderMaze();
+            document.getElementById('header-status').innerText = "LABERINTO FASE";
+        }
 
-            indexedOptions.forEach((item) => {
-                const button = document.createElement('button');
-                button.className = "w-full text-left font-pixel text-xl sm:text-2xl p-4 rounded-lg border-2 border-cyan-800 bg-black/60 text-cyan-300 hover:border-yellow-400 hover:bg-cyan-950/80 hover:text-yellow-300 transition cursor-pointer flex items-center justify-between shadow";
-                button.innerHTML = `<span>&gt; ${item.text}</span>`;
+        function goToScreen4() {
+            hideAllScreens();
+            document.getElementById('screen-4').classList.remove('hidden');
+            document.getElementById('header-status').innerText = "¡VICTORIA!";
+        }
+
+        function hideAllScreens() {
+            document.getElementById('screen-1').classList.add('hidden');
+            document.getElementById('screen-2').classList.add('hidden');
+            document.getElementById('screen-3').classList.add('hidden');
+            document.getElementById('screen-4').classList.add('hidden');
+        }
+
+        // Renderizar el laberinto tipo Comecocos (10 celdas/hitos)
+        function renderMaze() {
+            document.getElementById('maze-view').classList.remove('hidden');
+            document.getElementById('question-panel').classList.add('hidden');
+            document.getElementById('maze-progress').innerText = `HITO ${currentMilestone + 1} / 10`;
+
+            const grid = document.getElementById('pacman-grid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < 10; i++) {
+                const cell = document.createElement('div');
+                cell.className = "w-12 h-12 sm:w-16 sm:h-16 border-2 flex flex-col items-center justify-center font-pixel text-lg rounded transition ";
                 
-                button.onclick = () => selectOption(button, item.originalIndex, qData.correct);
-                optionsContainer.appendChild(button);
+                if (i < currentMilestone) {
+                    // Hito superado
+                    cell.className += "border-green-500 bg-green-950/60 text-green-400";
+                    cell.innerHTML = `<span>✔️</span><span class="text-[10px]">#${i+1}</span>`;
+                } else if (i === currentMilestone) {
+                    // Hito activo actual (Comecocos / Enfermera activa)
+                    cell.className += "border-yellow-400 bg-yellow-950/80 text-yellow-300 animate-pulse cursor-pointer arcade-glow-btn";
+                    cell.innerHTML = `<span>👩‍⚕️</span><span class="text-[10px] font-bold">¡IR!</span>`;
+                    cell.onclick = () => openQuestion(i);
+                } else {
+                    // Hito bloqueado futuro
+                    cell.className += "border-slate-700 bg-slate-900/60 text-slate-600";
+                    cell.innerHTML = `<span>🔒</span><span class="text-[10px]">#${i+1}</span>`;
+                }
+                grid.appendChild(cell);
+            }
+        }
+
+        // Abrir la pregunta correspondiente al hito actual del laberinto
+        function openQuestion(index) {
+            currentActiveQuestion = gameQuestions[index];
+            selectedOptionIndex = null;
+
+            document.getElementById('maze-view').classList.add('hidden');
+            document.getElementById('question-panel').classList.remove('hidden');
+            document.getElementById('error-feedback').classList.add('hidden');
+            document.getElementById('submit-ans-btn').classList.add('hidden');
+
+            document.getElementById('question-counter-label').innerText = `PREGUNTA ${index + 1} / 10 (HITO ${index + 1})`;
+            document.getElementById('question-text').innerText = currentActiveQuestion.q;
+
+            // Barajar opciones
+            let indexedOpts = currentActiveQuestion.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
+            indexedOpts.sort(() => Math.random() - 0.5);
+
+            const optContainer = document.getElementById('options-container');
+            optContainer.innerHTML = '';
+
+            indexedOpts.forEach((item) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left font-pixel text-xl sm:text-2xl p-4 rounded-lg border-2 border-cyan-800 bg-black/60 text-cyan-300 hover:border-yellow-400 hover:bg-cyan-950/80 hover:text-yellow-300 transition cursor-pointer flex items-center justify-between shadow";
+                btn.innerHTML = `<span>&gt; ${item.text}</span>`;
+                btn.onclick = () => selectOption(btn, item.originalIndex);
+                optContainer.appendChild(btn);
             });
         }
 
-        // Seleccionar opción
-        function selectOption(buttonElement, originalIdx, correctIdx) {
-            const allButtons = document.getElementById('options-container').children;
-            
-            for (let btn of allButtons) {
-                btn.classList.remove('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
+        function selectOption(btnElement, origIdx) {
+            const allBtns = document.getElementById('options-container').children;
+            for (let b of allBtns) {
+                b.classList.remove('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
             }
-
-            buttonElement.classList.add('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
-            selectedOptionIndex = originalIdx;
-            
-            document.getElementById('next-btn').classList.remove('hidden');
+            btnElement.classList.add('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
+            selectedOptionIndex = origIdx;
+            document.getElementById('submit-ans-btn').classList.remove('hidden');
         }
 
-        // Siguiente pregunta (Control estricto de las 10 preguntas)
-        function handleNextQuestion() {
+        // Comprobar respuesta
+        function checkAnswer() {
             if (selectedOptionIndex === null) return;
 
-            const qData = currentQuizQuestions[currentIndex];
-            if (selectedOptionIndex === qData.correct) {
-                score++;
-            }
-
-            currentIndex++;
-
-            if (currentIndex < currentQuizQuestions.length) {
-                loadQuestion();
+            if (selectedOptionIndex === currentActiveQuestion.correct) {
+                // ¡Correcto! Avanzar hito en el laberinto
+                currentMilestone++;
+                if (currentMilestone >= 10) {
+                    goToScreen4();
+                } else {
+                    renderMaze();
+                }
             } else {
-                showResults();
+                // ¡Upss lo siento! Vuelve a intentarlo en el laberinto
+                document.getElementById('question-panel').classList.add('hidden');
+                document.getElementById('maze-view').classList.remove('hidden');
+                renderMaze();
+                
+                // Mostrar alerta temporal de error
+                const feedback = document.getElementById('maze-status-text');
+                feedback.innerText = "> ¡UPSS LO SIENTO! Vuelve a intentarlo.";
+                feedback.className = "font-pixel text-lg text-red-400 animate-bounce";
+                setTimeout(() => {
+                    feedback.innerText = "> Haz clic en el hito activo para desbloquear la pregunta";
+                    feedback.className = "font-pixel text-lg text-yellow-400 animate-pulse";
+                }, 3000);
             }
         }
 
-        // Mostrar resultados
-        function showResults() {
-            document.getElementById('quiz-card').classList.add('hidden');
-            document.getElementById('result-card').classList.remove('hidden');
-            document.getElementById('score-text').innerText = `${score} / ${currentQuizQuestions.length}`;
+        function restartGame() {
+            goToScreen1();
         }
 
-        // Reiniciar
-        function restartQuiz() {
-            initQuiz();
-        }
-
-        window.onload = initQuiz;
+        window.onload = goToScreen1;
     </script>
 </body>
 </html>
