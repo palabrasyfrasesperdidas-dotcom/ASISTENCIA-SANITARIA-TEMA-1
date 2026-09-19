@@ -4,38 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TAPSD Arcade Edition - Tema 1: Práctica Sociosanitaria</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
-        .font-arcade {
-            font-family: 'Press Start 2P', monospace;
-        }
-        .font-pixel {
-            font-family: 'VT323', monospace;
-        }
+        .font-arcade { font-family: 'Press Start 2P', monospace; }
+        .font-pixel { font-family: 'VT323', monospace; }
         body {
             background-color: #05050a;
-            background-image: 
-                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
             background-size: 100% 4px, 6px 100%;
         }
-        .arcade-glow {
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.4), inset 0 0 15px rgba(34, 211, 238, 0.2);
-        }
-        .arcade-glow-btn:hover {
-            box-shadow: 0 0 15px rgba(250, 204, 21, 0.9);
-        }
-        @keyframes nurseWalk {
-            0% { transform: translateX(0px); }
-            50% { transform: translateX(25px) translateY(-3px); }
-            100% { transform: translateX(50px); }
-        }
-        .nurse-anim {
-            animation: nurseWalk 1.5s infinite alternate ease-in-out;
-        }
+        .arcade-glow { box-shadow: 0 0 15px rgba(34, 211, 238, 0.4), inset 0 0 15px rgba(34, 211, 238, 0.2); }
+        .arcade-glow-btn:hover { box-shadow: 0 0 15px rgba(250, 204, 21, 0.9); }
+        .nurse-anim { animation: nurseWalk 1.5s infinite alternate ease-in-out; }
+        @keyframes nurseWalk { 0% { transform: translateX(0px); } 50% { transform: translateX(25px) translateY(-3px); } 100% { transform: translateX(50px); } }
         .maze-board {
             display: grid;
             grid-template-columns: repeat(11, minmax(0, 1fr));
@@ -47,109 +29,59 @@
             max-width: 420px;
             margin: 0 auto;
         }
-        .maze-cell {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-        .wall {
-            background-color: #1e3a8a;
-            border: 1px solid #3b82f6;
-            border-radius: 2px;
-        }
-        .path {
-            background-color: #05050a;
-        }
+        .maze-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+        .wall { background-color: #1e3a8a; border: 1px solid #3b82f6; border-radius: 2px; }
+        .path { background-color: #05050a; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between text-cyan-400 selection:bg-yellow-400 selection:text-black p-4">
 
-    <!-- Audio de fondo en bucle -->
-    <audio id="bg-audio" loop>
-        <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
-        Tu navegador no soporta el elemento de audio.
-    </audio>
+    <audio id="bg-audio" loop><source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">Tu navegador no soporta el elemento de audio.</audio>
 
-    <!-- HEADER GENERAL -->
     <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow">
         <div class="flex items-center gap-3">
             <span class="inline-block w-4 h-4 bg-yellow-400 animate-pulse"></span>
             <h1 class="font-arcade text-xs sm:text-sm tracking-wider text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
         </div>
         <div class="flex items-center gap-2">
-            <button onclick="toggleAudio()" id="audio-btn" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-2 py-1 rounded hover:bg-cyan-900 transition">
-                🎵 MÚSICA: OFF
-            </button>
-            <div id="header-status" class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">
-                TAPSD ARCADE
-            </div>
+            <button onclick="toggleAudio()" id="audio-btn" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-2 py-1 rounded hover:bg-cyan-900 transition">🎵 MÚSICA: OFF</button>
+            <div id="header-status" class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">TAPSD ARCADE</div>
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
     <main class="max-w-3xl w-full mx-auto my-auto py-2">
 
-        <!-- ================= PANTALLA 1 ================= -->
         <div id="screen-1" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-8 text-center arcade-glow shadow-2xl space-y-6">
-            <h2 class="font-arcade text-lg sm:text-xl text-cyan-100 leading-relaxed pt-2">
-                ATENCIÓN SOCIOSANITARIA<br><span class="text-yellow-300 text-sm">EDICIÓN RETRO ARCADE</span>
-            </h2>
+            <h2 class="font-arcade text-lg sm:text-xl text-cyan-100 leading-relaxed pt-2">ATENCIÓN SOCIOSANITARIA<br><span class="text-yellow-300 text-sm">EDICIÓN RETRO ARCADE</span></h2>
             <div class="py-6 flex justify-center items-center">
                 <div class="nurse-anim bg-cyan-950/80 border-2 border-cyan-400 p-6 rounded-xl flex flex-col items-center shadow-lg">
                     <span class="text-5xl mb-2">👩‍⚕️💊</span>
                     <span class="font-pixel text-xl text-yellow-300">&gt; NURSE.EXE READY</span>
                 </div>
             </div>
-            <div>
-                <button onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">
-                    PULSA PARA COMENZAR &gt;&gt;
-                </button>
-            </div>
+            <div><button onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">PULSA PARA COMENZAR &gt;&gt;</button></div>
         </div>
 
-        <!-- ================= PANTALLA 2 ================= -->
         <div id="screen-2" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6">
             <div class="font-arcade text-xs text-cyan-400 tracking-widest">MISIÓN 0: PREPARACIÓN</div>
             <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg">
-                <p class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">
-                    Estudiando para ser una profesional en <span class="text-yellow-300">Atención a Personas Dependientes (TAPSD)</span> y vas a demostrar que es cierto el lema que dice:
-                </p>
-                <p class="font-arcade text-sm sm:text-base text-yellow-400 my-6 tracking-wide bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">
-                    "Quien quiere, puede, y quien quiere, debe"
-                </p>
-                <p class="font-pixel text-2xl text-cyan-200">
-                    ¿Estás preparada para el reto?
-                </p>
+                <p class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">Estudiando para ser una profesional en <span class="text-yellow-300">Atención a Personas Dependientes (TAPSD)</span> y vas a demotrar que es cierto el lema que dice:</p>
+                <p class="font-arcade text-sm sm:text-base text-yellow-400 my-6 tracking-wide bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">"Quien quiere, puede, y quien quiere, debe"</p>
+                <p class="font-pixel text-2xl text-cyan-200">¿Estás preparada para el reto?</p>
             </div>
-            <div>
-                <button onclick="goToScreen3()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">
-                    ¡ESTOY PREPARADA! &gt;&gt;
-                </button>
-            </div>
+            <div><button onclick="goToScreen3()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">¡ESTOY PREPARADA! &gt;&gt;</button></div>
         </div>
 
-        <!-- ================= PANTALLA 3 ================= -->
         <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl">
-            
             <div id="maze-view" class="space-y-3">
                 <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
                     <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
                     <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITOS: 0 / 10</span>
                 </div>
-
-                <p class="font-pixel text-lg text-center text-cyan-200">
-                    Usa las <span class="text-yellow-300 font-bold">FLECHAS DE DIRECCIÓN</span> para mover a la enfermera 👩‍⚕️ y esquivar al virus 👾:
-                </p>
-
+                <p class="font-pixel text-lg text-center text-cyan-200">Usa las <span class="text-yellow-300 font-bold">FLECHAS DE DIRECCIÓN</span> para mover a la enfermera 👩‍⚕️ y esquivar al virus 👾:</p>
                 <div id="pacman-board" class="maze-board"></div>
-
-                <div class="font-pixel text-lg text-center text-yellow-400" id="maze-status-text">
-                    &gt; ¡Usa ⬅️ ➡️ ⬆️ ⬇️ para moverte!
-                </div>
+                <div class="font-pixel text-lg text-center text-yellow-400" id="maze-status-text">&gt; ¡Usa ⬅️ ➡️ ⬆️ ⬇️ para moverte!</div>
             </div>
-
             <div id="question-panel" class="hidden space-y-6">
                 <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
                     <span class="text-yellow-300" id="question-counter-label">PREGUNTA 1 / 10</span>
@@ -157,291 +89,49 @@
                 </div>
                 <h2 id="question-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed tracking-wide"></h2>
                 <div id="options-container" class="space-y-3"></div>
-                <div class="flex justify-end pt-2">
-                    <button id="submit-ans-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 transition hidden cursor-pointer arcade-glow-btn">
-                        COMPROBAR &gt;&gt;
-                    </button>
-                </div>
+                <div class="flex justify-end pt-2"><button id="submit-ans-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 transition hidden cursor-pointer arcade-glow-btn">COMPROBAR &gt;&gt;</button></div>
             </div>
-
         </div>
 
-        <!-- ================= PANTALLA 4 ================= -->
         <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6 relative overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none flex justify-around items-center opacity-30 text-4xl animate-pulse">
-                🎆 ✨ 🎇 🌟 🎆 ✨ 🎇
-            </div>
+            <div class="absolute inset-0 pointer-events-none flex justify-around items-center opacity-30 text-4xl animate-pulse">🎆 ✨ 🎇 🌟 🎆 ✨ 🎇</div>
             <h2 class="font-arcade text-lg sm:text-2xl text-yellow-400 animate-bounce">ENHORABUENA</h2>
-            <p class="font-pixel text-2xl sm:text-3xl text-cyan-100">
-                ¡Has completado con éxito todos los hitos del laberinto sociosanitario!
-            </p>
-            <div class="font-arcade text-3xl text-cyan-300 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8">
-                10 / 10 HITOS
-            </div>
-            <div>
-                <button onclick="restartGame()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">
-                    VOLVER A PROBAR &gt;&gt;
-                </button>
-            </div>
+            <p class="font-pixel text-2xl sm:text-3xl text-cyan-100">¡Has completado con éxito todos los hitos del laberinto sociosanitario!</p>
+            <div class="font-arcade text-3xl text-cyan-300 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8">10 / 10 HITOS</div>
+            <div><button onclick="restartGame()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">VOLVER A PROBAR &gt;&gt;</button></div>
         </div>
 
     </main>
 
-    <footer class="text-center py-3 font-pixel text-lg text-slate-500 tracking-wider">
-        MÓDULO TAPSD &bull; ARCADE EDITION
-    </footer>
+    <footer class="text-center py-3 font-pixel text-lg text-slate-500 tracking-wider">MÓDULO TAPSD &bull; ARCADE EDITION</footer>
 
     <script>
         let isAudioPlaying = false;
         function toggleAudio() {
             const audio = document.getElementById('bg-audio');
             const btn = document.getElementById('audio-btn');
-            if (isAudioPlaying) {
-                audio.pause();
-                isAudioPlaying = false;
-                btn.innerText = "🎵 MÚSICA: OFF";
-            } else {
-                audio.play().then(() => {
-                    isAudioPlaying = true;
-                    btn.innerText = "🔊 MÚSICA: ON";
-                }).catch(e => console.log(e));
-            }
+            if (isAudioPlaying) { audio.pause(); isAudioPlaying = false; btn.innerText = "🎵 MÚSICA: OFF"; }
+            else { audio.play().then(() => { isAudioPlaying = true; btn.innerText = "🔊 MÚSICA: ON"; }).catch(e => console.log(e)); }
         }
 
         const questionBank = [
             { q: "A la hora de planificar actividades para un usuario, debemos entender a la persona como un ser multidimensional que comprende las siguientes esferas:", options: ["Biológica, psíquica y social.", "Únicamente física y económica.", "Motora, intelectual y laboral.", "Genética, clínica y farmacológica."], correct: 0 },
-            { q: "Cuando en un centro residencial se programan actividades dirigidas a despertar las capacidades motrices y los sentidos, nos referimos a:", options: ["Cuidados de estimulación.", "Cuidados de compensación.", "Cuidados de sosiego.", "Cuidados de autoimage."], correct: 0 },
-            { q: "Si un profesional aplica intervenciones orientadas a calmar el dolor y aportar serenidad y liberación de tensiones al usuario, está prestando:", options: ["Cuidados de sosiego.", "Cuidados de estimulación.", "Cuidados de conservación.", "Cuidados de confirmación."], correct: 0 },
-            { q: "Cuando realizamos actividades asistenciales destinadas a suplir aquellas funciones o capacidades que el usuario no adquirió o perdió, empleamos:", options: ["Cuidados de compensación.", "Cuidados de conservación de la vida.", "Cuidados de estimulación sensorial.", "Cuidados de autoimagen."], correct: 0 },
-            { q: "Para mantener las capacidades adquiridas y asegurar la autonomía el mayor tiempo posible en personas dependientes, el tipo de cuidado indicado es:", options: ["Conservación y continuidad de la vida.", "Compensación total de funciones.", "Estimulación psicomotriz infantil.", "Sosiego y alivio del dolor agudo."], correct: 0 },
-            { q: "Al adecuar el domicilio de una persona mayor con movilidad reducida, ¿cómo deben ser preferiblemente los suelos para prevenir accidentes?", options: ["Antideslizantes, evitando alfombras u objetos que entorpezcan el paso.", "De parqué encerado muy brillante y pulido.", "Cubiertos completamente de alfombras gruesas.", "De moqueta suelta sin fijar al suelo."], correct: 0 },
-            { q: "Respecto a la climatización y regulación de la temperatura en la vivienda de un usuario dependiente, se desaconseja expresamente el uso de:", options: ["Braseros tradicionales, debido al riesgo de monóxido de carbono.", "Sistemas de aire acondicionado digitales.", "Radiadores de aceite eléctricos homologados.", "Humidificadores ambientales."], correct: 0 },
-            { q: "En relación con las condiciones de iluminación en el hogar de un usuario anciano, esta debe asegurar que:", options: ["Exista luz suficiente para ver sin forzar la vista y interruptores accesibles.", "Las bombillas sean de intensidad muy baja.", "Los interruptores estén solo en el exterior.", "Se dependa exclusivamente de la luz natural."], correct: 0 },
-            { q: "Dentro de las estrategias para promover los autocuidados en los usuarios, una de las líneas clave consiste en:", options: ["Desarrollar la autoestima y favorecer la responsabilidad individual y comunitaria.", "Imponer normas estrictas obligatorias.", "Sustituir por completo al usuario en sus decisiones.", "Evitar cualquier participación social."], correct: 0 },
-            { q: "Cuál es una de las herramientas fundamentales que utiliza el profesional de atención sociosanitaria para educar y orientar los hábitos de autocuidado:", options: ["La educación para la salud (EpS).", "La restricción farmacológica directa.", "El aislamiento preventivo domiciliario.", "La delegación absoluta de responsabilidades."], correct: 0 }
+            { q: "Cuando en un centro residencial se programan actividades dirigidas a despertar las capacidades motrices y los sentidos, nos referimos a:", options: ["Cuidados de compensación.", "Cuidados de estimulación.", "Cuidados de sosiego.", "Cuidados de autoimagen."], correct: 1 },
+            { q: "Si un profesional aplica intervenciones orientadas a calmar el dolor y aportar serenidad, está prestando:", options: ["Cuidados de estimulación.", "Cuidados de conservación.", "Cuidados de sosiego.", "Cuidados de confirmación."], correct: 2 },
+            { q: "Cuando realizamos actividades asistenciales destinadas a suplir funciones o capacidades que el usuario perdió, empleamos:", options: ["Cuidados de estimulación sensorial.", "Cuidados de conservación de la vida.", "Cuidados de autoimagen.", "Cuidados de compensación."], correct: 3 },
+            { q: "Para mantener las capacidades adquiridas y asegurar la autonomía el mayor tiempo posible, el tipo de cuidado indicado es el de:", options: ["Conservación y continuidad de la vida.", "Compensación total de funciones.", "Estimulación psicomotriz infantil.", "Sosiego y alivio del dolor agudo."], correct: 0 },
+            { q: "Al adecuar el domicilio de una persona mayor con movilidad reducida, ¿cómo deben ser preferiblemente los suelos para prevenir accidentes?", options: ["De parqué muy brillante y pulido.", "Cubiertos de alfombras gruesas.", "Antideslizantes, evitando alfombras que entorpezcan el paso.", "De moqueta suelta."], correct: 2 },
+            { q: "Respecto a la climatización en la vivienda de un usuario dependiente, se desaconseja expresamente el uso de:", options: ["Sistemas de aire acondicionado con control digital.", "Braseros tradicionales, debido al riesgo de intoxicación.", "Radiadores de aceite eléctricos homologados.", "Humidificadores ambientales en estancias secas."], correct: 1 },
+            { q: "En relación con las condiciones de iluminación en el hogar de un usuario anciano, esta debe asegurar que:", options: ["Las bombillas sean de intensidad muy baja.", "Los interruptores estén solo en el exterior.", "Se dependa de la luz natural.", "Exista luz suficiente para ver sin forzar la vista y los interruptores sean accesibles."], correct: 3 },
+            { q: "Dentro de las estrategias para promover los autocuidados, una de las líneas clave consiste en:", options: ["Imponer normas estrictas.", "Sustituir al usuario en todas sus decisiones.", "Desarrollar la autoestima y favorecer la responsabilidad.", "Evitar la participación grupal."], correct: 2 },
+            { q: "Cuál es una de las herramientas fundamentales que utiliza el profesional para orientar, educar y reforzar los hábitos de autocuidado:", options: ["La restricción farmacológica nocturna.", "El aislamiento preventivo domiciliario.", "La simplificación administrativa.", "La educación para la salud."], correct: 3 }
         ];
 
-        // 1 = Pared, 0 = Camino libre, 2 = Hito
-        const initialMap = [
+        // 1 = Pared, 0 = Camino transitable, 2 = Hito (punto amarillo)
+        // MAPA REDISEÑADO: Pasillos anchos y abiertos sin islas cerradas.
+        const openMapLayout = [
             [1,1,1,1,1,1,1,1,1,1,1],
-            [1,2,0,0,1,0,0,0,0,2,1],
-            [1,0,1,0,1,0,1,1,1,0,1],
-            [1,0,1,0,0,0,1,2,1,0,1],
-            [1,0,1,1,1,0,1,1,1,0,1],
-            [1,0,0,0,2,0,0,0,0,0,1],
-            [1,0,1,1,1,1,1,0,1,1,1],
-            [1,2,0,0,0,0,0,0,2,0,1],
-            [1,1,1,0,1,1,1,0,1,1,1],
             [1,2,0,0,0,0,0,0,0,2,1],
-            [1,1,1,1,1,1,1,1,1,1,1]
-        ];
-
-        let mapData = [];
-        let nursePos = { r: 1, c: 1 };
-        let virusPos = { r: 9, c: 1 };
-        let score = 0;
-        let gameActive = false;
-        let selectedOption = null;
-        let currentQuestionIndex = 0;
-        let virusInterval = null;
-
-        function goToScreen2() {
-            document.getElementById('screen-1').classList.add('hidden');
-            document.getElementById('screen-2').classList.remove('hidden');
-        }
-
-        function goToScreen3() {
-            document.getElementById('screen-2').classList.add('hidden');
-            document.getElementById('screen-3').classList.remove('hidden');
-            initGame();
-        }
-
-        function initGame() {
-            mapData = JSON.parse(JSON.stringify(initialMap));
-            nursePos = { r: 1, c: 1 };
-            virusPos = { r: 9, c: 1 };
-            score = 0;
-            gameActive = true;
-            document.getElementById('question-panel').classList.add('hidden');
-            document.getElementById('maze-view').classList.remove('hidden');
-            updateMazeUI();
-            
-            if (virusInterval) clearInterval(virusInterval);
-            virusInterval = setInterval(moveVirus, 1200);
-
-            window.addEventListener('keydown', handleKeyInput);
-        }
-
-        function updateMazeUI() {
-            const board = document.getElementById('pacman-board');
-            board.innerHTML = '';
-            document.getElementById('maze-progress').innerText = `HITOS: ${score} / 10`;
-
-            for (let r = 0; r < mapData.length; r++) {
-                for (let c = 0; c < mapData[r].length; c++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'maze-cell';
-                    if (mapData[r][c] === 1) {
-                        cell.classList.add('wall');
-                    } else {
-                        cell.classList.add('path');
-                        if (r === nursePos.r && c === nursePos.c) {
-                            cell.innerHTML = '👩‍⚕️';
-                        } else if (r === virusPos.r && c === virusPos.c) {
-                            cell.innerHTML = '👾';
-                        } else if (mapData[r][c] === 2) {
-                            cell.innerHTML = '🟡';
-                        }
-                    }
-                    board.appendChild(cell);
-                }
-            }
-        }
-
-        function handleKeyInput(e) {
-            if (!gameActive) return;
-            let newR = nursePos.r;
-            let newC = nursePos.c;
-
-            if (e.key === 'ArrowUp') newR--;
-            else if (e.key === 'ArrowDown') newR++;
-            else if (e.key === 'ArrowLeft') newC--;
-            else if (e.key === 'ArrowRight') newC++;
-            else return;
-
-            e.preventDefault();
-
-            if (mapData[newR] && mapData[newR][newC] !== undefined && mapData[newR][newC] !== 1) {
-                nursePos.r = newR;
-                nursePos.c = newC;
-                checkCellInteraction();
-                updateMazeUI();
-            }
-        }
-
-        function moveVirus() {
-            if (!gameActive) return;
-
-            let rowDiff = nursePos.r - virusPos.r;
-            let colDiff = nursePos.c - virusPos.c;
-
-            let possibleMoves = [];
-            if (rowDiff > 0) possibleMoves.push({ r: virusPos.r + 1, c: virusPos.c });
-            if (rowDiff < 0) possibleMoves.push({ r: virusPos.r - 1, c: virusPos.c });
-            if (colDiff > 0) possibleMoves.push({ r: virusPos.r, c: virusPos.c + 1 });
-            if (colDiff < 0) possibleMoves.push({ r: virusPos.r, c: virusPos.c - 1 });
-
-            // Añadir movimientos aleatorios como alternativas si choca con pared
-            let allDirs = [
-                { r: virusPos.r + 1, c: virusPos.c },
-                { r: virusPos.r - 1, c: virusPos.c },
-                { r: virusPos.r, c: virusPos.c + 1 },
-                { r: virusPos.r, c: virusPos.c - 1 }
-            ];
-            allDirs.forEach(d => {
-                if (mapData[d.r] && mapData[d.r][d.c] !== 1) {
-                    possibleMoves.push(d);
-                }
-            });
-
-            for (let move of possibleMoves) {
-                if (mapData[move.r] && mapData[move.r][move.c] !== 1) {
-                    virusPos.r = move.r;
-                    virusPos.c = move.c;
-                    break;
-                }
-            }
-
-            // Comprobar si el virus atrapa a la enfermera
-            if (virusPos.r === nursePos.r && virusPos.c === nursePos.c) {
-                alert("¡El virus te ha atrapado! Vuelves al inicio del laberinto.");
-                nursePos = { r: 1, c: 1 };
-            }
-
-            updateMazeUI();
-        }
-
-        function checkCellInteraction() {
-            if (mapData[nursePos.r][nursePos.c] === 2) {
-                mapData[nursePos.r][nursePos.c] = 0; // Consumir hito
-                gameActive = false; // Pausar juego para pregunta
-                window.removeEventListener('keydown', handleKeyInput);
-                if (virusInterval) clearInterval(virusInterval);
-                triggerQuestion();
-            }
-        }
-
-        function triggerQuestion() {
-            document.getElementById('maze-view').classList.add('hidden');
-            document.getElementById('question-panel').classList.remove('hidden');
-
-            currentQuestionIndex = score % questionBank.length;
-            const qData = questionBank[currentQuestionIndex];
-
-            document.getElementById('question-counter-label').innerText = `HITO ALCANZADO: ${score + 1} / 10`;
-            document.getElementById('question-text').innerText = qData.q;
-
-            const optsContainer = document.getElementById('options-container');
-            optsContainer.innerHTML = '';
-            selectedOption = null;
-            document.getElementById('submit-ans-btn').classList.add('hidden');
-
-            qData.options.forEach((opt, index) => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left font-pixel text-xl sm:text-2xl p-4 rounded bg-cyan-950/60 border border-cyan-700 hover:border-yellow-400 hover:bg-cyan-900 text-cyan-100 transition cursor-pointer";
-                btn.innerText = `${String.fromCharCode(65 + index)}. ${opt}`;
-                btn.onclick = () => selectOption(index, btn);
-                optsContainer.appendChild(btn);
-            });
-        }
-
-        function selectOption(index, btnElement) {
-            const allBtns = document.getElementById('options-container').children;
-            for (let b of allBtns) {
-                b.classList.remove('border-yellow-400', 'bg-yellow-950/40');
-                b.classList.add('border-cyan-700', 'bg-cyan-950/60');
-            }
-            btnElement.classList.remove('border-cyan-700', 'bg-cyan-950/60');
-            btnElement.classList.add('border-yellow-400', 'bg-yellow-950/40');
-            selectedOption = index;
-            document.getElementById('submit-ans-btn').classList.remove('hidden');
-        }
-
-        function checkAnswer() {
-            if (selectedOption === null) return;
-            const qData = questionBank[currentQuestionIndex];
-
-            if (selectedOption === qData.correct) {
-                score++;
-                alert("¡Respuesta Correcta! Sumas 1 hito.");
-                document.getElementById('question-panel').classList.add('hidden');
-
-                if (score >= 10) {
-                    document.getElementById('screen-3').classList.add('hidden');
-                    document.getElementById('screen-4').classList.remove('hidden');
-                } else {
-                    document.getElementById('maze-view').classList.remove('hidden');
-                    gameActive = true;
-                    window.addEventListener('keydown', handleKeyInput);
-                    virusInterval = setInterval(moveVirus, 1200);
-                    updateMazeUI();
-                }
-            } else {
-                alert("Respuesta incorrecta. Sigue intentándolo en el laberinto.");
-                document.getElementById('question-panel').classList.add('hidden');
-                document.getElementById('maze-view').classList.remove('hidden');
-                gameActive = true;
-                window.addEventListener('keydown', handleKeyInput);
-                virusInterval = setInterval(moveVirus, 1200);
-                updateMazeUI();
-            }
-        }
-
-        function restartGame() {
-            document.getElementById('screen-4').classList.add('hidden');
-            document.getElementById('screen-3').classList.remove('hidden');
-            initGame();
-        }
-    </script>
-</body>
-</html>
+            [1,0,1,1,1,1,1,1,1,0,1],
+            [1,0,1,2,0,0,0,0,1,0,1],
+            [1,0,1,0,1,1,1,0,
