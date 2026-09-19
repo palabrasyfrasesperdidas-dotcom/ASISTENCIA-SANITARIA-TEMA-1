@@ -22,6 +22,26 @@
             100% { transform: translateX(50px); }
         }
         .nurse-anim { animation: nurseWalk 1.5s infinite alternate ease-in-out; }
+        .maze-board {
+            display: grid;
+            grid-template-columns: repeat(11, minmax(0, 1fr));
+            gap: 2px;
+            background-color: #000;
+            border: 3px solid #1d4ed8;
+            padding: 8px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .maze-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        .wall { background-color: #1e3a8a; border: 1px solid #3b82f6; border-radius: 2px; }
+        .path { background-color: #05050a; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between text-cyan-400 p-4">
@@ -67,20 +87,26 @@
             </div>
         </div>
 
-        <!-- PANTALLA 3: LABERINTO / JUEGO -->
+        <!-- PANTALLA 3: LABERINTO COMECOCOS & PREGUNTAS -->
         <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl space-y-4">
-            <div id="maze-container" class="space-y-4 text-center">
+            
+            <!-- Vista del Laberinto -->
+            <div id="maze-view" class="space-y-3">
                 <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
                     <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
                     <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITOS: 0 / 5</span>
                 </div>
-                <p class="font-pixel text-lg text-cyan-200">¡La enfermera avanza hacia el conocimiento! Prepárate para las cuestiones del tema.</p>
-                <div class="py-4">
-                    <button onclick="startQuizFromMaze()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn">ACCEDER A LOS HITOS &gt;&gt;</button>
+                <p class="font-pixel text-lg text-center text-cyan-200">
+                    Usa las <span class="text-yellow-300 font-bold">FLECHAS DE DIRECCIÓN</span> (⬅️ ➡️ ⬆️ ⬇️) para mover a la enfermera 👩‍⚕️ hacia el hito o virus 👾:
+                </p>
+                <div id="pacman-board" class="maze-board"></div>
+                <div class="font-pixel text-lg text-center text-yellow-400" id="maze-status-text">
+                    &gt; ¡Muévete por el laberinto!
                 </div>
             </div>
 
-            <div id="quiz-container" class="space-y-6 hidden">
+            <!-- Vista del Panel de Pregunta (Se activa al alcanzar un hito) -->
+            <div id="question-panel" class="space-y-6 hidden">
                 <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
                     <span class="text-yellow-300" id="q-counter">PREGUNTA 1 / 5</span>
                     <span class="text-cyan-400">MODO EXAMEN</span>
@@ -93,7 +119,7 @@
             </div>
         </div>
 
-        <!-- PANTALLA 4 -->
+        <!-- PANTALLA 4: VICTORIA -->
         <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6">
             <h2 class="font-arcade text-xl text-yellow-400">¡ENHORABUENA!</h2>
             <p class="font-pixel text-2xl text-cyan-100">Has superado todas las cuestiones y demostrado que "Quien quiere, puede, y quien quiere, debe".</p>
@@ -122,14 +148,10 @@
         function goToScreen3() {
             document.getElementById('screen-2').classList.add('hidden');
             document.getElementById('screen-3').classList.remove('hidden');
+            initMaze();
         }
 
-        function startQuizFromMaze() {
-            document.getElementById('maze-container').classList.add('hidden');
-            document.getElementById('quiz-container').classList.remove('hidden');
-            loadQuestion();
-        }
-
+        // Banco de preguntas
         const questions = [
             { q: "La persona como ser multidimensional comprende las esferas:", opts: ["Biológica, psíquica y social.", "Física y económica.", "Motora e intelectual."], correct: 0 },
             { q: "Las actividades para despertar capacidades motrices y sentidos son:", opts: ["Cuidados de estimulación.", "Cuidados de compensación.", "Cuidados de sosiego."], correct: 0 },
@@ -139,6 +161,97 @@
         ];
 
         let currentQ = 0, selectedOpt = null;
+
+        // Lógica del Laberinto Comecocos (11x11)
+        const mapGrid = [
+            [1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,3,0,1,2,1,0,3,0,1],
+            [1,0,1,0,1,0,1,0,1,0,1],
+            [1,3,1,0,0,0,0,0,1,3,1],
+            [1,0,1,1,1,0,1,1,1,0,1],
+            [1,0,0,0,0,4,0,0,0,0,1],
+            [1,0,1,1,1,0,1,1,1,0,1],
+            [1,3,1,0,0,0,0,0,1,3,1],
+            [1,0,1,0,1,0,1,0,1,0,1],
+            [1,0,3,0,1,0,1,0,3,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1]
+        ];
+        // Leyenda: 0=camino, 1=pared, 2=enfermera, 3=hito/pastilla, 4=virus
+
+        let playerPos = { r: 1, c: 5 };
+
+        function initMaze() {
+            renderMaze();
+            window.addEventListener('keydown', handleKeyMove);
+        }
+
+        function renderMaze() {
+            const board = document.getElementById('pacman-board');
+            board.innerHTML = '';
+            for(let r=0; r<mapGrid.length; r++) {
+                for(let c=0; c<mapGrid[r].length; c++) {
+                    let cell = document.createElement('div');
+                    cell.className = 'maze-cell ';
+                    let val = mapGrid[r][c];
+                    if(r === playerPos.r && c === playerPos.c) {
+                        cell.classList.add('path');
+                        cell.innerText = "👩‍⚕️";
+                    } else if(val === 1) {
+                        cell.classList.add('wall');
+                    } else if(val === 3) {
+                        cell.classList.add('path');
+                        cell.innerText = "💊";
+                    } else if(val === 4) {
+                        cell.classList.add('path');
+                        cell.innerText = "👾";
+                    } else {
+                        cell.classList.add('path');
+                    }
+                    board.appendChild(cell);
+                }
+            }
+        }
+
+        function handleKeyMove(e) {
+            if(document.getElementById('screen-3').classList.contains('hidden')) return;
+            if(!document.getElementById('question-panel').classList.contains('hidden')) return; // Bloqueado si hay pregunta activa
+
+            let newR = playerPos.r;
+            let newC = playerPos.c;
+
+            if(e.key === 'ArrowUp') newR--;
+            else if(e.key === 'ArrowDown') newR++;
+            else if(e.key === 'ArrowLeft') newC--;
+            else if(e.key === 'ArrowRight') newC++;
+            else return;
+
+            e.preventDefault();
+
+            if(newR >= 0 && newR < mapGrid.length && newC >= 0 && newC < mapGrid[0].length) {
+                let target = mapGrid[newR][newC];
+                if(target !== 1) { // Si no es pared
+                    playerPos.r = newR;
+                    playerPos.c = newC;
+                    renderMaze();
+
+                    if(target === 3) {
+                        // ¡Encontró un hito/pastilla! Abrir pregunta
+                        mapGrid[newR][newC] = 0; // Consumir pastilla
+                        triggerQuestion();
+                    } else if(target === 4) {
+                        // ¡Tocó al virus!
+                        document.getElementById('maze-status-text.innerText') = "¡Cuidado con el virus! Te ha retado a una cuestión.";
+                        triggerQuestion();
+                    }
+                }
+            }
+        }
+
+        function triggerQuestion() {
+            document.getElementById('maze-view').classList.add('hidden');
+            document.getElementById('question-panel').classList.remove('hidden');
+            loadQuestion();
+        }
 
         function loadQuestion() {
             selectedOpt = null;
@@ -173,7 +286,13 @@
             if(selectedOpt === questions[currentQ].correct) {
                 currentQ++;
                 document.getElementById('maze-progress').innerText = `HITOS: ${currentQ} / 5`;
-                loadQuestion();
+                document.getElementById('question-panel').classList.add('hidden');
+                document.getElementById('maze-view').classList.remove('hidden');
+                renderMaze();
+                if(currentQ >= questions.length) {
+                    document.getElementById('screen-3').classList.add('hidden');
+                    document.getElementById('screen-4').classList.remove('hidden');
+                }
             } else {
                 alert("Incorrecto. ¡Prueba otra vez!");
             }
