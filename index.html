@@ -333,7 +333,7 @@
 </head>
 <body>
 
-    <!-- Pantalla de Inicio Arcade -->
+    <!-- Pantalla de Inicio Arcade (Sin lema) -->
     <div id="arcade-splash" onclick="openStory()">
         <div class="arcade-splash-content">
             <div class="arcade-title-pixel">TAPSD: RETO SOCIOSANITARIO</div>
@@ -406,19 +406,19 @@
             x: 40,
             y: 40,
             size: 20,
-            speed: 2.5,
+            speed: 2,
             dx: 0,
             dy: 0
         };
 
-        // Fantasma configurado con velocidad baja y dirección controlada en laberinto
+        // Monstruo con movimiento estricto por rejilla/cuadrícula y velocidad reducida
         let ghost = {
             x: 400,
             y: 400,
             size: 20,
-            speed: 1.2,
+            speed: 0.75,
             dx: 0,
-            dy: -1.2
+            dy: -0.75
         };
 
         let objectives = [
@@ -448,41 +448,66 @@
             { x: 160, y: 380, w: 160, h: 30 }
         ];
 
+        // Nuevas preguntas centradas en términos, definiciones, abreviaturas y razonamiento del Tema 1
         const questions = [
             {
-                title: "PREGUNTA 1: Plan de Cuidados",
-                question: "¿Quién describió el Proceso de Atención en Enfermería (PAE) como método de trabajo en 1955?",
-                options: ["Lidia Hall", "Marie François Collière", "Virginia Henderson"],
+                title: "PREGUNTA 1: Definición de Autonomía",
+                question: "¿Cómo se define la autonomía personal en el ámbito de la dependencia?",
+                options: [
+                    "La capacidad de controlar y tomar decisiones sobre la propia vida",
+                    "La obligación exclusiva de recibir asistencia médica domiciliaria",
+                    "La dependencia absoluta de los servicios sociales públicos"
+                ],
                 correct: 0
             },
             {
-                title: "PREGUNTA 2: Tipos de Cuidados",
-                question: "Según Collière, ¿qué tipo de cuidados aportan tranquilidad, serenidad y ayudan a calmar el dolor?",
-                options: ["Cuidados de autoimagen", "Cuidados de sosiego", "Cuidados de confirmación"],
+                title: "PREGUNTA 2: Significado de Abreviatura",
+                question: "¿A qué corresponde exactamente la abreviatura TAPSD en el ámbito formativo?",
+                options: [
+                    "Técnico en Atención a Personas con Secuelas y Dolencias",
+                    "Técnico en Atención a Personas en Situación de Dependencia",
+                    "Tutoría Activa para Prestaciones Sociosanitarias a Domicilio"
+                ],
                 correct: 1
             },
             {
-                title: "PREGUNTA 3: Condiciones Ambientales",
-                question: "Respecto a las condiciones de la vivienda para la salud, ¿qué elemento se debe evitar por riesgo de monóxido de carbono?",
-                options: ["Braseros", "Suelos antideslizantes", "Ventilación diaria"],
+                title: "PREGUNTA 3: Razonamiento sobre Cuidados",
+                question: "Si un usuario requiere apoyo emocional, escucha activa y alivio de la angustia cotidiana, ¿qué tipo de cuidados predominan?",
+                options: [
+                    "Cuidados de compensación motora quirúrgica",
+                    "Cuidados de sosiego y acompañamiento",
+                    "Cuidados de alta intensidad farmacológica"
+                ],
+                correct: 1
+            },
+            {
+                title: "PREGUNTA 4: Concepto Clave",
+                question: "¿Qué caracteriza principalmente a las actividades de la vida diaria (AVD) instrumentales?",
+                options: [
+                    "Son tareas básicas como la higiene personal y la alimentación",
+                    "Implican tareas complejas para la vida autónoma como la gestión del hogar o compras",
+                    "Se realizan únicamente en centros hospitalarios de agudos"
+                ],
+                correct: 1
+            },
+            {
+                title: "PREGUNTA 5: Seguridad Ambiental",
+                question: "En el análisis de riesgos en el hogar de una persona dependiente, ¿qué medida preventiva es fundamental frente a caídas?",
+                options: [
+                    "Retirar alfombras deslizantes y asegurar una iluminación adecuada",
+                    "Cerrar con llave todas las puertas interiores de la vivienda",
+                    "Sustituir los suelos por superficies totalmente pulidas y brillantes"
+                ],
                 correct: 0
             },
             {
-                title: "PREGUNTA 4: Promoción del Autocuidado",
-                question: "¿Cuál es una estrategia clave para promover el autocuidado y la salud en los usuarios?",
-                options: ["Imponer normas estrictas sin diálogo", "Desarrollar la autoestima y el control personal", "Evitar cualquier espacio participativo grupal"],
-                correct: 1
-            },
-            {
-                title: "PREGUNTA 5: Tipos de Cuidados",
-                question: "Los cuidados centrados en despertar las capacidades generales, sensoriales y psicomotoras se denominan:",
-                options: ["Cuidados de compensación", "Cuidados de conservación", "Cuidados de estimulación"],
-                correct: 2
-            },
-            {
-                title: "PREGUNTA 6: Evolución del TAPSD",
-                question: "¿Cuál es una de las funciones principales de la competencia general del TAPSD?",
-                options: ["Realizar intervenciones puramente quirúrgicas", "Atender la dependencia para mejorar la calidad de vida con actividades asistenciales no sanitarias y psicosociales", "Prescribir tratamientos farmacológicos complejos"],
+                title: "PREGUNTA 6: Razonamiento Profesional",
+                question: "¿Cuál es el propósito fundamental de promover el autocuidado en una persona dependiente?",
+                options: [
+                    "Reducir por completo la implicación del equipo profesional",
+                    "Mantener y potenciar al máximo las capacidades físicas y psíquicas remanentes",
+                    "Delegar todas las responsabilidades cotidianas en los familiares directos"
+                ],
                 correct: 1
             }
         ];
@@ -541,21 +566,29 @@
                 if (!checkWallCollision(nextX, player.y, player.size)) player.x = nextX;
                 if (!checkWallCollision(player.x, nextY, player.size)) player.y = nextY;
 
-                // IA Estricta de Laberinto para el Fantasma (respeta pasillos y paredes)
+                // IA Estricta por cuadrícula / celdas para el Fantasma (respetando pasillos y giros limpios)
                 let nextGX = ghost.x + ghost.dx;
                 let nextGY = ghost.y + ghost.dy;
 
-                if (checkWallCollision(nextGX, nextGY, ghost.size)) {
-                    // Si choca con un muro, elige una dirección válida aleatoria o cambia de rumbo
-                    const directions = [
+                // Si choca contra un muro, o está alineado en una intersección de cuadrícula (múltiplo de 10), decide nueva dirección válida
+                if (checkWallCollision(nextGX, nextGY, ghost.size) || (ghost.x % 10 === 0 && ghost.y % 10 === 0 && Math.random() < 0.35)) {
+                    const candidateDirs = [
                         {dx: 0, dy: -ghost.speed},
                         {dx: 0, dy: ghost.speed},
                         {dx: -ghost.speed, dy: 0},
                         {dx: ghost.speed, dy: 0}
                     ];
-                    const validDirs = directions.filter(d => !checkWallCollision(ghost.x + d.dx, ghost.y + d.dy, ghost.size));
+                    // Filtrar solo las direcciones que no chocan con muros
+                    const validDirs = candidateDirs.filter(d => !checkWallCollision(ghost.x + d.dx * 2, ghost.y + d.dy * 2, ghost.size));
+                    
                     if (validDirs.length > 0) {
-                        const chosen = validDirs[Math.floor(Math.random() * validDirs.length)];
+                        // Intentar elegir una dirección que acerque suavemente al fantasma al jugador en las intersecciones
+                        validDirs.sort((a, b) => {
+                            let distA = Math.hypot((ghost.x + a.dx*10) - player.x, (ghost.y + a.dy*10) - player.y);
+                            let distB = Math.hypot((ghost.x + b.dx*10) - player.x, (ghost.y + b.dy*10) - player.y);
+                            return distA - distB;
+                        });
+                        const chosen = validDirs[0];
                         ghost.dx = chosen.dx;
                         ghost.dy = chosen.dy;
                     } else {
@@ -565,19 +598,9 @@
                 } else {
                     ghost.x = nextGX;
                     ghost.y = nextGY;
-                    // En las intersecciones puede cambiar opcionalmente hacia donde esté el jugador de forma suave
-                    if (Math.random() < 0.03) {
-                        if (Math.abs(player.x - ghost.x) > Math.abs(player.y - ghost.y)) {
-                            ghost.dx = player.x > ghost.x ? ghost.speed : -ghost.speed;
-                            ghost.dy = 0;
-                        } else {
-                            ghost.dy = player.y > ghost.y ? ghost.speed : -ghost.speed;
-                            ghost.dx = 0;
-                        }
-                    }
                 }
 
-                // Colisión con objetivos
+                // Comprobar colisión con objetivos
                 objectives.forEach(obj => {
                     if (!obj.collected) {
                         let dist = Math.hypot(player.x - obj.x, player.y - obj.y);
