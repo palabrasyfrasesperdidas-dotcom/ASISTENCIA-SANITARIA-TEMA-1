@@ -65,7 +65,7 @@
             <h1 class="font-arcade text-xs sm:text-sm text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
         </div>
         <div class="flex items-center gap-2">
-            <button onclick="toggleAudio()" id="audio-btn" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-2 py-1 rounded cursor-pointer">🎵 MÚSICA: OFF</button>
+            <button id="audio-btn" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-2 py-1 rounded cursor-pointer" style="pointer-events: auto; position: relative; z-index: 50;">🎵 MÚSICA: OFF</button>
             <div class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">TAPSD ARCADE</div>
         </div>
     </header>
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div>
-                <button id="start-btn" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition">PULSA PARA COMENZAR &gt;&gt;</button>
+                <button id="start-btn" style="pointer-events: auto; position: relative; z-index: 50;" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition">PULSA PARA COMENZAR &gt;&gt;</button>
             </div>
         </div>
 
@@ -94,7 +94,7 @@
                 <p class="font-pixel text-2xl text-cyan-200">¿Estás preparada?</p>
             </div>
             <div>
-                <button id="ready-btn" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition">¡ESTOY PREPARADA! &gt;&gt;</button>
+                <button id="ready-btn" style="pointer-events: auto; position: relative; z-index: 50;" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition">¡ESTOY PREPARADA! &gt;&gt;</button>
             </div>
         </div>
 
@@ -125,7 +125,7 @@
                 <h2 id="q-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">Cargando...</h2>
                 <div id="q-options" class="space-y-3"></div>
                 <div class="flex justify-end pt-2">
-                    <button id="q-btn" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn">COMPROBAR &gt;&gt;</button>
+                    <button id="q-btn" style="pointer-events: auto; position: relative; z-index: 50;" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn">COMPROBAR &gt;&gt;</button>
                 </div>
             </div>
         </div>
@@ -144,7 +144,7 @@
             <h2 class="font-arcade text-xl text-yellow-400 relative z-20">¡ENHORABUENA!</h2>
             <p class="font-pixel text-2xl text-cyan-100 relative z-20">Has superado todas las cuestiones y demostrado que "Quien quiere, puede, y quien quiere, debe".</p>
             <div class="relative z-20">
-                <button id="restart-btn" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn">REINICIAR &gt;&gt;</button>
+                <button id="restart-btn" style="pointer-events: auto; position: relative; z-index: 50;" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn">REINICIAR &gt;&gt;</button>
             </div>
         </div>
     </main>
@@ -154,30 +154,58 @@
     <script>
         let isAudioPlaying = false;
         const bgAudio = document.getElementById('bg-audio');
+        
         function toggleAudio() {
             const btn = document.getElementById('audio-btn');
-            if(isAudioPlaying) { bgAudio.pause(); isAudioPlaying = false; btn.innerText = "🎵 MÚSICA: OFF"; }
-            else { bgAudio.play().then(() => { isAudioPlaying = true; btn.innerText = "🔊 MÚSICA: ON"; }).catch(e => console.log(e)); }
+            if(isAudioPlaying) { 
+                bgAudio.pause(); 
+                isAudioPlaying = false; 
+                btn.innerText = "🎵 MÚSICA: OFF"; 
+            } else { 
+                bgAudio.play().then(() => { 
+                    isAudioPlaying = true; 
+                    btn.innerText = "🔊 MÚSICA: ON"; 
+                }).catch(e => console.log(e)); 
+            }
         }
 
-        // Enlaces directos por JavaScript (evita fallos de caché o inline onclick en GitHub Pages)
+        // Enlaces seguros mediante event listeners con DOMContentLoaded para GitHub Pages
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('start-btn').addEventListener('click', () => {
-                document.getElementById('screen-1').classList.add('hidden');
-                document.getElementById('screen-2').classList.remove('hidden');
-            });
+            const startBtn = document.getElementById('start-btn');
+            if (startBtn) {
+                startBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById('screen-1').classList.add('hidden');
+                    document.getElementById('screen-2').classList.remove('hidden');
+                });
+            }
 
-            document.getElementById('ready-btn').addEventListener('click', () => {
-                document.getElementById('screen-2').classList.add('hidden');
-                document.getElementById('screen-3').classList.remove('hidden');
-                initMaze();
-            });
+            const readyBtn = document.getElementById('ready-btn');
+            if (readyBtn) {
+                readyBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById('screen-2').classList.add('hidden');
+                    document.getElementById('screen-3').classList.remove('hidden');
+                    initMaze();
+                });
+            }
 
-            document.getElementById('q-btn').addEventListener('click', checkAnswer);
+            const qBtn = document.getElementById('q-btn');
+            if (qBtn) {
+                qBtn.addEventListener('click', checkAnswer);
+            }
 
-            document.getElementById('restart-btn').addEventListener('click', () => {
-                location.reload();
-            });
+            const restartBtn = document.getElementById('restart-btn');
+            if (restartBtn) {
+                restartBtn.addEventListener('click', () => {
+                    location.reload();
+                });
+            }
+
+            const audioBtn = document.getElementById('audio-btn');
+            if (audioBtn) {
+                audioBtn.addEventListener('click', toggleAudio);
+            }
         });
 
         // Banco de 8 preguntas ampliadas del Tema 1
