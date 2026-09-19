@@ -15,7 +15,7 @@
             background-size: 100% 4px, 6px 100%;
         }
         .arcade-glow { box-shadow: 0 0 15px rgba(34,211,238,0.4), inset 0 0 15px rgba(34,211,238,0.2); }
-        .arcade-glow-btn:hover { box-shadow: 0 0 15px rgba(250,204,21,0.9); }
+        .arcade-glow-btn:hover { box-shadow: 0 0 20px rgba(250,204,21,1); transform: scale(1.02); }
         @keyframes nurseWalk {
             0% { transform: translateX(0px); }
             50% { transform: translateX(25px) translateY(-3px); }
@@ -59,18 +59,18 @@
 
     <audio id="bg-audio" loop><source src="Coffee_and_Cartridges.mp3" type="audio/mpeg"></audio>
 
-    <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow z-10">
+    <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow z-20">
         <div class="flex items-center gap-3">
             <span class="inline-block w-4 h-4 bg-yellow-400 animate-pulse"></span>
             <h1 class="font-arcade text-xs sm:text-sm text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
         </div>
         <div class="flex items-center gap-2">
-            <button onclick="toggleAudio()" id="audio-btn" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-2 py-1 rounded">🎵 MÚSICA: OFF</button>
+            <button onclick="toggleAudio()" id="audio-btn" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-2 py-1 rounded cursor-pointer">🎵 MÚSICA: OFF</button>
             <div class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">TAPSD ARCADE</div>
         </div>
     </header>
 
-    <main class="max-w-3xl w-full mx-auto my-auto py-2 z-10">
+    <main class="max-w-3xl w-full mx-auto my-auto py-2 z-20 relative">
         <!-- PANTALLA 1 -->
         <div id="screen-1" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-8 text-center arcade-glow shadow-2xl space-y-6">
             <h2 class="font-arcade text-lg sm:text-xl text-cyan-100 leading-relaxed pt-2">ATENCIÓN SOCIOSANITARIA<br><span class="text-yellow-300 text-sm">EDICIÓN RETRO ARCADE</span></h2>
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div>
-                <button onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn">PULSA PARA COMENZAR &gt;&gt;</button>
+                <button id="start-btn" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition">PULSA PARA COMENZAR &gt;&gt;</button>
             </div>
         </div>
 
@@ -94,7 +94,7 @@
                 <p class="font-pixel text-2xl text-cyan-200">¿Estás preparada?</p>
             </div>
             <div>
-                <button onclick="goToScreen3()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn">¡ESTOY PREPARADA! &gt;&gt;</button>
+                <button id="ready-btn" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition">¡ESTOY PREPARADA! &gt;&gt;</button>
             </div>
         </div>
 
@@ -125,7 +125,7 @@
                 <h2 id="q-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">Cargando...</h2>
                 <div id="q-options" class="space-y-3"></div>
                 <div class="flex justify-end pt-2">
-                    <button id="q-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn">COMPROBAR &gt;&gt;</button>
+                    <button id="q-btn" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn">COMPROBAR &gt;&gt;</button>
                 </div>
             </div>
         </div>
@@ -133,7 +133,7 @@
         <!-- PANTALLA 4: VICTORIA CON FUEGOS ARTIFICIALES -->
         <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6 relative overflow-hidden">
             <!-- Contenedor de fuegos artificiales -->
-            <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none overflow-hidden z-10">
                 <div class="firework-particle" style="left: 20%; top: 60%; animation-delay: 0s;"></div>
                 <div class="firework-particle" style="left: 75%; top: 50%; animation-delay: 0.6s;"></div>
                 <div class="firework-particle" style="left: 45%; top: 70%; animation-delay: 1.2s;"></div>
@@ -141,15 +141,15 @@
                 <div class="firework-particle" style="left: 15%; top: 45%; animation-delay: 1.5s;"></div>
             </div>
 
-            <h2 class="font-arcade text-xl text-yellow-400 relative z-10">¡ENHORABUENA!</h2>
-            <p class="font-pixel text-2xl text-cyan-100 relative z-10">Has superado todas las cuestiones y demostrado que "Quien quiere, puede, y quien quiere, debe".</p>
-            <div class="relative z-10">
-                <button onclick="location.reload()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn">REINICIAR &gt;&gt;</button>
+            <h2 class="font-arcade text-xl text-yellow-400 relative z-20">¡ENHORABUENA!</h2>
+            <p class="font-pixel text-2xl text-cyan-100 relative z-20">Has superado todas las cuestiones y demostrado que "Quien quiere, puede, y quien quiere, debe".</p>
+            <div class="relative z-20">
+                <button id="restart-btn" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn">REINICIAR &gt;&gt;</button>
             </div>
         </div>
     </main>
 
-    <footer class="text-center py-3 font-pixel text-lg text-slate-500 z-10">MÓDULO TAPSD &bull; ARCADE EDITION</footer>
+    <footer class="text-center py-3 font-pixel text-lg text-slate-500 z-20">MÓDULO TAPSD &bull; ARCADE EDITION</footer>
 
     <script>
         let isAudioPlaying = false;
@@ -160,16 +160,25 @@
             else { bgAudio.play().then(() => { isAudioPlaying = true; btn.innerText = "🔊 MÚSICA: ON"; }).catch(e => console.log(e)); }
         }
 
-        function goToScreen2() {
-            document.getElementById('screen-1').classList.add('hidden');
-            document.getElementById('screen-2').classList.remove('hidden');
-        }
+        // Enlaces directos por JavaScript (evita fallos de caché o inline onclick en GitHub Pages)
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('start-btn').addEventListener('click', () => {
+                document.getElementById('screen-1').classList.add('hidden');
+                document.getElementById('screen-2').classList.remove('hidden');
+            });
 
-        function goToScreen3() {
-            document.getElementById('screen-2').classList.add('hidden');
-            document.getElementById('screen-3').classList.remove('hidden');
-            initMaze();
-        }
+            document.getElementById('ready-btn').addEventListener('click', () => {
+                document.getElementById('screen-2').classList.add('hidden');
+                document.getElementById('screen-3').classList.remove('hidden');
+                initMaze();
+            });
+
+            document.getElementById('q-btn').addEventListener('click', checkAnswer);
+
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                location.reload();
+            });
+        });
 
         // Banco de 8 preguntas ampliadas del Tema 1
         const questions = [
@@ -210,6 +219,7 @@
 
         function renderMaze() {
             const board = document.getElementById('pacman-board');
+            if(!board) return;
             board.innerHTML = '';
             for(let r=0; r<mapGrid.length; r++) {
                 for(let c=0; c<mapGrid[r].length; c++) {
@@ -271,7 +281,6 @@
             loadQuestion();
         }
 
-        // Función para barajar aleatoriamente un array (algoritmo Fisher-Yates)
         function shuffleArray(array) {
             let arr = [...array];
             for (let i = arr.length - 1; i > 0; i--) {
@@ -292,7 +301,6 @@
             document.getElementById('q-counter').innerText = `PREGUNTA ${currentQ + 1} / ${questions.length}`;
             document.getElementById('q-text').innerText = data.q;
 
-            // Mezclar opciones aleatoriamente y registrar el índice correcto nuevo
             currentShuffledOpts = shuffleArray(data.opts);
             currentCorrectIdx = currentShuffledOpts.indexOf(data.correctText);
 
