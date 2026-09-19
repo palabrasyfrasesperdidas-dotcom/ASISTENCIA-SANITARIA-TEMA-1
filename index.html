@@ -3,32 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test de Atención Sanitaria</title>
+    <title>TAPSD Arcade Edition - Tema 1: Prácticas Sociosanitarias</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Press Start 2P para la estética Arcade Retro -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        .font-arcade {
+            font-family: 'Press Start 2P', monospace;
+        }
+        .font-pixel {
+            font-family: 'VT323', monospace;
+        }
+        body {
+            background-color: #05050a;
+            background-image: 
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 6px 100%;
+        }
+        .arcade-glow {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.4), inset 0 0 15px rgba(34, 211, 238, 0.2);
+        }
+        .arcade-glow-btn:hover {
+            box-shadow: 0 0 12px rgba(250, 204, 21, 0.8);
+        }
+    </style>
 </head>
-<body class="bg-slate-100 min-h-screen flex flex-col justify-between font-sans">
+<body class="min-h-screen flex flex-col justify-between text-cyan-400 selection:bg-yellow-400 selection:text-black p-4">
 
-    <!-- Audio de fondo en bucle (se reproduce automáticamente) -->
+    <!-- Audio de fondo en bucle -->
     <audio autoplay loop hidden>
         <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
-    <!-- Header -->
-    <header class="bg-emerald-700 text-white shadow-md py-4 px-6">
-        <div class="max-w-3xl mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">Atención Sanitaria - Evaluador</h1>
-            <span id="progress-indicator" class="text-sm bg-emerald-800 px-3 py-1 rounded-full">Pregunta 1 de 10</span>
+    <!-- Header Arcade -->
+    <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex flex-col sm:flex-row justify-between items-center gap-4 arcade-glow">
+        <div class="flex items-center gap-3">
+            <span class="inline-block w-4 h-4 bg-yellow-400 animate-pulse"></span>
+            <h1 class="font-arcade text-xs sm:text-sm tracking-wider text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
+        </div>
+        <div id="progress-indicator" class="font-pixel text-xl sm:text-2xl text-cyan-300 bg-cyan-950/60 px-4 py-1 border border-cyan-700 rounded">
+            FASE 1 / 10
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-3xl w-full mx-auto p-4 sm:p-6 my-auto">
+    <main class="max-w-3xl w-full mx-auto my-auto py-2">
         
-        <!-- Card de Pregunta -->
-        <div id="quiz-card" class="bg-white rounded-2xl shadow-lg p-6 sm:p-8 transition-all">
-            <div id="question-container">
-                <h2 id="question-text" class="text-lg sm:text-xl font-semibold text-slate-800 mb-6">Cargando pregunta...</h2>
+        <!-- Card de Pregunta Estilo Consola Retro -->
+        <div id="quiz-card" class="bg-slate-950/90 border-2 border-cyan-500 rounded-xl p-6 sm:p-8 arcade-glow shadow-2xl relative">
+            <div class="absolute -top-3 left-6 bg-black px-2 font-arcade text-[10px] text-cyan-400 border border-cyan-500">
+                PANTALLA DE PREGUNTA
+            </div>
+
+            <div id="question-container" class="mt-2">
+                <h2 id="question-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 mb-6 leading-relaxed tracking-wide">
+                    Cargando datos del sistema...
+                </h2>
                 <div id="options-container" class="space-y-3">
                     <!-- Opciones generadas dinámicamente -->
                 </div>
@@ -36,131 +69,189 @@
 
             <!-- Botón Siguiente -->
             <div class="mt-8 flex justify-end">
-                <button id="next-btn" onclick="handleNextQuestion()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-2.5 rounded-xl shadow transition hidden cursor-pointer">
-                    Siguiente pregunta
+                <button id="next-btn" onclick="handleNextQuestion()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 transition hidden cursor-pointer arcade-glow-btn">
+                    SIGUIENTE &gt;&gt;
                 </button>
             </div>
         </div>
 
         <!-- Pantalla de Resultados (Oculta por defecto) -->
-        <div id="result-card" class="bg-white rounded-2xl shadow-lg p-8 text-center hidden">
-            <h2 class="text-2xl font-bold text-slate-800 mb-4">¡Test completado!</h2>
-            <p class="text-slate-600 mb-6">Has respondido a todas las preguntas del bloque actual.</p>
-            <div class="text-4xl font-extrabold text-emerald-600 mb-6" id="score-text">0 / 10</div>
-            <button onclick="restartQuiz()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-8 py-3 rounded-xl shadow transition cursor-pointer">
-                Realizar otro test
-            </button>
+        <div id="result-card" class="bg-slate-950/90 border-2 border-yellow-500 rounded-xl p-8 text-center hidden shadow-2xl">
+            <h2 class="font-arcade text-sm sm:text-base text-yellow-400 mb-4 animate-bounce">¡MISIÓN CUMPLIDA!</h2>
+            <p class="font-pixel text-xl text-slate-300 mb-6">Has superado el test práctico del Tema 1.</p>
+            <div class="font-arcade text-3xl sm:text-4xl text-cyan-300 mb-8 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8" id="score-text">
+                0 / 10
+            </div>
+            <div>
+                <button onclick="restartQuiz()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">
+                    JUGAR DE NUEVO
+                </button>
+            </div>
         </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="text-center py-4 text-xs text-slate-500">
-        Módulo de Atención Sanitaria &bull; Formación Profesional
+    <!-- Footer Retro -->
+    <footer class="text-center py-3 font-pixel text-lg text-slate-500 tracking-wider">
+        MÓDULO TAPSD &bull; ARCADE EDITION
     </footer>
 
+    <span class="hidden">
+        <!-- Citations placeholder for compliance if needed -->
+    </span>
+
     <script>
-        // Banco de preguntas ceñido estrictamente al temario práctico (Atención Sanitaria)
+        // Banco de preguntas práctico basado en todo el Tema 1 (sin autores ni teorías explícitas)
         const questionBank = [
             {
-                q: "Al medir la temperatura axilar a un paciente encamado, ¿cuánto tiempo se recomienda mantener el termómetro digital clásico colocado correctamente?",
+                q: "A la hora de planificar actividades para un usuario, debemos entender a la persona como un ser multidimensional que comprende las siguientes esferas:",
                 options: [
-                    "Hasta que emita la señal acústica característica.",
-                    "Exactamente 30 segundos.",
-                    "Al menos 5 minutos fijos.",
-                    "10 minutos obligatorios."
+                    "Biológica, psíquica y social.",
+                    "Únicamente física y económica.",
+                    "Motora, intelectual y laboral.",
+                    "Genética, clínica y farmacológica."
                 ],
                 correct: 0
             },
             {
-                q: "Si al realizar la técnica de desinfección de manos con solución hidroalcohólica observamos suciedad visible en las palmas, ¿qué procedimiento debemos seguir según los protocolos higiénico-sanitarios?",
+                q: "Cuando en un centro residencial se programan actividades dirigidas a despertar las capacidades motrices y los sentidos, especialmente en niños o colectivos específicos, nos referimos a:",
                 options: [
-                    "Aplicar el doble de gel hidroalcohólico sin retirar la suciedad.",
-                    "Lavar las manos previamente con agua y jabón y luego secarlas bien.",
-                    "Continuar con el proceso de fricción habitual ignorando la suciedad.",
-                    "Utilizar guantes estériles directamente."
-                ],
-                correct: 1
-            },
-            {
-                q: "¿Cuál es el valor considerado como presión arterial sistólica normal (estándar clínico en reposo para adultos)?",
-                options: [
-                    "Menor de 120 mmHg.",
-                    "Entre 140 y 160 mmHg.",
-                    "Exactamente 150 mmHg.",
-                    "Menor de 80 mmHg."
+                    "Cuidados de estimulación.",
+                    "Cuidados de compensación.",
+                    "Cuidados de sosiego.",
+                    "Cuidados de autoimagen."
                 ],
                 correct: 0
             },
             {
-                q: "Durante la movilización de un paciente encamado para evitar úlceras por presión (UPP), ¿con qué frecuencia estándar se deben realizar los cambios posturales?",
+                q: "Si un profesional aplica intervenciones orientadas a calmar el dolor y aportar serenidad y liberación de tensiones al usuario, está prestando:",
                 options: [
-                    "Cada 8 horas.",
-                    "Cada 2 a 3 horas.",
-                    "Una vez al día por la mañana.",
-                    "Únicamente cuando el paciente lo solicite."
-                ],
-                correct: 1
-            },
-            {
-                q: "Ante una situación de obstrucción completa de la vía aérea por cuerpo extraño (OVACE) en un adulto consciente, la maniobra inicial de primeros auxilios recomendada es:",
-                options: [
-                    "Dar compresiones abdominales continuas (Maniobra de Heimlich).",
-                    "Dar 5 golpes interescapulares firmes seguidos de compresiones abdominales.",
-                    "Introducir los dedos a ciegas en la boca para extraer el objeto.",
-                    "Colocar al paciente en posición lateral de seguridad inmediatamente."
-                ],
-                correct: 1
-            },
-            {
-                q: "En la técnica de higiene de un paciente encamado, ¿qué zona corporal debe lavarse en primer lugar para mantener los principios de asepsia correctos?",
-                options: [
-                    "La zona genital y anal.",
-                    "Las extremidades inferiores.",
-                    "Los ojos y la cara (sin jabón en los ojos).",
-                    "El tórax y el abdomen."
-                ],
-                correct: 2
-            },
-            {
-                q: "Al preparar un carro de curas, ¿cómo debe clasificarse el material de desecho biocontaminado o punzante (como agujas usadas)?",
-                options: [
-                    "En el contenedor general de residuos urbanos.",
-                    "En el contenedor específico rígido de riesgos biológicos y punzantes.",
-                    "En una bolsa de plástico negra común bien cerrada.",
-                    "Directamente en el lavabo con abundante agua."
-                ],
-                correct: 1
-            },
-            {
-                q: "Al realizar la técnica de traslado desde la cama a una silla de ruedas, lo primero que debemos comprobar por seguridad es:",
-                options: [
-                    "Que las ruedas de la silla estén frenadas y los reposapiés retirados o abatidos.",
-                    "Que la silla sea de color azul.",
-                    "Que el paciente tenga los zapatos puestos obligatoriamente.",
-                    "Que la ventana de la habitación esté abierta."
+                    "Cuidados de sosiego.",
+                    "Cuidados de estimulación.",
+                    "Cuidados de conservación.",
+                    "Cuidados de confirmación."
                 ],
                 correct: 0
             },
             {
-                q: "¿Qué nombre recibe el pulso periférico que se palpa en la zona de la muñeca, sobre la arteria radial?",
+                q: "Cuando realizamos actividades asistenciales destinadas a suplir aquellas funciones o capacidades que el usuario no adquirió o perdió, empleamos:",
                 options: [
-                    "Pulso carotídeo.",
-                    "Pulso radial.",
-                    "Pulso apical.",
-                    "Pulso pedio."
+                    "Cuidados de compensación.",
+                    "Cuidados de conservación de la vida.",
+                    "Cuidados de estimulación sensorial.",
+                    "Cuidados de autoimagen."
                 ],
-                correct: 1
+                correct: 0
             },
             {
-                q: "En la administración de medicación por vía tópica cutánea, es una buena práctica clínica:",
+                q: "Para mantener las capacidades adquiridas y asegurar la autonomía el mayor tiempo posible en personas dependientes, el tipo de cuidado indicado es el de:",
                 options: [
-                    "Extender la crema con la mano descubierta sin protección.",
-                    "Utilizar guantes limpios y aplicar la pomada realizando un suave masaje según prescripción.",
-                    "Mezclar varios medicamentos tópicos en el mismo envase antes de aplicarlos.",
-                    "Limpiar la zona previamente con alcohol de 96 grados de forma enérgica."
+                    "Conservación y continuidad de la vida.",
+                    "Compensación total de funciones.",
+                    "Estimulación psicomotriz infantil.",
+                    "Sosiego y alivio del dolor agudo."
                 ],
-                correct: 1
+                correct: 0
+            },
+            {
+                q: "Al adecuar el domicilio de una persona mayor con movilidad reducida, ¿cómo deben ser preferiblemente los suelos para prevenir accidentes?",
+                options: [
+                    "Antideslizantes, evitando alfombras u objetos que entorpezcan el paso.",
+                    "De parqué encerado muy brillante y pulido.",
+                    "Cubiertos completamente de alfombras gruesas para amortiguar caídas.",
+                    "De moqueta suelta sin fijar al suelo."
+                ],
+                correct: 0
+            },
+            {
+                q: "Respecto a la climatización y regulación de la temperatura en la vivienda de un usuario dependiente, se desaconseja expresamente el uso de:",
+                options: [
+                    "Braseros tradicionales, debido al alto riesgo de intoxicación por monóxido de carbono.",
+                    "Sistemas de aire acondicionado con control digital de temperatura.",
+                    "Radiadores de aceite eléctricos homologados.",
+                    "Humidificadores ambientales en estancias secas."
+                ],
+                correct: 0
+            },
+            {
+                q: "En relación con las condiciones de iluminación en el hogar de un usuario anciano, esta debe asegurar que:",
+                options: [
+                    "Exista luz suficiente para ver sin forzar la vista y que los interruptores sean accesibles desde la cama o la entrada.",
+                    "Las bombillas sean de intensidad muy baja para no molestar la vista.",
+                    "Los interruptores estén situados únicamente en el exterior de las habitaciones.",
+                    "Se dependa exclusivamente de la luz natural exterior."
+                ],
+                correct: 0
+            },
+            {
+                q: "Dentro de las estrategias para promover los autocuidados en los usuarios, una de las líneas clave consiste en:",
+                options: [
+                    "Desarrollar la autoestima y favorecer la responsabilidad individual y comunitaria.",
+                    "Imponer normas estrictas de cumplimiento obligatorio sin consultar al usuario.",
+                    "Sustituir por completo al usuario en todas sus decisiones cotidianas.",
+                    "Evitar cualquier tipo de participación grupal o social."
+                ],
+                correct: 0
+            },
+            {
+                q: "Cuál es una de las herramientas fundamentales que utiliza el profesional de atención sociosanitaria para educar, orientar y reforzar los hábitos de autocuidado en los usuarios:",
+                options: [
+                    "La educación para la salud.",
+                    "La restricción farmacológica nocturna.",
+                    "El aislamiento preventivo domiciliario.",
+                    "La simplificación administrativa de historiales."
+                ],
+                correct: 0
+            },
+            {
+                q: "En cuanto a la arquitectura de la vivienda para facilitar el tránsito de personas con productos de apoyo o sillas de ruedas, se recomienda:",
+                options: [
+                    "Disponer de puertas amplias, pasamanos y rampas alternativas si hay escalones.",
+                    "Mantener umbrales de puertas elevados para delimitar las habitaciones.",
+                    "Sustituir las puertas por cortinas opacas para ganar espacio.",
+                    "Instalar escaleras de caracol para optimizar los metros útiles."
+                ],
+                correct: 0
+            },
+            {
+                q: "La competencia general del título profesional de atención a personas en situación de dependencia se orienta principalmente a:",
+                options: [
+                    "Atender a las personas en el ámbito domiciliario e institucional para mantener y mejorar su calidad de vida.",
+                    "Realizar intervenciones quirúrgicas de alta complejidad en hospitales.",
+                    "Gestionar exclusivamente los recursos financieros de centros sociales.",
+                    "Impartir docencia universitaria en ciencias de la salud."
+                ],
+                correct: 0
+            },
+            {
+                q: "Cuando un profesional utiliza la comunicación no verbal y apoya la construcción de la imagen personal del usuario, está prestando cuidados centrados en:",
+                options: [
+                    "La autoimagen.",
+                    "El sosiego absoluto.",
+                    "La estimulación motora básica.",
+                    "La compensación orgánica."
+                ],
+                correct: 0
+            },
+            {
+                q: "El concepto actual de salud impulsado en los modelos asistenciales se aleja de la mera ausencia de enfermedad para concebirse como:",
+                options: [
+                    "Un estado completo de bienestar físico, psíquico, social y dinámico con el entorno.",
+                    "Una condición estática invariable determinada únicamente por la genética.",
+                    "Un indicador puramente económico de productividad laboral.",
+                    "La resistencia biológica exclusiva frente a infecciones agudas."
+                ],
+                correct: 0
+            },
+            {
+                q: "Durante la valoración inicial de un plan de cuidados individualizado, la fase de la enfermedad en la que esta todavía no se manifiesta clínicamente se denomina:",
+                options: [
+                    "Periodo prepatogénico.",
+                    "Periodo de enfermedad manifiesta.",
+                    "Fase de secuelas incapacitantes.",
+                    "Estadio terminal de dependencia."
+                ],
+                correct: 0
             }
         ];
 
@@ -169,6 +260,7 @@
         let score = 0;
         let selectedOptionIndex = null;
 
+        // Inicializar el test seleccionando 10 preguntas aleatorias
         function initQuiz() {
             const shuffledBank = [...questionBank].sort(() => Math.random() - 0.5);
             currentQuizQuestions = shuffledBank.slice(0, 10);
@@ -180,15 +272,19 @@
             loadQuestion();
         }
 
+        // Cargar pregunta y mezclar aleatoriamente las opciones
         function loadQuestion() {
             selectedOptionIndex = null;
             document.getElementById('next-btn').classList.add('hidden');
             
             const qData = currentQuizQuestions[currentIndex];
-            document.getElementById('progress-indicator').innerText = `Pregunta ${currentIndex + 1} de ${currentQuizQuestions.length}`;
+            document.getElementById('progress-indicator').innerText = `FASE ${currentIndex + 1} / ${currentQuizQuestions.length}`;
             document.getElementById('question-text').innerText = qData.q;
 
+            // Mapear opciones con índice original para rastrear la correcta
             let indexedOptions = qData.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
+            
+            // Aleatorizar el orden de las respuestas en cada carga
             indexedOptions.sort(() => Math.random() - 0.5);
 
             const optionsContainer = document.getElementById('options-container');
@@ -196,26 +292,29 @@
 
             indexedOptions.forEach((item) => {
                 const button = document.createElement('button');
-                button.className = "w-full text-left p-4 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition font-medium text-slate-700 cursor-pointer flex items-center justify-between";
-                button.innerHTML = `<span>${item.text}</span>`;
+                button.className = "w-full text-left font-pixel text-xl sm:text-2xl p-4 rounded-lg border-2 border-cyan-800 bg-black/60 text-cyan-300 hover:border-yellow-400 hover:bg-cyan-950/80 hover:text-yellow-300 transition cursor-pointer flex items-center justify-between shadow";
+                button.innerHTML = `<span>&gt; ${item.text}</span>`;
                 
                 button.onclick = () => selectOption(button, item.originalIndex, qData.correct);
                 optionsContainer.appendChild(button);
             });
         }
 
+        // Seleccionar opción
         function selectOption(buttonElement, originalIdx, correctIdx) {
             const allButtons = document.getElementById('options-container').children;
             
             for (let btn of allButtons) {
-                btn.classList.remove('border-emerald-600', 'bg-emerald-50', 'ring-2', 'ring-emerald-600');
+                btn.classList.remove('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
             }
 
-            buttonElement.classList.add('border-emerald-600', 'bg-emerald-50', 'ring-2', 'ring-emerald-600');
+            buttonElement.classList.add('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
             selectedOptionIndex = originalIdx;
+            
             document.getElementById('next-btn').classList.remove('hidden');
         }
 
+        // Siguiente pregunta (Control estricto de las 10 preguntas)
         function handleNextQuestion() {
             if (selectedOptionIndex === null) return;
 
@@ -233,12 +332,14 @@
             }
         }
 
+        // Mostrar resultados
         function showResults() {
             document.getElementById('quiz-card').classList.add('hidden');
             document.getElementById('result-card').classList.remove('hidden');
             document.getElementById('score-text').innerText = `${score} / ${currentQuizQuestions.length}`;
         }
 
+        // Reiniciar
         function restartQuiz() {
             initQuiz();
         }
