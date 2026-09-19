@@ -73,7 +73,6 @@
             text-align: center;
         }
 
-        /* Contenedor del Personaje Pixel Art 80s con Animación */
         .arcade-image-container {
             position: relative;
             width: 100%;
@@ -139,7 +138,7 @@
             51%, 100% { opacity: 0.2; }
         }
 
-        /* Ventana Intermedia con tipografía Arcade total */
+        /* Ventana Intermedia con tipografía Arcade */
         #story-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -200,7 +199,6 @@
             background: #ffcc00;
         }
 
-        /* Contenedor del Juego Principal */
         #game-container {
             display: none;
             flex-direction: column;
@@ -235,7 +233,6 @@
             margin-top: 10px;
         }
 
-        /* Modal de Preguntas Estilo Arcade */
         #quiz-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -306,7 +303,6 @@
             min-height: 20px;
         }
 
-        /* Pantalla Final / Victoria */
         #victory-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -355,7 +351,7 @@
         </div>
     </div>
 
-    <!-- Ventana Intermedia con Relato (Estilo Arcade Total) -->
+    <!-- Ventana Intermedia con Relato (Estilo Arcade) -->
     <div id="story-modal">
         <div class="story-box">
             <h3>MISIÓN TAPSD</h3>
@@ -376,7 +372,7 @@
         <div class="instructions-hud">Usa las FLECHAS del teclado para guiar a la Enfermera por el laberinto</div>
     </div>
 
-    <!-- Modal de Preguntas del Tema 1 -->
+    <!-- Modal de Preguntas -->
     <div id="quiz-modal">
         <div class="quiz-box">
             <h3 id="quiz-title">PREGUNTA DE EVALUACIÓN TAPSD</h3>
@@ -406,7 +402,6 @@
         let gameStarted = false;
         let score = 0;
 
-        // Configuración del Jugador (Enfermera)
         let player = {
             x: 40,
             y: 40,
@@ -416,15 +411,16 @@
             dy: 0
         };
 
-        // Fantasma enemigo con velocidad muy moderada y justa para el laberinto
+        // Fantasma configurado con velocidad baja y dirección controlada en laberinto
         let ghost = {
             x: 400,
             y: 400,
             size: 20,
-            speed: 0.9
+            speed: 1.2,
+            dx: 0,
+            dy: -1.2
         };
 
-        // 6 Bolas / Objetivos repartidos por los pasillos estilo laberinto clásico
         let objectives = [
             { x: 140, y: 70, collected: false, id: 0 },
             { x: 340, y: 70, collected: false, id: 1 },
@@ -434,13 +430,12 @@
             { x: 340, y: 410, collected: false, id: 5 }
         ];
 
-        // Estructura de laberinto clásico con pasillos entrelazados (estilo Pac-Man)
+        // Muros estrictos del laberinto clásico
         const walls = [
             { x: 0, y: 0, w: 480, h: 20 },
             { x: 0, y: 460, w: 480, h: 20 },
             { x: 0, y: 0, w: 20, h: 480 },
             { x: 460, y: 0, w: 20, h: 480 },
-            // Bloques internos del laberinto
             { x: 60, y: 60, w: 60, h: 60 },
             { x: 160, y: 60, w: 160, h: 30 },
             { x: 360, y: 60, w: 60, h: 60 },
@@ -453,7 +448,6 @@
             { x: 160, y: 380, w: 160, h: 30 }
         ];
 
-        // Preguntas basadas estrictamente en el Tema 1
         const questions = [
             {
                 title: "PREGUNTA 1: Plan de Cuidados",
@@ -513,7 +507,6 @@
             }, 300);
         }
 
-        // Controles de Teclado
         window.addEventListener('keydown', e => {
             if (!gameStarted || activeQuestionIndex !== null) return;
             if (e.key === 'ArrowUp') { player.dx = 0; player.dy = -player.speed; }
@@ -542,19 +535,49 @@
             if (!gameStarted) return;
 
             if (activeQuestionIndex === null) {
-                // Movimiento del jugador con colisión de paredes
+                // Movimiento jugador
                 let nextX = player.x + player.dx;
                 let nextY = player.y + player.dy;
                 if (!checkWallCollision(nextX, player.y, player.size)) player.x = nextX;
                 if (!checkWallCollision(player.x, nextY, player.size)) player.y = nextY;
 
-                // Movimiento fluido y suave del fantasma
-                if (ghost.x < player.x) ghost.x += ghost.speed;
-                if (ghost.x > player.x) ghost.x -= ghost.speed;
-                if (ghost.y < player.y) ghost.y += ghost.speed;
-                if (ghost.y > player.y) ghost.y -= ghost.speed;
+                // IA Estricta de Laberinto para el Fantasma (respeta pasillos y paredes)
+                let nextGX = ghost.x + ghost.dx;
+                let nextGY = ghost.y + ghost.dy;
 
-                // Comprobar colisión con los 6 objetivos (bolas)
+                if (checkWallCollision(nextGX, nextGY, ghost.size)) {
+                    // Si choca con un muro, elige una dirección válida aleatoria o cambia de rumbo
+                    const directions = [
+                        {dx: 0, dy: -ghost.speed},
+                        {dx: 0, dy: ghost.speed},
+                        {dx: -ghost.speed, dy: 0},
+                        {dx: ghost.speed, dy: 0}
+                    ];
+                    const validDirs = directions.filter(d => !checkWallCollision(ghost.x + d.dx, ghost.y + d.dy, ghost.size));
+                    if (validDirs.length > 0) {
+                        const chosen = validDirs[Math.floor(Math.random() * validDirs.length)];
+                        ghost.dx = chosen.dx;
+                        ghost.dy = chosen.dy;
+                    } else {
+                        ghost.dx = -ghost.dx;
+                        ghost.dy = -ghost.dy;
+                    }
+                } else {
+                    ghost.x = nextGX;
+                    ghost.y = nextGY;
+                    // En las intersecciones puede cambiar opcionalmente hacia donde esté el jugador de forma suave
+                    if (Math.random() < 0.03) {
+                        if (Math.abs(player.x - ghost.x) > Math.abs(player.y - ghost.y)) {
+                            ghost.dx = player.x > ghost.x ? ghost.speed : -ghost.speed;
+                            ghost.dy = 0;
+                        } else {
+                            ghost.dy = player.y > ghost.y ? ghost.speed : -ghost.speed;
+                            ghost.dx = 0;
+                        }
+                    }
+                }
+
+                // Colisión con objetivos
                 objectives.forEach(obj => {
                     if (!obj.collected) {
                         let dist = Math.hypot(player.x - obj.x, player.y - obj.y);
@@ -573,7 +596,6 @@
         function drawGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Dibujar paredes del laberinto estilo arcade clásico (azul oscuro)
             ctx.fillStyle = '#111133';
             for (let w of walls) {
                 ctx.fillRect(w.x, w.y, w.w, w.h);
@@ -581,7 +603,6 @@
                 ctx.strokeRect(w.x, w.y, w.w, w.h);
             }
 
-            // Dibujar las 6 bolas / objetivos pendientes
             objectives.forEach(obj => {
                 if (!obj.collected) {
                     ctx.fillStyle = '#ffcc00';
@@ -595,7 +616,7 @@
                 }
             });
 
-            // Dibujar Enfermera (Jugador)
+            // Enfermera
             ctx.fillStyle = '#00ffc8';
             ctx.fillRect(player.x, player.y, player.size, player.size);
             ctx.fillStyle = '#ffffff';
@@ -603,7 +624,7 @@
             ctx.fillStyle = '#ff3366';
             ctx.fillRect(player.x + 8, player.y - 4, 4, 6);
 
-            // Dibujar Fantasma enemigo
+            // Fantasma
             ctx.fillStyle = '#ff3366';
             ctx.beginPath();
             ctx.arc(ghost.x + 10, ghost.y + 10, 10, Math.PI, 0, false);
