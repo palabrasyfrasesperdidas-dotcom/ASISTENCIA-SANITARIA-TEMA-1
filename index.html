@@ -1,501 +1,495 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAPSD Arcade Edition - Tema 1: Práctica Sociosanitaria</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Press Start 2P y VT323 para estética retro -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <style>
-        .font-arcade {
-            font-family: 'Press Start 2P', monospace;
-        }
-        .font-pixel {
-            font-family: 'VT323', monospace;
-        }
-        body {
-            background-color: #05050a;
-            background-image: 
-                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            background-size: 100% 4px, 6px 100%;
-        }
-        .arcade-glow {
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.4), inset 0 0 15px rgba(34, 211, 238, 0.2);
-        }
-        .arcade-glow-btn:hover {
-            box-shadow: 0 0 15px rgba(250, 204, 21, 0.9);
-        }
-        @keyframes nurseWalk {
-            0% { transform: translateX(0px); }
-            50% { transform: translateX(25px) translateY(-3px); }
-            100% { transform: translateX(50px); }
-        }
-        .nurse-anim {
-            animation: nurseWalk 1.5s infinite alternate ease-in-out;
-        }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col justify-between text-cyan-400 selection:bg-yellow-400 selection:text-black p-4">
+<!-- Audio de fondo en bucle con controles de activación por políticas de navegador -->
+<audio id="bg-audio" loop>
+    <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+</audio>
 
-    <!-- Audio de fondo en bucle -->
-    <audio id="bg-audio" autoplay loop hidden>
-        <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
-        Tu navegador no soporta el elemento de audio.
-    </audio>
-
-    <!-- HEADER GENERAL -->
-    <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow">
-        <div class="flex items-center gap-3">
-            <span class="inline-block w-4 h-4 bg-yellow-400 animate-pulse"></span>
-            <h1 class="font-arcade text-xs sm:text-sm tracking-wider text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
-        </div>
+<!-- HEADER GENERAL -->
+<header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow">
+    <div class="flex items-center gap-3">
+        <span class="inline-block w-4 h-4 bg-yellow-400 animate-pulse"></span>
+        <h1 class="font-arcade text-xs sm:text-sm tracking-wider text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
+    </div>
+    <div class="flex items-center gap-3">
+        <button id="audio-toggle" onclick="toggleAudio()" class="font-pixel text-xs bg-cyan-900 hover:bg-cyan-800 text-cyan-200 px-2.5 py-1 border border-cyan-600 rounded transition cursor-pointer" title="Activar/Silenciar música">
+            🔊 MÚSICA: OFF
+        </button>
         <div id="header-status" class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">
             TAPSD ARCADE
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- MAIN CONTAINER (PANTALLAS) -->
-    <main class="max-w-3xl w-full mx-auto my-auto py-2">
+<!-- MAIN CONTAINER (PANTALLAS) -->
+<main class="max-w-3xl w-full mx-auto my-auto py-2">
 
-        <!-- ================= PANTALLA 1: INICIO CON ENFERMERA ARCADE ================= -->
-        <div id="screen-1" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-8 text-center arcade-glow shadow-2xl space-y-6">
-            <div class="font-arcade text-xs text-yellow-400 tracking-widest animate-pulse">INSERT COIN TO START</div>
-            
-            <h2 class="font-arcade text-lg sm:text-xl text-cyan-100 leading-relaxed">
-                ATENCIÓN SOCIOSANITARIA<br><span class="text-yellow-300 text-sm">EDICIÓN RETRO ARCADE</span>
-            </h2>
+    <!-- ================= PANTALLA 1: INICIO CON ENFERMERA ARCADE ================= -->
+    <div id="screen-1" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-8 text-center arcade-glow shadow-2xl space-y-6">
+        
+        <h2 class="font-arcade text-lg sm:text-xl text-cyan-100 leading-relaxed pt-2">
+            ATENCIÓN SOCIOSANITARIA<br><span class="text-yellow-300 text-sm">EDICIÓN RETRO ARCADE</span>
+        </h2>
 
-            <!-- Sprite animado de la enfermera -->
-            <div class="py-6 flex justify-center items-center">
-                <div class="nurse-anim bg-cyan-950/80 border-2 border-cyan-400 p-6 rounded-xl flex flex-col items-center shadow-lg">
-                    <span class="text-5xl mb-2">👩‍⚕️💊</span>
-                    <span class="font-pixel text-xl text-yellow-300">&gt; NURSE.EXE READY</span>
-                </div>
-            </div>
-
-            <div>
-                <button onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">
-                    EMPEZAR AVENTURA &gt;&gt;
-                </button>
+        <!-- Sprite animado de la enfermera -->
+        <div class="py-6 flex justify-center items-center">
+            <div class="nurse-anim bg-cyan-950/80 border-2 border-cyan-400 p-6 rounded-xl flex flex-col items-center shadow-lg">
+                <span class="text-5xl mb-2">👩‍⚕️💊</span>
+                <span class="font-pixel text-xl text-yellow-300">> NURSE.EXE READY</span>
             </div>
         </div>
 
-        <!-- ================= PANTALLA 2: LEMA MOTIVACIONAL ================= -->
-        <div id="screen-2" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6">
-            <div class="font-arcade text-xs text-cyan-400 tracking-widest">MISIÓN 0: PREPARACIÓN</div>
-            
-            <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg">
-                <p class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">
-                    Estudiando para ser una profesional en <span class="text-yellow-300">Atención a Personas Dependientes (TAPSD)</span> y vas a demostrar que es cierto el lema que dice:
-                </p>
-                <p class="font-arcade text-sm sm:text-base text-yellow-400 my-6 tracking-wide bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">
-                    "Quien quiere, puede, y quien quiere, debe"
-                </p>
-                <p class="font-pixel text-2xl text-cyan-200">
-                    ¿Estás preparada para el reto?
-                </p>
-            </div>
+        <div>
+            <button onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">
+                PULSA PARA COMENZAR >>
+            </button>
+        </div>
+    </div>
 
-            <div>
-                <button onclick="goToScreen3()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">
-                    ¡ESTOY PREPARADA! &gt;&gt;
-                </button>
-            </div>
+    <!-- ================= PANTALLA 2: LEMA MOTIVACIONAL ================= -->
+    <div id="screen-2" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6">
+        <div class="font-arcade text-xs text-cyan-400 tracking-widest">MISIÓN 0: PREPARACIÓN</div>
+        
+        <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg">
+            <p class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">
+                Estudiando para ser una profesional en <span class="text-yellow-300">Atención a Personas Dependientes (TAPSD)</span> y vas a demostrar que es cierto el lema que dice:
+            </p>
+            <p class="font-arcade text-sm sm:text-base text-yellow-400 my-6 tracking-wide bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">
+                "Quien quiere, puede, y quien quiere, debe"
+            </p>
+            <p class="font-pixel text-2xl text-cyan-200">
+                ¿Estás preparada para el reto?
+            </p>
         </div>
 
-        <!-- ================= PANTALLA 3: LABERINTO TIPO COMECOCOS & PREGUNTAS ================= -->
-        <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl">
-            
-            <!-- Vista de Laberinto / Mapa de Hitos -->
-            <div id="maze-view" class="space-y-6">
-                <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
-                    <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
-                    <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITO 1 / 10</span>
-                </div>
-
-                <p class="font-pixel text-xl text-center text-cyan-200">
-                    Guía a la enfermera a través del laberinto para alcanzar el siguiente hito de conocimiento:
-                </p>
-
-                <!-- Cuadrícula del Laberinto estilo Comecocos -->
-                <div class="bg-black border-2 border-cyan-600 p-4 rounded-xl flex flex-col items-center justify-center gap-4">
-                    <div id="pacman-grid" class="grid grid-cols-5 gap-3 sm:gap-4 my-2">
-                        <!-- Generado por JS -->
-                    </div>
-                    <div class="font-pixel text-lg text-yellow-400 animate-pulse" id="maze-status-text">
-                        &gt; Haz clic en el hito activo para desbloquear la pregunta
-                    </div>
-                </div>
-            </div>
-
-            <!-- Panel de Pregunta (Se activa al pulsar el hito del laberinto) -->
-            <div id="question-panel" class="hidden space-y-6">
-                <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
-                    <span class="text-yellow-300" id="question-counter-label">PREGUNTA 1 / 10</span>
-                    <span class="text-cyan-400">MODO EXAMEN</span>
-                </div>
-
-                <h2 id="question-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed tracking-wide">
-                    Cargando pregunta...
-                </h2>
-
-                <div id="options-container" class="space-y-3">
-                    <!-- Opciones -->
-                </div>
-
-                <!-- Feedback de error (Upss) -->
-                <div id="error-feedback" class="hidden bg-red-950/80 border-2 border-red-500 p-4 rounded-lg text-center animate-bounce">
-                    <p class="font-arcade text-xs text-red-300 mb-2">¡UPSS LO SIENTO!</p>
-                    <p class="font-pixel text-xl text-white">Vuelve a intentarlo en el laberinto.</p>
-                </div>
-
-                <div class="flex justify-end pt-2">
-                    <button id="submit-ans-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 transition hidden cursor-pointer arcade-glow-btn">
-                        COMPROBAR &gt;&gt;
-                    </button>
-                </div>
-            </div>
-
+        <div>
+            <button onclick="goToScreen3()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">
+                ¡ESTOY PREPARADA! >>
+            </button>
         </div>
+    </div>
 
-        <!-- ================= PANTALLA 4: VICTORIA / FUEGOS ARTIFICIALES ================= -->
-        <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6 relative overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none flex justify-around items-center opacity-30 text-4xl animate-pulse">
-                🎆 ✨ 🎇 🌟 🎆 ✨ 🎇
+    <!-- ================= PANTALLA 3: LABERINTO TIPO COMECOCOS & PREGUNTAS ================= -->
+    <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl">
+        
+        <!-- Vista de Laberinto / Mapa de Hitos -->
+        <div id="maze-view" class="space-y-6">
+            <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
+                <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
+                <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITO 1 / 10</span>
             </div>
-            
-            <h2 class="font-arcade text-lg sm:text-2xl text-yellow-400 animate-bounce">¡ENHORABUENA!</h2>
-            
-            <p class="font-pixel text-2xl sm:text-3xl text-cyan-100">
-                ¡Has completado con éxito todos los hitos del laberinto sociosanitario y demostrado que "Quien quiere, puede, y quien quiere, debe"!
+
+            <p class="font-pixel text-xl text-center text-cyan-200">
+                Guía a la enfermera a través del laberinto para alcanzar el siguiente hito de conocimiento:
             </p>
 
-            <div class="font-arcade text-3xl text-cyan-300 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8">
-                10 / 10 HITOS
+            <!-- Cuadrícula del Laberinto estilo Comecocos -->
+            <div class="bg-black border-2 border-cyan-600 p-4 rounded-xl flex flex-col items-center justify-center gap-4">
+                <div id="pacman-grid" class="grid grid-cols-5 gap-3 sm:gap-4 my-2">
+                    <!-- Generado por JS -->
+                </div>
+                <div class="font-pixel text-lg text-yellow-400 animate-pulse" id="maze-status-text">
+                    > Haz clic en el hito activo para desbloquear la pregunta
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de Pregunta (Se activa al pulsar el hito del laberinto) -->
+        <div id="question-panel" class="hidden space-y-6">
+            <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
+                <span class="text-yellow-300" id="question-counter-label">PREGUNTA 1 / 10</span>
+                <span class="text-cyan-400">MODO EXAMEN</span>
             </div>
 
-            <div>
-                <button onclick="restartGame()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">
-                    VOLVER A JUGAR &gt;&gt;
+            <h2 id="question-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed tracking-wide">
+                Cargando pregunta...
+            </h2>
+
+            <div id="options-container" class="space-y-3">
+                <!-- Opciones -->
+            </div>
+
+            <!-- Feedback de error (Upss) -->
+            <div id="error-feedback" class="hidden bg-red-950/80 border-2 border-red-500 p-4 rounded-lg text-center animate-bounce">
+                <p class="font-arcade text-xs text-red-300 mb-2">¡UPSS LO SIENTO!</p>
+                <p class="font-pixel text-xl text-white">Vuelve a intentarlo en el laberinto.</p>
+            </div>
+
+            <div class="flex justify-end pt-2">
+                <button id="submit-ans-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 transition hidden cursor-pointer arcade-glow-btn">
+                    COMPROBAR >>
                 </button>
             </div>
         </div>
 
-    </main>
+    </div>
 
-    <!-- FOOTER -->
-    <footer class="text-center py-3 font-pixel text-lg text-slate-500 tracking-wider">
-        MÓDULO TAPSD &bull; ARCADE EDITION
-    </footer>
+    <!-- ================= PANTALLA 4: VICTORIA / FUEGOS ARTIFICIALES ================= -->
+    <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none flex justify-around items-center opacity-30 text-4xl animate-pulse">
+            🎆 ✨ 🎇 🌟 🎆 ✨ 🎇
+        </div>
+        
+        <h2 class="font-arcade text-lg sm:text-2xl text-yellow-400 animate-bounce">¡ENHORABUENA!</h2>
+        
+        <p class="font-pixel text-2xl sm:text-3xl text-cyan-100">
+            ¡Has completado con éxito todos los hitos del laberinto sociosanitario y demostrado que "Quien quiere, puede, y quien quiere, debe"!
+        </p>
 
-    <script>
-        // Banco completo de preguntas prácticas (15 preguntas sin autores ni teorías)
-        const questionBank = [
-            {
-                q: "A la hora de planificar actividades para un usuario, debemos entender a la persona como un ser multidimensional que comprende las siguientes esferas:",
-                options: [
-                    "Biológica, psíquica y social.",
-                    "Únicamente física y económica.",
-                    "Motora, intelectual y laboral.",
-                    "Genética, clínica y farmacológica."
-                ],
-                correct: 0
-            },
-            {
-                q: "Cuando en un centro residencial se programan actividades dirigidas a despertar las capacidades motrices y los sentidos, especialmente en niños o colectivos específicos, nos referimos a:",
-                options: [
-                    "Cuidados de estimulación.",
-                    "Cuidados de compensación.",
-                    "Cuidados de sosiego.",
-                    "Cuidados de autoimagen."
-                ],
-                correct: 0
-            },
-            {
-                q: "Si un profesional aplica intervenciones orientadas a calmar el dolor y aportar serenidad y liberación de tensiones al usuario, está prestando:",
-                options: [
-                    "Cuidados de sosiego.",
-                    "Cuidados de estimulación.",
-                    "Cuidados de conservación.",
-                    "Cuidados de confirmación."
-                ],
-                correct: 0
-            },
-            {
-                q: "Cuando realizamos actividades asistenciales destinadas a suplir aquellas funciones o capacidades que el usuario no adquirió o perdió, empleamos:",
-                options: [
-                    "Cuidados de compensación.",
-                    "Cuidados de conservación de la vida.",
-                    "Cuidados de estimulación sensorial.",
-                    "Cuidados de autoimagen."
-                ],
-                correct: 0
-            },
-            {
-                q: "Para mantener las capacidades adquiridas y asegurar la autonomía el mayor tiempo posible en personas dependientes, el tipo de cuidado indicado es el de:",
-                options: [
-                    "Conservación y continuidad de la vida.",
-                    "Compensación total de funciones.",
-                    "Estimulación psicomotriz infantil.",
-                    "Sosiego y alivio del dolor agudo."
-                ],
-                correct: 0
-            },
-            {
-                q: "Al adecuar el domicilio de una persona mayor con movilidad reducida, ¿cómo deben ser preferiblemente los suelos para prevenir accidentes?",
-                options: [
-                    "Antideslizantes, evitando alfombras u objetos que entorpezcan el paso.",
-                    "De parqué encerado muy brillante y pulido.",
-                    "Cubiertos completamente de alfombras gruesas para amortiguar caídas.",
-                    "De moqueta suelta sin fijar al suelo."
-                ],
-                correct: 0
-            },
-            {
-                q: "Respecto a la climatización y regulación de la temperatura en la vivienda de un usuario dependiente, se desaconseja expresamente el uso de:",
-                options: [
-                    "Braseros tradicionales, debido al alto riesgo de intoxicación por monóxido de carbono.",
-                    "Sistemas de aire acondicionado con control digital de temperatura.",
-                    "Radiadores de aceite eléctricos homologados.",
-                    "Humidificadores ambientales en estancias secas."
-                ],
-                correct: 0
-            },
-            {
-                q: "En relación con las condiciones de iluminación en el hogar de un usuario anciano, esta debe asegurar que:",
-                options: [
-                    "Exista luz suficiente para ver sin forzar la vista y que los interruptores sean accesibles desde la cama o la entrada.",
-                    "Las bombillas sean de intensidad muy baja para no molestar la vista.",
-                    "Los interruptores estén situados únicamente en el exterior de las habitaciones.",
-                    "Se dependa exclusivamente de la luz natural exterior."
-                ],
-                correct: 0
-            },
-            {
-                q: "Dentro de las estrategias para promover los autocuidados en los usuarios, una de las líneas clave consiste en:",
-                options: [
-                    "Desarrollar la autoestima y favorecer la responsabilidad individual y comunitaria.",
-                    "Imponer normas estrictas de cumplimiento obligatorio sin consultar al usuario.",
-                    "Sustituir por completo al usuario en todas sus decisiones cotidianas.",
-                    "Evitar cualquier tipo de participación grupal o social."
-                ],
-                correct: 0
-            },
-            {
-                q: "Cuál es una de las herramientas fundamentales que utiliza el profesional de atención sociosanitaria para educar, orientar y reforzar los hábitos de autocuidado en los usuarios:",
-                options: [
-                    "La educación para la salud.",
-                    "La restricción farmacológica nocturna.",
-                    "El aislamiento preventivo domiciliario.",
-                    "La simplificación administrativa de historiales."
-                ],
-                correct: 0
-            },
-            {
-                q: "En cuanto a la arquitectura de la vivienda para facilitar el tránsito de personas con productos de apoyo o sillas de ruedas, se recomienda:",
-                options: [
-                    "Disponer de puertas amplias, pasamanos y rampas alternativas si hay escalones.",
-                    "Mantener umbrales de puertas elevados para delimitar las habitaciones.",
-                    "Sustituir las puertas por cortinas opacas para ganar espacio.",
-                    "Instalar escaleras de caracol para optimizar los metros útiles."
-                ],
-                correct: 0
-            },
-            {
-                q: "La competencia general del título profesional de atención a personas en situación de dependencia se orienta principalmente a:",
-                options: [
-                    "Atender a las personas en el ámbito domiciliario e institucional para mantener y mejorar su calidad de vida.",
-                    "Realizar intervenciones quirúrgicas de alta complejidad en hospitales.",
-                    "Gestionar exclusivamente los recursos financieros de centros sociales.",
-                    "Impartir docencia universitaria en ciencias de la salud."
-                ],
-                correct: 0
-            },
-            {
-                q: "Cuando un profesional utiliza la comunicación no verbal y apoya la construcción de la imagen personal del usuario, está prestando cuidados centrados en:",
-                options: [
-                    "La autoimagen.",
-                    "El sosiego absoluto.",
-                    "La estimulación motora básica.",
-                    "La compensación orgánica."
-                ],
-                correct: 0
-            },
-            {
-                q: "El concepto actual de salud impulsado en los modelos asistenciales se aleja de la mera ausencia de enfermedad para concebirse como:",
-                options: [
-                    "Un estado completo de bienestar físico, psíquico, social y dinámico con el entorno.",
-                    "Una condición estática invariable determinada únicamente por la genética.",
-                    "Un indicador puramente económico de productividad laboral.",
-                    "La resistencia biológica exclusiva frente a infecciones agudas."
-                ],
-                correct: 0
-            },
-            {
-                q: "Durante la valoración inicial de un plan de cuidados individualizado, la fase de la enfermedad en la que esta todavía no se manifiesta clínicamente se denomina:",
-                options: [
-                    "Periodo prepatogénico.",
-                    "Periodo de enfermedad manifiesta.",
-                    "Fase de secuelas incapacitantes.",
-                    "Estadio terminal de dependencia."
-                ],
-                correct: 0
-            }
-        ];
+        <div class="font-arcade text-3xl text-cyan-300 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8">
+            10 / 10 HITOS
+        </div>
 
-        let gameQuestions = [];
-        let currentMilestone = 0; // De 0 a 9 (10 hitos)
-        let selectedOptionIndex = null;
-        let currentActiveQuestion = null;
+        <div>
+            <button onclick="restartGame()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">
+                VOLVER A JUGAR >>
+            </button>
+        </div>
+    </div>
 
-        // Iniciar juego seleccionando 10 preguntas aleatorias
-        function initGameData() {
-            const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
-            gameQuestions = shuffled.slice(0, 10);
-            currentMilestone = 0;
+</main>
+
+<!-- FOOTER -->
+<footer class="text-center py-3 font-pixel text-lg text-slate-500 tracking-wider">
+    MÓDULO TAPSD • ARCADE EDITION
+</footer>
+
+<script>
+    // Banco completo de preguntas prácticas (15 preguntas sin autores ni teorías)
+    const questionBank = [
+        {
+            q: "A la hora de planificar actividades para un usuario, debemos entender a la persona como un ser multidimensional que comprende las siguientes esferas:",
+            options: [
+                "Biológica, psíquica y social.",
+                "Únicamente física y económica.",
+                "Motora, intelectual y laboral.",
+                "Genética, clínica y farmacológica."
+            ],
+            correct: 0
+        },
+        {
+            q: "Cuando en un centro residencial se programan actividades dirigidas a despertar las capacidades motrices y los sentidos, especialmente en niños o colectivos específicos, nos referimos a:",
+            options: [
+                "Cuidados de estimulación.",
+                "Cuidados de compensación.",
+                "Cuidados de sosiego.",
+                "Cuidados de autoimagen."
+            ],
+            correct: 0
+        },
+        {
+            q: "Si un profesional aplica intervenciones orientadas a calmar el dolor y aportar serenidad y liberación de tensiones al usuario, está prestando:",
+            options: [
+                "Cuidados de sosiego.",
+                "Cuidados de estimulación.",
+                "Cuidados de conservación.",
+                "Cuidados de confirmación."
+            ],
+            correct: 0
+        },
+        {
+            q: "Cuando realizamos actividades asistenciales destinadas a suplir aquellas funciones o capacidades que el usuario no adquirió o perdió, empleamos:",
+            options: [
+                "Cuidados de compensación.",
+                "Cuidados de conservación de la vida.",
+                "Cuidados de estimulación sensorial.",
+                "Cuidados de autoimagen."
+            ],
+            correct: 0
+        },
+        {
+            q: "Para mantener las capacidades adquiridas y asegurar la autonomía el mayor tiempo posible en personas dependientes, el tipo de cuidado indicado es el de:",
+            options: [
+                "Conservación y continuidad de la vida.",
+                "Compensación total de funciones.",
+                "Estimulación psicomotriz infantil.",
+                "Sosiego y alivio del dolor agudo."
+            ],
+            correct: 0
+        },
+        {
+            q: "Al adecuar el domicilio de una persona mayor con movilidad reducida, ¿cómo deben ser preferiblemente los suelos para prevenir accidentes?",
+            options: [
+                "Antideslizantes, evitando alfombras u objetos que entorpezcan el paso.",
+                "De parqué encerado muy brillante y pulido.",
+                "Cubiertos completamente de alfombras gruesas para amortiguar caídas.",
+                "De moqueta suelta sin fijar al suelo."
+            ],
+            correct: 0
+        },
+        {
+            q: "Respecto a la climatización y regulación de la temperatura en la vivienda de un usuario dependiente, se desaconseja expresamente el uso de:",
+            options: [
+                "Braseros tradicionales, debido al alto riesgo de intoxicación por monóxido de carbono.",
+                "Sistemas de aire acondicionado con control digital de temperatura.",
+                "Radiadores de aceite eléctricos homologados.",
+                "Humidificadores ambientales en estancias secas."
+            ],
+            correct: 0
+        },
+        {
+            q: "En relación con las condiciones de iluminación en el hogar de un usuario anciano, esta debe asegurar que:",
+            options: [
+                "Exista luz suficiente para ver sin forzar la vista y que los interruptores sean accesibles desde la cama o la entrada.",
+                "Las bombillas sean de intensidad muy baja para no molestar la vista.",
+                "Los interruptores estén situados únicamente en el exterior de las habitaciones.",
+                "Se dependa exclusivamente de la luz natural exterior."
+            ],
+            correct: 0
+        },
+        {
+            q: "Dentro de las estrategias para promover los autocuidados en los usuarios, una de las líneas clave consiste en:",
+            options: [
+                "Desarrollar la autoestima y favorecer la responsabilidad individual y comunitaria.",
+                "Imponer normas estrictas de cumplimiento obligatorio sin consultar al usuario.",
+                "Sustituir por completo al usuario en todas sus decisiones cotidianas.",
+                "Evitar cualquier tipo de participación grupal o social."
+            ],
+            correct: 0
+        },
+        {
+            q: "Cuál es una de las herramientas fundamentales que utiliza el profesional de atención sociosanitaria para educar, orientar y reforzar los hábitos de autocuidado en los usuarios:",
+            options: [
+                "La educación para la salud.",
+                "La restricción farmacológica nocturna.",
+                "El aislamiento preventivo domiciliario.",
+                "La simplificación administrativa de historiales."
+            ],
+            correct: 0
+        },
+        {
+            q: "En cuanto a la arquitectura de la vivienda para facilitar el tránsito de personas con productos de apoyo o sillas de ruedas, se recomienda:",
+            options: [
+                "Disponer de puertas amplias, pasamanos y rampas alternativas si hay escalones.",
+                "Mantener umbrales de puertas elevados para delimitar las habitaciones.",
+                "Sustituir las puertas por cortinas opacas para ganar espacio.",
+                "Instalar escaleras de caracol para optimizar los metros útiles."
+            ],
+            correct: 0
+        },
+        {
+            q: "La competencia general del título profesional de atención a personas en situación de dependencia se orienta principalmente a:",
+            options: [
+                "Atender a las personas en el ámbito domiciliario e institucional para mantener y mejorar su calidad de vida.",
+                "Realizar intervenciones quirúrgicas de alta complejidad en hospitales.",
+                "Gestionar exclusivamente los recursos financieros de centros sociales.",
+                "Impartir docencia universitaria en ciencias de la salud."
+            ],
+            correct: 0
+        },
+        {
+            q: "Cuando un profesional utiliza la comunicación no verbal y apoya la construcción de la imagen personal del usuario, está prestando cuidados centrados en:",
+            options: [
+                "La autoimagen.",
+                "El sosiego absoluto.",
+                "La estimulación motora básica.",
+                "La compensación orgánica."
+            ],
+            correct: 0
+        },
+        {
+            q: "El concepto actual de salud impulsado en los modelos asistenciales se aleja de la mera ausencia de enfermedad para concebirse como:",
+            options: [
+                "Un estado completo de bienestar físico, psíquico, social y dinámico con el entorno.",
+                "Una condición estática invariable determinada únicamente por la genética.",
+                "Un indicador puramente económico de productividad laboral.",
+                "La resistencia biológica exclusiva frente a infecciones agudas."
+            ],
+            correct: 0
+        },
+        {
+            q: "Durante la valoración inicial de un plan de cuidados individualizado, la fase de la enfermedad en la que esta todavía no se manifiesta clínicamente se denomina:",
+            options: [
+                "Periodo prepatogénico.",
+                "Periodo de enfermedad manifiesta.",
+                "Fase de secuelas incapacitantes.",
+                "Estadio terminal de dependencia."
+            ],
+            correct: 0
         }
+    ];
 
-        // Navegación entre pantallas
-        function goToScreen1() {
-            hideAllScreens();
-            document.getElementById('screen-1').classList.remove('hidden');
-            document.getElementById('header-status').innerText = "TAPSD ARCADE";
-        }
+    let gameQuestions = [];
+    let currentMilestone = 0; // De 0 a 9 (10 hitos)
+    let selectedOptionIndex = null;
+    let currentActiveQuestion = null;
+    let isAudioPlaying = false;
 
-        function goToScreen2() {
-            hideAllScreens();
-            document.getElementById('screen-2').classList.remove('hidden');
-            document.getElementById('header-status').innerText = "MISIÓN 0";
-        }
-
-        function goToScreen3() {
-            hideAllScreens();
-            initGameData();
-            document.getElementById('screen-3').classList.remove('hidden');
-            renderMaze();
-            document.getElementById('header-status').innerText = "LABERINTO FASE";
-        }
-
-        function goToScreen4() {
-            hideAllScreens();
-            document.getElementById('screen-4').classList.remove('hidden');
-            document.getElementById('header-status').innerText = "¡VICTORIA!";
-        }
-
-        function hideAllScreens() {
-            document.getElementById('screen-1').classList.add('hidden');
-            document.getElementById('screen-2').classList.add('hidden');
-            document.getElementById('screen-3').classList.add('hidden');
-            document.getElementById('screen-4').classList.add('hidden');
-        }
-
-        // Renderizar el laberinto tipo Comecocos (10 celdas/hitos)
-        function renderMaze() {
-            document.getElementById('maze-view').classList.remove('hidden');
-            document.getElementById('question-panel').classList.add('hidden');
-            document.getElementById('maze-progress').innerText = `HITO ${currentMilestone + 1} / 10`;
-
-            const grid = document.getElementById('pacman-grid');
-            grid.innerHTML = '';
-
-            for (let i = 0; i < 10; i++) {
-                const cell = document.createElement('div');
-                cell.className = "w-12 h-12 sm:w-16 sm:h-16 border-2 flex flex-col items-center justify-center font-pixel text-lg rounded transition ";
-                
-                if (i < currentMilestone) {
-                    // Hito superado
-                    cell.className += "border-green-500 bg-green-950/60 text-green-400";
-                    cell.innerHTML = `<span>✔️</span><span class="text-[10px]">#${i+1}</span>`;
-                } else if (i === currentMilestone) {
-                    // Hito activo actual (Comecocos / Enfermera activa)
-                    cell.className += "border-yellow-400 bg-yellow-950/80 text-yellow-300 animate-pulse cursor-pointer arcade-glow-btn";
-                    cell.innerHTML = `<span>👩‍⚕️</span><span class="text-[10px] font-bold">¡IR!</span>`;
-                    cell.onclick = () => openQuestion(i);
-                } else {
-                    // Hito bloqueado futuro
-                    cell.className += "border-slate-700 bg-slate-900/60 text-slate-600";
-                    cell.innerHTML = `<span>🔒</span><span class="text-[10px]">#${i+1}</span>`;
-                }
-                grid.appendChild(cell);
-            }
-        }
-
-        // Abrir la pregunta correspondiente al hito actual del laberinto
-        function openQuestion(index) {
-            currentActiveQuestion = gameQuestions[index];
-            selectedOptionIndex = null;
-
-            document.getElementById('maze-view').classList.add('hidden');
-            document.getElementById('question-panel').classList.remove('hidden');
-            document.getElementById('error-feedback').classList.add('hidden');
-            document.getElementById('submit-ans-btn').classList.add('hidden');
-
-            document.getElementById('question-counter-label').innerText = `PREGUNTA ${index + 1} / 10 (HITO ${index + 1})`;
-            document.getElementById('question-text').innerText = currentActiveQuestion.q;
-
-            // Barajar opciones
-            let indexedOpts = currentActiveQuestion.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
-            indexedOpts.sort(() => Math.random() - 0.5);
-
-            const optContainer = document.getElementById('options-container');
-            optContainer.innerHTML = '';
-
-            indexedOpts.forEach((item) => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left font-pixel text-xl sm:text-2xl p-4 rounded-lg border-2 border-cyan-800 bg-black/60 text-cyan-300 hover:border-yellow-400 hover:bg-cyan-950/80 hover:text-yellow-300 transition cursor-pointer flex items-center justify-between shadow";
-                btn.innerHTML = `<span>&gt; ${item.text}</span>`;
-                btn.onclick = () => selectOption(btn, item.originalIndex);
-                optContainer.appendChild(btn);
+    // Gestión de audio continua (respeta las políticas de autoplay de los navegadores)
+    function toggleAudio() {
+        const audio = document.getElementById('bg-audio');
+        const btn = document.getElementById('audio-toggle');
+        if (isAudioPlaying) {
+            audio.pause();
+            isAudioPlaying = false;
+            btn.innerText = "🔊 MÚSICA: OFF";
+            btn.className = "font-pixel text-xs bg-cyan-900 hover:bg-cyan-800 text-cyan-200 px-2.5 py-1 border border-cyan-600 rounded transition cursor-pointer";
+        } else {
+            audio.play().then(() => {
+                isAudioPlaying = true;
+                btn.innerText = "🔊 MÚSICA: ON";
+                btn.className = "font-pixel text-xs bg-yellow-500 hover:bg-yellow-400 text-black px-2.5 py-1 border border-yellow-300 rounded transition cursor-pointer font-bold";
+            }).catch(e => {
+                console.log("Reproducción bloqueada por el navegador:", e);
             });
         }
+    }
 
-        function selectOption(btnElement, origIdx) {
-            const allBtns = document.getElementById('options-container').children;
-            for (let b of allBtns) {
-                b.classList.remove('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
-            }
-            btnElement.classList.add('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
-            selectedOptionIndex = origIdx;
-            document.getElementById('submit-ans-btn').classList.remove('hidden');
+    // Intenta reproducir automáticamente al primer clic en cualquier parte de la web
+    document.addEventListener('click', function tryAutoplay() {
+        const audio = document.getElementById('bg-audio');
+        if (!isAudioPlaying) {
+            audio.play().then(() => {
+                isAudioPlaying = true;
+                const btn = document.getElementById('audio-toggle');
+                btn.innerText = "🔊 MÚSICA: ON";
+                btn.className = "font-pixel text-xs bg-yellow-500 hover:bg-yellow-400 text-black px-2.5 py-1 border border-yellow-300 rounded transition cursor-pointer font-bold";
+            }).catch(() => {});
         }
+    }, { once: true });
 
-        // Comprobar respuesta
-        function checkAnswer() {
-            if (selectedOptionIndex === null) return;
+    // Iniciar juego seleccionando 10 preguntas aleatorias
+    function initGameData() {
+        const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
+        gameQuestions = shuffled.slice(0, 10);
+        currentMilestone = 0;
+    }
 
-            if (selectedOptionIndex === currentActiveQuestion.correct) {
-                // ¡Correcto! Avanzar hito en el laberinto
-                currentMilestone++;
-                if (currentMilestone >= 10) {
-                    goToScreen4();
-                } else {
-                    renderMaze();
-                }
+    // Navegación entre pantallas
+    function goToScreen1() {
+        hideAllScreens();
+        document.getElementById('screen-1').classList.remove('hidden');
+        document.getElementById('header-status').innerText = "TAPSD ARCADE";
+    }
+
+    function goToScreen2() {
+        hideAllScreens();
+        document.getElementById('screen-2').classList.remove('hidden');
+        document.getElementById('header-status').innerText = "MISIÓN 0";
+    }
+
+    function goToScreen3() {
+        hideAllScreens();
+        initGameData();
+        document.getElementById('screen-3').classList.remove('hidden');
+        renderMaze();
+        document.getElementById('header-status').innerText = "LABERINTO FASE";
+    }
+
+    function goToScreen4() {
+        hideAllScreens();
+        document.getElementById('screen-4').classList.remove('hidden');
+        document.getElementById('header-status').innerText = "¡VICTORIA!";
+    }
+
+    function hideAllScreens() {
+        document.getElementById('screen-1').classList.add('hidden');
+        document.getElementById('screen-2').classList.add('hidden');
+        document.getElementById('screen-3').classList.add('hidden');
+        document.getElementById('screen-4').classList.add('hidden');
+    }
+
+    // Renderizar el laberinto tipo Comecocos (10 celdas/hitos)
+    function renderMaze() {
+        document.getElementById('maze-view').classList.remove('hidden');
+        document.getElementById('question-panel').classList.add('hidden');
+        document.getElementById('maze-progress').innerText = `HITO ${currentMilestone + 1} / 10`;
+
+        const grid = document.getElementById('pacman-grid');
+        grid.innerHTML = '';
+
+        for (let i = 0; i < 10; i++) {
+            const cell = document.createElement('div');
+            cell.className = "w-12 h-12 sm:w-16 sm:h-16 border-2 flex flex-col items-center justify-center font-pixel text-lg rounded transition ";
+            
+            if (i < currentMilestone) {
+                // Hito superado
+                cell.className += "border-green-500 bg-green-950/60 text-green-400";
+                cell.innerHTML = `<span>✔️</span><span class="text-[10px]">#${i+1}</span>`;
+            } else if (i === currentMilestone) {
+                // Hito activo actual (Comecocos / Enfermera activa)
+                cell.className += "border-yellow-400 bg-yellow-950/80 text-yellow-300 animate-pulse cursor-pointer arcade-glow-btn";
+                cell.innerHTML = `<span>👩‍⚕️</span><span class="text-[10px] font-bold">¡IR!</span>`;
+                cell.onclick = () => openQuestion(i);
             } else {
-                // ¡Upss lo siento! Vuelve a intentarlo en el laberinto
-                document.getElementById('question-panel').classList.add('hidden');
-                document.getElementById('maze-view').classList.remove('hidden');
-                renderMaze();
-                
-                // Mostrar alerta temporal de error
-                const feedback = document.getElementById('maze-status-text');
-                feedback.innerText = "> ¡UPSS LO SIENTO! Vuelve a intentarlo.";
-                feedback.className = "font-pixel text-lg text-red-400 animate-bounce";
-                setTimeout(() => {
-                    feedback.innerText = "> Haz clic en el hito activo para desbloquear la pregunta";
-                    feedback.className = "font-pixel text-lg text-yellow-400 animate-pulse";
-                }, 3000);
+                // Hito bloqueado futuro
+                cell.className += "border-slate-700 bg-slate-900/60 text-slate-600";
+                cell.innerHTML = `<span>🔒</span><span class="text-[10px]">#${i+1}</span>`;
             }
+            grid.appendChild(cell);
         }
+    }
 
-        function restartGame() {
-            goToScreen1();
+    // Abrir la pregunta correspondiente al hito actual del laberinto
+    function openQuestion(index) {
+        currentActiveQuestion = gameQuestions[index];
+        selectedOptionIndex = null;
+
+        document.getElementById('maze-view').classList.add('hidden');
+        document.getElementById('question-panel').classList.remove('hidden');
+        document.getElementById('error-feedback').classList.add('hidden');
+        document.getElementById('submit-ans-btn').classList.add('hidden');
+
+        document.getElementById('question-counter-label').innerText = `PREGUNTA ${index + 1} / 10 (HITO ${index + 1})`;
+        document.getElementById('question-text').innerText = currentActiveQuestion.q;
+
+        // Barajar opciones
+        let indexedOpts = currentActiveQuestion.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
+        indexedOpts.sort(() => Math.random() - 0.5);
+
+        const optContainer = document.getElementById('options-container');
+        optContainer.innerHTML = '';
+
+        indexedOpts.forEach((item) => {
+            const btn = document.createElement('button');
+            btn.className = "w-full text-left font-pixel text-xl sm:text-2xl p-4 rounded-lg border-2 border-cyan-800 bg-black/60 text-cyan-300 hover:border-yellow-400 hover:bg-cyan-950/80 hover:text-yellow-300 transition cursor-pointer flex items-center justify-between shadow";
+            btn.innerHTML = `<span>> ${item.text}</span>`;
+            btn.onclick = () => selectOption(btn, item.originalIndex);
+            optContainer.appendChild(btn);
+        });
+    }
+
+    function selectOption(btnElement, origIdx) {
+        const allBtns = document.getElementById('options-container').children;
+        for (let b of allBtns) {
+            b.classList.remove('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
         }
+        btnElement.classList.add('border-yellow-400', 'bg-cyan-950', 'text-yellow-300', 'ring-2', 'ring-yellow-400');
+        selectedOptionIndex = origIdx;
+        document.getElementById('submit-ans-btn').classList.remove('hidden');
+    }
 
-        window.onload = goToScreen1;
-    </script>
-</body>
-</html>
+    // Comprobar respuesta
+    function checkAnswer() {
+        if (selectedOptionIndex === null) return;
+
+        if (selectedOptionIndex === currentActiveQuestion.correct) {
+            // ¡Correcto! Avanzar hito en el laberinto
+            currentMilestone++;
+            if (currentMilestone >= 10) {
+                goToScreen4();
+            } else {
+                renderMaze();
+            }
+        } else {
+            // ¡Upss lo siento! Vuelve a intentarlo en el laberinto
+            document.getElementById('question-panel').classList.add('hidden');
+            document.getElementById('maze-view').classList.remove('hidden');
+            renderMaze();
+            
+            // Mostrar alerta temporal de error
+            const feedback = document.getElementById('maze-status-text');
+            feedback.innerText = "> ¡UPSS LO SIENTO! Vuelve a intentarlo.";
+            feedback.className = "font-pixel text-lg text-red-400 animate-bounce";
+            setTimeout(() => {
+                feedback.innerText = "> Haz clic en el hito activo para desbloquear la pregunta";
+                feedback.className = "font-pixel text-lg text-yellow-400 animate-pulse";
+            }, 3000);
+        }
+    }
+
+    function restartGame() {
+        goToScreen1();
+    }
+
+    window.onload = goToScreen1;
+</script>
