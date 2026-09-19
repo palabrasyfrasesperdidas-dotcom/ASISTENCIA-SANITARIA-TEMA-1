@@ -192,6 +192,8 @@
             font-size: 0.7rem;
             box-shadow: 0 0 15px rgba(0, 255, 200, 0.6);
             transition: transform 0.2s;
+            position: relative;
+            z-index: 350;
         }
 
         .action-btn:hover {
@@ -313,10 +315,29 @@
             align-items: center;
             z-index: 300;
             padding: 20px;
+            overflow: hidden;
+        }
+
+        #victory-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 305;
+        }
+
+        .victory-content {
+            position: relative;
+            z-index: 310;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         #victory-screen h2 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #00ffc8;
             text-shadow: 0 0 20px #00ffc8;
             margin-bottom: 20px;
@@ -324,16 +345,17 @@
         }
 
         #victory-screen p {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             line-height: 1.8;
             margin-bottom: 30px;
             color: #fff;
+            max-width: 500px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla de Inicio Arcade (Sin lema) -->
+    <!-- Pantalla de Inicio Arcade -->
     <div id="arcade-splash" onclick="openStory()">
         <div class="arcade-splash-content">
             <div class="arcade-title-pixel">TAPSD: RETO SOCIOSANITARIO</div>
@@ -365,7 +387,7 @@
     <!-- Contenedor del Juego Principal -->
     <div id="game-container">
         <div class="game-header">
-            <span id="score-board">OBJETIVOS: 0 / 6</span>
+            <span id="score-board">OBJETIVOS: 0 / 10</span>
             <span>NIVEL 1: LABERINTO</span>
         </div>
         <canvas id="gameCanvas" width="480" height="480"></canvas>
@@ -382,11 +404,14 @@
         </div>
     </div>
 
-    <!-- Pantalla de Victoria -->
+    <!-- Pantalla de Victoria con Fuegos Artificiales -->
     <div id="victory-screen">
-        <h2>¡ENHORABUENA!</h2>
-        <p>¡Has superado con éxito todos los retos del Tema 1 y demostrado tu valía como TAPSD!</p>
-        <button class="action-btn" onclick="location.reload()">JUGAR OTRA VEZ</button>
+        <canvas id="victory-canvas"></canvas>
+        <div class="victory-content">
+            <h2>¡ENHORABUENA!</h2>
+            <p>¡Has superado con éxito las 10 misiones del Tema 1 y demostrado tu valía como TAPSD!<br><br><em>"Quien quiere, puede, y quien quiere, debe"</em></p>
+            <button class="action-btn" onclick="restartGame()">VOLVER A JUGAR</button>
+        </div>
     </div>
 
     <script>
@@ -401,6 +426,8 @@
 
         let gameStarted = false;
         let score = 0;
+        const totalObjectives = 10;
+        let activeQuestions = [];
 
         let player = {
             x: 40,
@@ -411,7 +438,6 @@
             dy: 0
         };
 
-        // Monstruo con movimiento estricto por rejilla/cuadrícula y velocidad reducida
         let ghost = {
             x: 400,
             y: 400,
@@ -421,13 +447,18 @@
             dy: -0.75
         };
 
+        // 10 Objetivos distribuidos por todo el mapa del laberinto
         let objectives = [
             { x: 140, y: 70, collected: false, id: 0 },
             { x: 340, y: 70, collected: false, id: 1 },
             { x: 70,  y: 240, collected: false, id: 2 },
             { x: 410, y: 240, collected: false, id: 3 },
             { x: 140, y: 410, collected: false, id: 4 },
-            { x: 340, y: 410, collected: false, id: 5 }
+            { x: 340, y: 410, collected: false, id: 5 },
+            { x: 230, y: 40,  collected: false, id: 6 },
+            { x: 40,  y: 410, collected: false, id: 7 },
+            { x: 410, y: 40,  collected: false, id: 8 },
+            { x: 230, y: 430, collected: false, id: 9 }
         ];
 
         // Muros estrictos del laberinto clásico
@@ -448,68 +479,48 @@
             { x: 160, y: 380, w: 160, h: 30 }
         ];
 
-        // Nuevas preguntas centradas en términos, definiciones, abreviaturas y razonamiento del Tema 1
-        const questions = [
-            {
-                title: "PREGUNTA 1: Definición de Autonomía",
-                question: "¿Cómo se define la autonomía personal en el ámbito de la dependencia?",
-                options: [
-                    "La capacidad de controlar y tomar decisiones sobre la propia vida",
-                    "La obligación exclusiva de recibir asistencia médica domiciliaria",
-                    "La dependencia absoluta de los servicios sociales públicos"
-                ],
-                correct: 0
-            },
-            {
-                title: "PREGUNTA 2: Significado de Abreviatura",
-                question: "¿A qué corresponde exactamente la abreviatura TAPSD en el ámbito formativo?",
-                options: [
-                    "Técnico en Atención a Personas con Secuelas y Dolencias",
-                    "Técnico en Atención a Personas en Situación de Dependencia",
-                    "Tutoría Activa para Prestaciones Sociosanitarias a Domicilio"
-                ],
-                correct: 1
-            },
-            {
-                title: "PREGUNTA 3: Razonamiento sobre Cuidados",
-                question: "Si un usuario requiere apoyo emocional, escucha activa y alivio de la angustia cotidiana, ¿qué tipo de cuidados predominan?",
-                options: [
-                    "Cuidados de compensación motora quirúrgica",
-                    "Cuidados de sosiego y acompañamiento",
-                    "Cuidados de alta intensidad farmacológica"
-                ],
-                correct: 1
-            },
-            {
-                title: "PREGUNTA 4: Concepto Clave",
-                question: "¿Qué caracteriza principalmente a las actividades de la vida diaria (AVD) instrumentales?",
-                options: [
-                    "Son tareas básicas como la higiene personal y la alimentación",
-                    "Implican tareas complejas para la vida autónoma como la gestión del hogar o compras",
-                    "Se realizan únicamente en centros hospitalarios de agudos"
-                ],
-                correct: 1
-            },
-            {
-                title: "PREGUNTA 5: Seguridad Ambiental",
-                question: "En el análisis de riesgos en el hogar de una persona dependiente, ¿qué medida preventiva es fundamental frente a caídas?",
-                options: [
-                    "Retirar alfombras deslizantes y asegurar una iluminación adecuada",
-                    "Cerrar con llave todas las puertas interiores de la vivienda",
-                    "Sustituir los suelos por superficies totalmente pulidas y brillantes"
-                ],
-                correct: 0
-            },
-            {
-                title: "PREGUNTA 6: Razonamiento Profesional",
-                question: "¿Cuál es el propósito fundamental de promover el autocuidado en una persona dependiente?",
-                options: [
-                    "Reducir por completo la implicación del equipo profesional",
-                    "Mantener y potenciar al máximo las capacidades físicas y psíquicas remanentes",
-                    "Delegar todas las responsabilidades cotidianas en los familiares directos"
-                ],
-                correct: 1
-            }
+        // Banco total de 40 preguntas técnicas oficiales TAPSD
+        const questionBank = [
+            { title: "PREGUNTA 1: Autonomía", question: "¿Cómo se define la autonomía personal en el ámbito de la dependencia?", options: ["La capacidad de controlar y tomar decisiones sobre la propia vida", "La obligación exclusiva de recibir asistencia médica domiciliaria", "La dependencia absoluta de los servicios sociales públicos"], correct: 0 },
+            { title: "PREGUNTA 2: Abreviatura TAPSD", question: "¿A qué corresponde exactamente la abreviatura TAPSD en el ámbito formativo?", options: ["Técnico en Atención a Personas con Secuelas y Dolencias", "Técnico en Atención a Personas en Situación de Dependencia", "Tutoría Activa para Prestaciones Sociosanitarias a Domicilio"], correct: 1 },
+            { title: "PREGUNTA 3: Cuidados de Sosiego", question: "Si un usuario requiere apoyo emocional, escucha activa y alivio de la angustia cotidiana, ¿qué tipo de cuidados predominan?", options: ["Cuidados de compensación motora quirúrgica", "Cuidados de sosiego y acompañamiento", "Cuidados de alta intensidad farmacológica"], correct: 1 },
+            { title: "PREGUNTA 4: AVD Instrumentales", question: "¿Qué caracteriza principalmente a las actividades de la vida diaria (AVD) instrumentales?", options: ["Son tareas básicas como la higiene personal y la alimentación", "Implican tareas complejas para la vida autónoma como la gestión del hogar o compras", "Se realizan únicamente en centros hospitalarios de agudos"], correct: 1 },
+            { title: "PREGUNTA 5: Seguridad en el Hogar", question: "En el análisis de riesgos en el hogar de una persona dependiente, ¿qué medida preventiva es fundamental frente a caídas?", options: ["Retirar alfombras deslizantes y asegurar una iluminación adecuada", "Cerrar con llave todas las puertas interiores de la vivienda", "Sustituir los suelos por superficies totalmente pulidas y brillantes"], correct: 0 },
+            { title: "PREGUNTA 6: Promoción del Autocuidado", question: "¿Cuál es el propósito fundamental de promover el autocuidado en una persona dependiente?", options: ["Reducir por completo la implicación del equipo profesional", "Mantener y potenciar al máximo las capacidades físicas y psíquicas remanentes", "Delegar todas las responsabilidades cotidianas en los familiares directos"], correct: 1 },
+            { title: "PREGUNTA 7: Situación de Dependencia", question: "¿Cómo se define el estado de carácter permanente en el que se encuentran las personas que precisan atención?", options: ["Situación de dependencia", "Patología aguda transitoria", "Convalecencia hospitalaria breve"], correct: 0 },
+            { title: "PREGUNTA 8: Abreviatura AVD", question: "¿Qué significan las siglas AVD en el contexto de la valoración sociosanitaria?", options: ["Áreas Vitales de Descanso", "Actividades de la Vida Diaria", "Asistencia y Vigilancia a Domicilio"], correct: 1 },
+            { title: "PREGUNTA 9: Enfoque ACP", question: "Desde la perspectiva del TAPSD, ¿qué implica un enfoque de atención centrado en la persona (ACP)?", options: ["Priorizar la comodidad de la organización por encima de los gustos del usuario", "Respetar la dignidad, preferencias, historia de vida y deseos del individuo", "Aplicar un protocolo estricto e inflexible idéntico para todos los residentes"], correct: 1 },
+            { title: "PREGUNTA 10: Bienestar Emocional", question: "Si fomentamos que un usuario decore su entorno con objetos significativos y fotografías, ¿qué tipo de bienestar apoyamos?", options: ["Únicamente el metabolismo calórico basal", "El bienestar emocional, la identidad y la vinculación afectiva", "La resistencia aerodinámica pulmonar"], correct: 1 },
+            { title: "PREGUNTA 11: Abreviatura SAAD", question: "¿Qué significa el acrónimo SAAD dentro del sistema de atención a la dependencia en España?", options: ["Servicio de Ayuda y Apoyo a Domicilio", "Sistema para la Autonomía y Atención a la Dependencia", "Sociedad Andaluza de Ayuda a la Dependencia"], correct: 1 },
+            { title: "PREGUNTA 12: Ley de Dependencia", question: "¿Qué norma reguló por primera vez con carácter básico el SAAD en España (Ley 39/2006)?", options: ["Ley de Promoción de la Autonomía Personal y Atención a las personas en situación de dependencia", "Ley General de Sanidad", "Ley de Ordenación de las Profesiones Sanitarias"], correct: 0 },
+            { title: "PREGUNTA 13: AVD Básicas", question: "¿Cuál de las siguientes opciones se considera una Actividad Básica de la Vida Diaria (ABVD)?", options: ["Preparar la comida y cocinar", "Utilizar el transporte público o conducir", "Alimentarse e ingerir alimentos por sí mismo"], correct: 2 },
+            { title: "PREGUNTA 14: Accesibilidad", question: "Se entiende por diseño para todos o accesibilidad universal:", options: ["La adaptación exclusiva de edificios públicos singulares", "El diseño de productos y entornos utilizables por todas las personas en la mayor medida posible", "La restricción del acceso a zonas urbanas complejas"], correct: 1 },
+            { title: "PREGUNTA 15: Postura Antidéficit", question: "En la movilización de encamados, ¿qué objetivo persiguen los cambios posturales frecuentes?", options: ["Evitar la aparición de úlceras por presión (UPP)", "Acelerar el metabolismo general del paciente", "Garantizar el sueño profundo ininterrumpido"], correct: 0 },
+            { title: "PREGUNTA 16: Abreviatura UPP", question: "¿Qué significan las siglas UPP en el cuidado e higiene de personas dependientes?", options: ["Unidades de Primera Plantilla", "Úlceras por Presión", "Urgencias Psiquiátricas Primarias"], correct: 1 },
+            { title: "PREGUNTA 17: Barreras Arquitectónicas", question: "¿Qué elemento del hogar constituye una barrera arquitectónica vertical crítica para una persona en silla de ruedas?", options: ["Una alfombra de pelo corto", "Una escalera o ausencia de ascensor adaptado", "Un interruptor de luz situado a 1,20 metros de altura"], correct: 1 },
+            { title: "PREGUNTA 18: Higiene Matutina", question: "Durante el aseo parcial en cama, ¿por qué zona corporal se debe comenzar habitualmente por criterios de higiene?", options: ["Por la zona genital y perianal", "Por los ojos y la cara", "Por los pies y extremidades inferiores"], correct: 1 },
+            { title: "PREGUNTA 19: Comunicación Empática", question: "La escucha activa en la relación de ayuda con un usuario dependiente implica:", options: ["Asentir sin prestar atención real a lo que relata", "Escuchar mostrando comprensión, respeto y sin interrumpir ni juzgar", "Interrumpir frecuentemente para ofrecer soluciones rápidas"], correct: 1 },
+            { title: "PREGUNTA 20: Ayudas Técnicas", question: "¿Cómo se denominan los productos de apoyo destinados a facilitar la deambulación autónoma?", options: ["Ortesis correctoras rígidas", "Ayudas técnicas para la movilidad (bastones, andadores, sillas)", "Prótesis quirúrgicas internas"], correct: 1 },
+            { title: "PREGUNTA 21: Prevención de Riesgos Laborales", question: "Al realizar una transferencia de un paciente de la cama a la silla, el TAPSD debe proteger especialmente:",options: ["Su columna vertebral aplicando una correcta mecánica corporal", "Sus extremidades superiores con guantes estériles", "Su capacidad visual directa"], correct: 0 },
+            { title: "PREGUNTA 22: Dependencia Moderada", question: "El Grado I de dependencia según la legislación vigente se corresponde con:", options: ["Dependencia moderada cuando la persona necesita ayuda al menos una vez al día", "Dependencia severa cuando necesita ayuda para varios actos básicos", "Gran dependencia cuando necesita apoyo continuo de otra persona"], correct: 0 },
+            { title: "PREGUNTA 23: Dependencia Severa", question: "El Grado II de dependencia se define cuando la persona necesita ayuda:", options: ["Para realizar varias actividades básicas dos o tres veces al día", "Exclusivamente para gestiones bancarias complejas", "Para todas las actividades vitales sin excepción"], correct: 0 },
+            { title: "PREGUNTA 24: Gran Dependencia", question: "El Grado III de dependencia se asigna cuando la persona necesita ayuda:", options: ["Para realizar varias actividades básicas varias veces al día y pérdida total de autonomía mental o física", "Para tareas instrumentales de limpieza del hogar una vez por semana", "Para pasear al aire libre ocasionalmente"], correct: 0 },
+            { title: "PREGUNTA 25: Apoyo Psicosocial", question: "El apoyo psicosocial prestado por el TAPSD abarca áreas como:", options: ["La estimulación cognitiva, las relaciones sociales y el fomento del ocio", "La prescripción y dosificación de fármacos analgésicos", "La intervención quirúrgica menor domiciliaria"], correct: 0 },
+            { title: "PREGUNTA 26: Estimulación Cognitiva", question: "¿Qué objetivo persiguen los ejercicios de orientación a la realidad y estimulación cognitiva?", options: ["Mantener activas las funciones mentales y frenar el deterioro cognitivo", "Aumentar la masa muscular de los miembros superiores", "Reducir la presión arterial sistólica"], correct: 0 },
+            { title: "PREGUNTA 27: Relación de Ayuda", question: "En la relación profesional entre el TAPSD y el usuario, el límite ético principal es:", options: ["Evitar la sobreprotección y fomentar la autonomía sin perder la calidez profesional", "Mantener una distancia fría y evitar cualquier tipo de conversación personal", "Delegar todas las decisiones en la familia del usuario"], correct: 0 },
+            { title: "PREGUNTA 28: Ergonomía", question: "La ciencia que estudia la adaptación del entorno y las tareas a las capacidades del ser humano se denomina:", options: ["Ergonomía", "Tanatología", "Gerontología clínica"], correct: 0 },
+            { title: "PREGUNTA 29: Incontinencia", question: "Ante una situación de incontinencia urinaria en un usuario dependiente, la intervención higiénica adecuada incluye:", options: ["Mantener la piel siempre limpia, seca e hidratada previniendo irritaciones", "Restringir totalmente la ingesta de líquidos diarios", "Cambiar los pañales una vez al día por la noche"], correct: 0 },
+            { title: "PREGUNTA 30: Cuidados Paliativos", question: "Los cuidados paliativos dirigidos a personas en situación terminal tienen como fin principal:", options: ["Mejorar la calidad de vida y asegurar el confort y alivio del sufrimiento", "Curar la enfermedad de base a corto plazo", "Prolongar artificialmente la vida a cualquier precio"], correct: 0 },
+            { title: "PREGUNTA 31: Accesibilidad Cognitiva", question: "La accesibilidad cognitiva hace referencia a:", options: ["La facilidad para comprender los entornos, señales e información escrita o visual", "La capacidad intelectual innata de los cuidadores", "La velocidad de procesamiento informático"], correct: 0 },
+            { title: "PREGUNTA 32: Hidratación", question: "Un signo frecuente de deshidratación en personas mayores dependientes es:", options: ["Sequedad en mucosas, piel acartonada y confusión o mareo", "Aumento repentino de la agilidad física", "Exceso de salivación continua"], correct: 0 },
+            { title: "PREGUNTA 33: Intimidad y Dignidad", question: "Durante la realización de tareas de aseo y vestituras, el TAPSD debe salvaguardar siempre:", options: ["La intimidad y la dignidad del usuario cerrando puertas y tapando zonas no implicadas", "La rapidez cronometrada de la tarea por encima de todo", "La presencia de familiares en la estancia"], correct: 0 },
+            { title: "PREGUNTA 34: Escala de valoración", question: "Las escalas de valoración funcional estandarizadas (como Barthel o Lawton) sirven para:", options: ["Medir el grado de autonomía en la realización de las AVD", "Diagnosticar enfermedades infecciosas agudas", "Calcular el coste económico de los medicamentos"], correct: 0 },
+            { title: "PREGUNTA 35: Productos de Apoyo", question: "Una grúa de movilización de pacientes se clasifica técnicamente como:", options: ["Un producto de apoyo para la protección y el cuidado personal y para la movilidad", "Un medicamento de uso hospitalario exclusivo", "Una ortesis de miembro inferior"], correct: 0 },
+            { title: "PREGUNTA 36: Abreviatura PAI", question: "¿Qué significa el acrónimo PAI en los centros residenciales sociosanitarios?", options: ["Plan de Atención Individualizada", "Protocolo de Aislamiento Inmediato", "Programa de Actividades Interiores"], correct: 0 },
+            { title: "PREGUNTA 37: Trabajo en Equipo", question: "La coordinación del TAPSD con el equipo interdisciplinar (enfermeros, trabajadores sociales, médicos) es clave porque:", options: ["Garantiza una atención integral, coordinada y de calidad al usuario", "Evita que el TAPSD tenga que tomar decisiones cotidianas", "Permite delegar toda la responsabilidad en un solo profesional"], correct: 0 },
+            { title: "PREGUNTA 38: Autodeterminación", question: "El derecho del usuario dependiente a tomar sus propias decisiones sobre su plan de vida se conoce como:", options: ["Principio de autonomía y autodeterminación", "Principio de beneficencia obligatoria", "Tutela judicial permanente"], correct: 0 },
+            { title: "PREGUNTA 39: Prevención de Quemaduras", question: "En el baño de un usuario con sensibilidad térmica alterada, el TAPSD debe comprobar la temperatura del agua utilizando:", options: ["Un termómetro de baño o el dorso de la mano antes de introducir al usuario", "La mano de un familiar directo", "Directamente la ducha a máxima potencia"], correct: 0 },
+            { title: "PREGUNTA 40: Ética Profesional", question: "El secreto profesional al que está obligado el TAPSD implica:", options: ["Guardar confidencialidad absoluta sobre los datos personales y de salud del usuario", "Publicar los avances terapéuticos en redes sociales sin nombres", "Informar a los vecinos de las dolencias del residente"], correct: 0 }
         ];
 
         let activeQuestionIndex = null;
@@ -526,10 +537,45 @@
             storyModal.style.opacity = '0';
             setTimeout(() => {
                 storyModal.style.display = 'none';
+                initNewGame();
                 gameContainer.style.display = 'flex';
                 gameStarted = true;
                 requestAnimationFrame(updateGame);
             }, 300);
+        }
+
+        // Selecciona 10 preguntas aleatorias únicas del banco de 40 cada vez que se inicia
+        function initNewGame() {
+            score = 0;
+            scoreBoard.innerText = `OBJETIVOS: ${score} / ${totalObjectives}`;
+            
+            // Barajar el banco completo y tomar 10
+            let shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+            activeQuestions = shuffled.slice(0, 10);
+
+            // Reiniciar objetivos
+            objectives.forEach(obj => obj.collected = false);
+
+            // Posición inicial de la enfermera y fantasma
+            player.x = 40;
+            player.y = 40;
+            player.dx = 0;
+            player.dy = 0;
+
+            ghost.x = 400;
+            ghost.y = 400;
+            ghost.dx = 0;
+            ghost.dy = -ghost.speed;
+
+            victoryScreen.style.display = 'none';
+        }
+
+        // Botón Volver a jugar desde la pantalla final (lleva directamente al laberinto)
+        function restartGame() {
+            victoryScreen.style.display = 'none';
+            initNewGame();
+            gameContainer.style.display = 'flex';
+            gameStarted = true;
         }
 
         window.addEventListener('keydown', e => {
@@ -566,11 +612,10 @@
                 if (!checkWallCollision(nextX, player.y, player.size)) player.x = nextX;
                 if (!checkWallCollision(player.x, nextY, player.size)) player.y = nextY;
 
-                // IA Estricta por cuadrícula / celdas para el Fantasma (respetando pasillos y giros limpios)
+                // IA Estricta por cuadrícula para el Fantasma
                 let nextGX = ghost.x + ghost.dx;
                 let nextGY = ghost.y + ghost.dy;
 
-                // Si choca contra un muro, o está alineado en una intersección de cuadrícula (múltiplo de 10), decide nueva dirección válida
                 if (checkWallCollision(nextGX, nextGY, ghost.size) || (ghost.x % 10 === 0 && ghost.y % 10 === 0 && Math.random() < 0.35)) {
                     const candidateDirs = [
                         {dx: 0, dy: -ghost.speed},
@@ -578,11 +623,9 @@
                         {dx: -ghost.speed, dy: 0},
                         {dx: ghost.speed, dy: 0}
                     ];
-                    // Filtrar solo las direcciones que no chocan con muros
                     const validDirs = candidateDirs.filter(d => !checkWallCollision(ghost.x + d.dx * 2, ghost.y + d.dy * 2, ghost.size));
                     
                     if (validDirs.length > 0) {
-                        // Intentar elegir una dirección que acerque suavemente al fantasma al jugador en las intersecciones
                         validDirs.sort((a, b) => {
                             let distA = Math.hypot((ghost.x + a.dx*10) - player.x, (ghost.y + a.dy*10) - player.y);
                             let distB = Math.hypot((ghost.x + b.dx*10) - player.x, (ghost.y + b.dy*10) - player.y);
@@ -659,7 +702,7 @@
 
         function triggerQuiz(id) {
             activeQuestionIndex = id;
-            const q = questions[id];
+            const q = activeQuestions[id];
             document.getElementById('quiz-title').innerText = q.title;
             document.getElementById('quiz-question-text').innerText = q.question;
             
@@ -687,9 +730,9 @@
                     quizModal.style.display = 'none';
                     activeQuestionIndex = null;
                     score++;
-                    scoreBoard.innerText = `OBJETIVOS: ${score} / 6`;
+                    scoreBoard.innerText = `OBJETIVOS: ${score} / ${totalObjectives}`;
 
-                    if (score === 6) {
+                    if (score === totalObjectives) {
                         triggerVictory();
                     }
                 }, 1000);
@@ -702,6 +745,108 @@
         function triggerVictory() {
             gameContainer.style.display = 'none';
             victoryScreen.style.display = 'flex';
+            initFireworks();
+        }
+
+        // Sistema de Fuegos Artificiales para la pantalla de victoria
+        function initFireworks() {
+            const fCanvas = document.getElementById('victory-canvas');
+            const fCtx = fCanvas.getContext('2d');
+            fCanvas.width = window.innerWidth;
+            fCanvas.height = window.innerHeight;
+
+            let particles = [];
+            let fireworks = [];
+
+            class Firework {
+                constructor() {
+                    this.x = Math.random() * fCanvas.width;
+                    this.y = fCanvas.height;
+                    this.targetY = Math.random() * (fCanvas.height / 2);
+                    this.speed = 4;
+                    this.angle = -Math.PI / 2 + (Math.random() * 0.4 - 0.2);
+                    this.vx = Math.cos(this.angle) * this.speed;
+                    this.vy = Math.sin(this.angle) * this.speed;
+                    this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+                    this.exploded = false;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.y <= this.targetY) {
+                        this.exploded = true;
+                        createParticles(this.x, this.y, this.color);
+                    }
+                }
+                draw() {
+                    fCtx.fillStyle = this.color;
+                    fCtx.fillRect(this.x, this.y, 3, 10);
+                }
+            }
+
+            class Particle {
+                constructor(x, y, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.color = color;
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 6 + 1;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                    this.alpha = 1;
+                    this.decay = Math.random() * 0.015 + 0.01;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.vy += 0.08;
+                    this.alpha -= this.decay;
+                }
+                draw() {
+                    fCtx.save();
+                    fCtx.globalAlpha = Math.max(this.alpha, 0);
+                    fCtx.fillStyle = this.color;
+                    fCtx.beginPath();
+                    fCtx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
+                    fCtx.fill();
+                    fCtx.restore();
+                }
+            }
+
+            function createParticles(x, y, color) {
+                for (let i = 0; i < 50; i++) {
+                    particles.push(new Particle(x, y, color));
+                }
+            }
+
+            function loop() {
+                fCtx.fillStyle = 'rgba(8, 8, 12, 0.2)';
+                fCtx.fillRect(0, 0, fCanvas.width, fCanvas.height);
+
+                if (Math.random() < 0.04) {
+                    fireworks.push(new Firework());
+                }
+
+                for (let i = fireworks.length - 1; i >= 0; i--) {
+                    fireworks[i].update();
+                    fireworks[i].draw();
+                    if (fireworks[i].exploded) {
+                        fireworks.splice(i, 1);
+                    }
+                }
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if (particles[i].alpha <= 0) {
+                        particles.splice(i, 1);
+                    }
+                }
+
+                requestAnimationFrame(loop);
+            }
+
+            loop();
         }
     </script>
 </body>
