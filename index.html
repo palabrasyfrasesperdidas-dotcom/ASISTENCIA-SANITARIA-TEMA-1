@@ -36,6 +36,33 @@
         .nurse-anim {
             animation: nurseWalk 1.5s infinite alternate ease-in-out;
         }
+        /* Estilos específicos para el laberinto tipo Comecocos */
+        .maze-board {
+            display: grid;
+            grid-template-columns: repeat(11, minmax(0, 1fr));
+            gap: 4px;
+            background-color: #000;
+            border: 3px solid #1d4ed8;
+            padding: 12px;
+            border-radius: 8px;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        .maze-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        .wall {
+            background-color: #1e3a8a;
+            border: 1px solid #3b82f6;
+            border-radius: 3px;
+        }
+        .path {
+            background-color: #05050a;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between text-cyan-400 selection:bg-yellow-400 selection:text-black p-4">
@@ -113,29 +140,28 @@
         <!-- ================= PANTALLA 3: LABERINTO TIPO COMECOCOS & PREGUNTAS ================= -->
         <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl">
             
-            <!-- Vista de Laberinto / Mapa de Hitos -->
-            <div id="maze-view" class="space-y-6">
+            <!-- Vista de Laberinto / Mapa estilo Comecocos -->
+            <div id="maze-view" class="space-y-4">
                 <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
                     <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
-                    <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITO 1 / 10</span>
+                    <span id="maze-progress" class="font-pixel text-xl text-cyan-300">PUNTOS: 0 / 10</span>
                 </div>
 
-                <p class="font-pixel text-xl text-center text-cyan-200">
-                    Guía a la enfermera a través del laberinto para alcanzar el siguiente hito de conocimiento:
+                <p class="font-pixel text-lg text-center text-cyan-200">
+                    Guía a la enfermera 👩‍⚕️ por el laberinto para alcanzar los 10 puntos de conocimiento:
                 </p>
 
-                <!-- Cuadrícula del Laberinto estilo Comecocos -->
-                <div class="bg-black border-2 border-cyan-600 p-4 rounded-xl flex flex-col items-center justify-center gap-4">
-                    <div id="pacman-grid" class="grid grid-cols-5 gap-3 sm:gap-4 my-2">
-                        <!-- Generado por JS -->
-                    </div>
-                    <div class="font-pixel text-lg text-yellow-400 animate-pulse" id="maze-status-text">
-                        &gt; Haz clic en el hito activo para desbloquear la pregunta
-                    </div>
+                <!-- Tablero Laberinto Comecocos -->
+                <div id="pacman-board" class="maze-board">
+                    <!-- Generado dinámicamente por JS -->
+                </div>
+
+                <div class="font-pixel text-lg text-center text-yellow-400 animate-pulse pt-2" id="maze-status-text">
+                    &gt; Haz clic en el siguiente punto activo de la enfermera para avanzar
                 </div>
             </div>
 
-            <!-- Panel de Pregunta (Se activa al pulsar el hito del laberinto) -->
+            <!-- Panel de Pregunta (Se activa al alcanzar un punto del laberinto) -->
             <div id="question-panel" class="hidden space-y-6">
                 <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
                     <span class="text-yellow-300" id="question-counter-label">PREGUNTA 1 / 10</span>
@@ -165,19 +191,19 @@
                 🎆 ✨ 🎇 🌟 🎆 ✨ 🎇
             </div>
             
-            <h2 class="font-arcade text-lg sm:text-2xl text-yellow-400 animate-bounce">¡ENHORABUENA!</h2>
+            <h2 class="font-arcade text-lg sm:text-2xl text-yellow-400 animate-bounce">ENHORABUENA</h2>
             
             <p class="font-pixel text-2xl sm:text-3xl text-cyan-100">
                 ¡Has completado con éxito todos los hitos del laberinto sociosanitario y demostrado que "Quien quiere, puede, y quien quiere, debe"!
             </p>
 
             <div class="font-arcade text-3xl text-cyan-300 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8">
-                10 / 10 HITOS
+                10 / 10 PUNTOS
             </div>
 
             <div>
                 <button onclick="restartGame()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">
-                    VOLVER A JUGAR &gt;&gt;
+                    VOLVER A PROBAR &gt;&gt;
                 </button>
             </div>
         </div>
@@ -330,43 +356,43 @@
                     "Impartir docencia universitaria en ciencias de la salud."
                 ],
                 correct: 0
-            },
-            {
-                q: "Cuando un profesional utiliza la comunicación no verbal y apoya la construcción de la imagen personal del usuario, está prestando cuidados centrados en:",
-                options: [
-                    "La autoimagen.",
-                    "El sosiego absoluto.",
-                    "La estimulación motora básica.",
-                    "La compensación orgánica."
-                ],
-                correct: 0
-            },
-            {
-                q: "El concepto actual de salud impulsado en los modelos asistenciales se aleja de la mera ausencia de enfermedad para concebirse como:",
-                options: [
-                    "Un estado completo de bienestar físico, psíquico, social y dinámico con el entorno.",
-                    "Una condición estática invariable determinada únicamente por la genética.",
-                    "Un indicador puramente económico de productividad laboral.",
-                    "La resistencia biológica exclusiva frente a infecciones agudas."
-                ],
-                correct: 0
-            },
-            {
-                q: "Durante la valoración inicial de un plan de cuidados individualizado, la fase de la enfermedad en la que esta todavía no se manifiesta clínicamente se denomina:",
-                options: [
-                    "Periodo prepatogénico.",
-                    "Periodo de enfermedad manifiesta.",
-                    "Fase de secuelas incapacitantes.",
-                    "Estadio terminal de dependencia."
-                ],
-                correct: 0
             }
         ];
 
         let gameQuestions = [];
-        let currentMilestone = 0;
+        let currentMilestone = 0; // De 0 a 9 (10 puntos)
         let selectedOptionIndex = null;
         let currentActiveQuestion = null;
+
+        // Definición de un laberinto de 11x11 celdas (1 = Pared, 0 = Pasillo con punto)
+        // Colocaremos exactamente 10 puntos repartidos en los pasillos
+        const mazeLayout = [
+            [1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,1,0,0,0,0,0,1],
+            [1,0,1,0,1,0,1,1,1,0,1],
+            [1,0,1,0,0,0,1,0,0,0,1],
+            [1,0,1,1,1,0,1,0,1,1,1],
+            [1,0,0,0,1,0,0,0,0,0,1],
+            [1,1,1,0,1,1,1,1,1,0,1],
+            [1,0,0,0,0,0,0,0,1,0,1],
+            [1,0,1,1,1,1,1,0,1,0,1],
+            [1,0,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1]
+        ];
+
+        // Coordenadas [fila, col] exactas en el mapa donde se ubican los 10 puntos de parada
+        const milestoneCoords = [
+            [1, 1], // Punto 1
+            [1, 3], // Punto 2
+            [1, 5], // Punto 3
+            [1, 9], // Punto 4
+            [3, 3], // Punto 5
+            [3, 7], // Punto 6
+            [5, 1], // Punto 7
+            [5, 9], // Punto 8
+            [7, 1], // Punto 9
+            [9, 9]  // Punto 10
+        ];
 
         function initGameData() {
             const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
@@ -410,27 +436,41 @@
         function renderMaze() {
             document.getElementById('maze-view').classList.remove('hidden');
             document.getElementById('question-panel').classList.add('hidden');
-            document.getElementById('maze-progress').innerText = `HITO ${currentMilestone + 1} / 10`;
+            document.getElementById('maze-progress').innerText = `PUNTOS: ${currentMilestone} / 10`;
 
-            const grid = document.getElementById('pacman-grid');
-            grid.innerHTML = '';
+            const board = document.getElementById('pacman-board');
+            board.innerHTML = '';
 
-            for (let i = 0; i < 10; i++) {
-                const cell = document.createElement('div');
-                cell.className = "w-12 h-12 sm:w-16 sm:h-16 border-2 flex flex-col items-center justify-center font-pixel text-lg rounded transition ";
-                
-                if (i < currentMilestone) {
-                    cell.className += "border-green-500 bg-green-950/60 text-green-400";
-                    cell.innerHTML = `<span>✔️</span><span class="text-[10px]">#${i+1}</span>`;
-                } else if (i === currentMilestone) {
-                    cell.className += "border-yellow-400 bg-yellow-950/80 text-yellow-300 animate-pulse cursor-pointer arcade-glow-btn";
-                    cell.innerHTML = `<span>👩‍⚕️</span><span class="text-[10px] font-bold">¡IR!</span>`;
-                    cell.onclick = () => openQuestion(i);
-                } else {
-                    cell.className += "border-slate-700 bg-slate-900/60 text-slate-600";
-                    cell.innerHTML = `<span>🔒</span><span class="text-[10px]">#${i+1}</span>`;
+            for (let r = 0; r < mazeLayout.length; r++) {
+                for (let c = 0; c < mazeLayout[r].length; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = "maze-cell ";
+
+                    if (mazeLayout[r][c] === 1) {
+                        cell.className += "wall";
+                    } else {
+                        cell.className += "path";
+                        
+                        // Comprobar si esta celda es uno de los 10 puntos de hito
+                        const pointIndex = milestoneCoords.findIndex(coord => coord[0] === r && coord[1] === c);
+                        
+                        if (pointIndex !== -1) {
+                            if (pointIndex < currentMilestone) {
+                                // Puntos ya superados
+                                cell.innerHTML = `<span class="text-xs text-green-500">✔️</span>`;
+                            } else if (pointIndex === currentMilestone) {
+                                // Punto activo actual donde está la enfermera
+                                cell.className += " cursor-pointer animate-pulse bg-yellow-950/60 border border-yellow-400 rounded";
+                                cell.innerHTML = `<span class="text-xl">👩‍⚕️</span>`;
+                                cell.onclick = () => openQuestion(pointIndex);
+                            } else {
+                                // Puntos futuros pendientes por recorrer
+                                cell.innerHTML = `<span class="w-2 h-2 bg-cyan-600 rounded-full inline-block"></span>`;
+                            }
+                        }
+                    }
+                    board.appendChild(cell);
                 }
-                grid.appendChild(cell);
             }
         }
 
@@ -442,7 +482,7 @@
             document.getElementById('question-panel').classList.remove('hidden');
             document.getElementById('submit-ans-btn').classList.add('hidden');
 
-            document.getElementById('question-counter-label').innerText = `PREGUNTA ${index + 1} / 10 (HITO ${index + 1})`;
+            document.getElementById('question-counter-label').innerText = `PREGUNTA ${index + 1} / 10`;
             document.getElementById('question-text').innerText = currentActiveQuestion.q;
 
             let indexedOpts = currentActiveQuestion.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
@@ -474,22 +514,34 @@
             if (selectedOptionIndex === null) return;
 
             if (selectedOptionIndex === currentActiveQuestion.correct) {
+                // Acierto correcto
                 currentMilestone++;
                 if (currentMilestone >= 10) {
                     goToScreen4();
                 } else {
+                    document.getElementById('question-panel').classList.add('hidden');
+                    document.getElementById('maze-view').classList.remove('hidden');
                     renderMaze();
+                    
+                    const feedback = document.getElementById('maze-status-text');
+                    feedback.innerText = "> ¡Enhorabuena, es correcto!";
+                    feedback.className = "font-pixel text-lg text-green-400 animate-bounce";
+                    setTimeout(() => {
+                        feedback.innerText = "> Haz clic en el siguiente punto activo de la enfermera para avanzar";
+                        feedback.className = "font-pixel text-lg text-yellow-400 animate-pulse";
+                    }, 3000);
                 }
             } else {
+                // Error en la respuesta
                 document.getElementById('question-panel').classList.add('hidden');
                 document.getElementById('maze-view').classList.remove('hidden');
                 renderMaze();
                 
                 const feedback = document.getElementById('maze-status-text');
-                feedback.innerText = "> ¡UPSS LO SIENTO! Vuelve a intentarlo.";
+                feedback.innerText = "> ¡Lo siento, no es correcto! Prueba de nuevo.";
                 feedback.className = "font-pixel text-lg text-red-400 animate-bounce";
                 setTimeout(() => {
-                    feedback.innerText = "> Haz clic en el hito activo para desbloquear la pregunta";
+                    feedback.innerText = "> Haz clic en el siguiente punto activo de la enfermera para avanzar";
                     feedback.className = "font-pixel text-lg text-yellow-400 animate-pulse";
                 }, 3000);
             }
