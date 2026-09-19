@@ -59,13 +59,14 @@
 
     <audio id="bg-audio" loop><source src="Coffee_and_Cartridges.mp3" type="audio/mpeg"></audio>
 
-    <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow z-20">
+    <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow z-30">
         <div class="flex items-center gap-3">
             <span class="inline-block w-4 h-4 bg-yellow-400 animate-pulse"></span>
             <h1 class="font-arcade text-xs sm:text-sm text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
         </div>
         <div class="flex items-center gap-2">
-            <button id="audio-btn" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-2 py-1 rounded cursor-pointer" style="pointer-events: auto; position: relative; z-index: 50;">🎵 MÚSICA: OFF</button>
+            <!-- Botón de sonido con onclick directo -->
+            <button id="audio-btn" onclick="toggleAudio()" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-3 py-1 rounded cursor-pointer relative z-40">🎵 MÚSICA: OFF</button>
             <div class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">TAPSD ARCADE</div>
         </div>
     </header>
@@ -81,7 +82,8 @@
                 </div>
             </div>
             <div>
-                <button id="start-btn" style="pointer-events: auto; position: relative; z-index: 50;" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition">PULSA PARA COMENZAR &gt;&gt;</button>
+                <!-- Botón de comenzar con onclick directo -->
+                <button id="start-btn" onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition relative z-40">PULSA PARA COMENZAR &gt;&gt;</button>
             </div>
         </div>
 
@@ -94,7 +96,7 @@
                 <p class="font-pixel text-2xl text-cyan-200">¿Estás preparada?</p>
             </div>
             <div>
-                <button id="ready-btn" style="pointer-events: auto; position: relative; z-index: 50;" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition">¡ESTOY PREPARADA! &gt;&gt;</button>
+                <button id="ready-btn" onclick="startMazeMission()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition relative z-40">¡ESTOY PREPARADA! &gt;&gt;</button>
             </div>
         </div>
 
@@ -125,7 +127,7 @@
                 <h2 id="q-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">Cargando...</h2>
                 <div id="q-options" class="space-y-3"></div>
                 <div class="flex justify-end pt-2">
-                    <button id="q-btn" style="pointer-events: auto; position: relative; z-index: 50;" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn">COMPROBAR &gt;&gt;</button>
+                    <button id="q-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn relative z-40">COMPROBAR &gt;&gt;</button>
                 </div>
             </div>
         </div>
@@ -144,7 +146,7 @@
             <h2 class="font-arcade text-xl text-yellow-400 relative z-20">¡ENHORABUENA!</h2>
             <p class="font-pixel text-2xl text-cyan-100 relative z-20">Has superado todas las cuestiones y demostrado que "Quien quiere, puede, y quien quiere, debe".</p>
             <div class="relative z-20">
-                <button id="restart-btn" style="pointer-events: auto; position: relative; z-index: 50;" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn">REINICIAR &gt;&gt;</button>
+                <button id="restart-btn" onclick="location.reload()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn relative z-40">REINICIAR &gt;&gt;</button>
             </div>
         </div>
     </main>
@@ -169,44 +171,16 @@
             }
         }
 
-        // Enlaces seguros mediante event listeners con DOMContentLoaded para GitHub Pages
-        document.addEventListener('DOMContentLoaded', () => {
-            const startBtn = document.getElementById('start-btn');
-            if (startBtn) {
-                startBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    document.getElementById('screen-1').classList.add('hidden');
-                    document.getElementById('screen-2').classList.remove('hidden');
-                });
-            }
+        function goToScreen2() {
+            document.getElementById('screen-1').classList.add('hidden');
+            document.getElementById('screen-2').classList.remove('hidden');
+        }
 
-            const readyBtn = document.getElementById('ready-btn');
-            if (readyBtn) {
-                readyBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    document.getElementById('screen-2').classList.add('hidden');
-                    document.getElementById('screen-3').classList.remove('hidden');
-                    initMaze();
-                });
-            }
-
-            const qBtn = document.getElementById('q-btn');
-            if (qBtn) {
-                qBtn.addEventListener('click', checkAnswer);
-            }
-
-            const restartBtn = document.getElementById('restart-btn');
-            if (restartBtn) {
-                restartBtn.addEventListener('click', () => {
-                    location.reload();
-                });
-            }
-
-            const audioBtn = document.getElementById('audio-btn');
-            if (audioBtn) {
-                audioBtn.addEventListener('click', toggleAudio);
-            }
-        });
+        function startMazeMission() {
+            document.getElementById('screen-2').classList.add('hidden');
+            document.getElementById('screen-3').classList.remove('hidden');
+            initMaze();
+        }
 
         // Banco de 8 preguntas ampliadas del Tema 1
         const questions = [
