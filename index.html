@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAPSD Arcade Edition - Tema 1: Práctica Sociosanitaria</title>
+    <title>TAPSD Arcade Edition - Tema 1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
@@ -11,127 +11,156 @@
         .font-pixel { font-family: 'VT323', monospace; }
         body {
             background-color: #05050a;
-            background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-image: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03));
             background-size: 100% 4px, 6px 100%;
         }
-        .arcade-glow { box-shadow: 0 0 15px rgba(34, 211, 238, 0.4), inset 0 0 15px rgba(34, 211, 238, 0.2); }
-        .arcade-glow-btn:hover { box-shadow: 0 0 15px rgba(250, 204, 21, 0.9); }
-        .nurse-anim { animation: nurseWalk 1.5s infinite alternate ease-in-out; }
-        @keyframes nurseWalk { 0% { transform: translateX(0px); } 50% { transform: translateX(25px) translateY(-3px); } 100% { transform: translateX(50px); } }
-        .maze-board {
-            display: grid;
-            grid-template-columns: repeat(11, minmax(0, 1fr));
-            gap: 2px;
-            background-color: #000;
-            border: 3px solid #1d4ed8;
-            padding: 8px;
-            border-radius: 8px;
-            max-width: 420px;
-            margin: 0 auto;
+        .arcade-glow { box-shadow: 0 0 15px rgba(34,211,238,0.4), inset 0 0 15px rgba(34,211,238,0.2); }
+        .arcade-glow-btn:hover { box-shadow: 0 0 15px rgba(250,204,21,0.9); }
+        @keyframes nurseWalk {
+            0% { transform: translateX(0px); }
+            50% { transform: translateX(25px) translateY(-3px); }
+            100% { transform: translateX(50px); }
         }
-        .maze-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
-        .wall { background-color: #1e3a8a; border: 1px solid #3b82f6; border-radius: 2px; }
-        .path { background-color: #05050a; }
+        .nurse-anim { animation: nurseWalk 1.5s infinite alternate ease-in-out; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between text-cyan-400 selection:bg-yellow-400 selection:text-black p-4">
+<body class="min-h-screen flex flex-col justify-between text-cyan-400 p-4">
 
-    <audio id="bg-audio" loop><source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">Tu navegador no soporta el elemento de audio.</audio>
+    <audio id="bg-audio" loop><source src="Coffee_and_Cartridges.mp3" type="audio/mpeg"></audio>
 
     <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow">
         <div class="flex items-center gap-3">
             <span class="inline-block w-4 h-4 bg-yellow-400 animate-pulse"></span>
-            <h1 class="font-arcade text-xs sm:text-sm tracking-wider text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
+            <h1 class="font-arcade text-xs sm:text-sm text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
         </div>
         <div class="flex items-center gap-2">
-            <button onclick="toggleAudio()" id="audio-btn" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-2 py-1 rounded hover:bg-cyan-900 transition">🎵 MÚSICA: OFF</button>
-            <div id="header-status" class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">TAPSD ARCADE</div>
+            <button onclick="toggleAudio()" id="audio-btn" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-2 py-1 rounded">🎵 MÚSICA: OFF</button>
+            <div class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">TAPSD ARCADE</div>
         </div>
     </header>
 
     <main class="max-w-3xl w-full mx-auto my-auto py-2">
-
+        <!-- PANTALLA 1 -->
         <div id="screen-1" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-8 text-center arcade-glow shadow-2xl space-y-6">
             <h2 class="font-arcade text-lg sm:text-xl text-cyan-100 leading-relaxed pt-2">ATENCIÓN SOCIOSANITARIA<br><span class="text-yellow-300 text-sm">EDICIÓN RETRO ARCADE</span></h2>
-            <div class="py-6 flex justify-center items-center">
-                <div class="nurse-anim bg-cyan-950/80 border-2 border-cyan-400 p-6 rounded-xl flex flex-col items-center shadow-lg">
+            <div class="py-6 flex justify-center">
+                <div class="nurse-anim bg-cyan-950/80 border-2 border-cyan-400 p-6 rounded-xl flex flex-col items-center">
                     <span class="text-5xl mb-2">👩‍⚕️💊</span>
                     <span class="font-pixel text-xl text-yellow-300">&gt; NURSE.EXE READY</span>
                 </div>
             </div>
-            <div><button onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">PULSA PARA COMENZAR &gt;&gt;</button></div>
+            <div>
+                <button onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn">PULSA PARA COMENZAR &gt;&gt;</button>
+            </div>
         </div>
 
+        <!-- PANTALLA 2 -->
         <div id="screen-2" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6">
-            <div class="font-arcade text-xs text-cyan-400 tracking-widest">MISIÓN 0: PREPARACIÓN</div>
-            <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg">
-                <p class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">Estudiando para ser una profesional en <span class="text-yellow-300">Atención a Personas Dependientes (TAPSD)</span> y vas a demotrar que es cierto el lema que dice:</p>
-                <p class="font-arcade text-sm sm:text-base text-yellow-400 my-6 tracking-wide bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">"Quien quiere, puede, y quien quiere, debe"</p>
-                <p class="font-pixel text-2xl text-cyan-200">¿Estás preparada para el reto?</p>
+            <div class="font-arcade text-xs text-cyan-400">MISIÓN 0: PREPARACIÓN</div>
+            <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg space-y-4">
+                <p class="font-pixel text-2xl text-cyan-100">Estudiando para ser profesional en <span class="text-yellow-300">TAPSD</span>, demostrarás el lema:</p>
+                <p class="font-arcade text-sm text-yellow-400 bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">"Quien quiere, puede, y quien quiere, debe"</p>
+                <p class="font-pixel text-2xl text-cyan-200">¿Estás preparada?</p>
             </div>
-            <div><button onclick="goToScreen3()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 transition cursor-pointer arcade-glow-btn">¡ESTOY PREPARADA! &gt;&gt;</button></div>
+            <div>
+                <button onclick="goToScreen3()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn">¡ESTOY PREPARADA! &gt;&gt;</button>
+            </div>
         </div>
 
-        <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl">
-            <div id="maze-view" class="space-y-3">
-                <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
-                    <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
-                    <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITOS: 0 / 10</span>
-                </div>
-                <p class="font-pixel text-lg text-center text-cyan-200">Usa las <span class="text-yellow-300 font-bold">FLECHAS DE DIRECCIÓN</span> para mover a la enfermera 👩‍⚕️ y esquivar al virus 👾:</p>
-                <div id="pacman-board" class="maze-board"></div>
-                <div class="font-pixel text-lg text-center text-yellow-400" id="maze-status-text">&gt; ¡Usa ⬅️ ➡️ ⬆️ ⬇️ para moverte!</div>
-            </div>
-            <div id="question-panel" class="hidden space-y-6">
+        <!-- PANTALLA 3 -->
+        <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl space-y-4">
+            <div id="quiz-container" class="space-y-6">
                 <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
-                    <span class="text-yellow-300" id="question-counter-label">PREGUNTA 1 / 10</span>
+                    <span class="text-yellow-300" id="q-counter">PREGUNTA 1 / 5</span>
                     <span class="text-cyan-400">MODO EXAMEN</span>
                 </div>
-                <h2 id="question-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed tracking-wide"></h2>
-                <div id="options-container" class="space-y-3"></div>
-                <div class="flex justify-end pt-2"><button id="submit-ans-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 transition hidden cursor-pointer arcade-glow-btn">COMPROBAR &gt;&gt;</button></div>
+                <h2 id="q-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">Cargando...</h2>
+                <div id="q-options" class="space-y-3"></div>
+                <div class="flex justify-end pt-2">
+                    <button id="q-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn">COMPROBAR &gt;&gt;</button>
+                </div>
             </div>
         </div>
 
-        <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6 relative overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none flex justify-around items-center opacity-30 text-4xl animate-pulse">🎆 ✨ 🎇 🌟 🎆 ✨ 🎇</div>
-            <h2 class="font-arcade text-lg sm:text-2xl text-yellow-400 animate-bounce">ENHORABUENA</h2>
-            <p class="font-pixel text-2xl sm:text-3xl text-cyan-100">¡Has completado con éxito todos los hitos del laberinto sociosanitario!</p>
-            <div class="font-arcade text-3xl text-cyan-300 py-4 bg-black/60 border border-cyan-500 rounded inline-block px-8">10 / 10 HITOS</div>
-            <div><button onclick="restartGame()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 transition cursor-pointer arcade-glow-btn">VOLVER A PROBAR &gt;&gt;</button></div>
+        <!-- PANTALLA 4 -->
+        <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6">
+            <h2 class="font-arcade text-xl text-yellow-400">¡ENHORABUENA!</h2>
+            <p class="font-pixel text-2xl text-cyan-100">Has superado todas las cuestiones y demostrado que "Quien quiere, puede, y quien quiere, debe".</p>
+            <div>
+                <button onclick="location.reload()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn">REINICIAR &gt;&gt;</button>
+            </div>
         </div>
-
     </main>
 
-    <footer class="text-center py-3 font-pixel text-lg text-slate-500 tracking-wider">MÓDULO TAPSD &bull; ARCADE EDITION</footer>
+    <footer class="text-center py-3 font-pixel text-lg text-slate-500">MÓDULO TAPSD &bull; ARCADE EDITION</footer>
 
     <script>
         let isAudioPlaying = false;
+        const bgAudio = document.getElementById('bg-audio');
         function toggleAudio() {
-            const audio = document.getElementById('bg-audio');
             const btn = document.getElementById('audio-btn');
-            if (isAudioPlaying) { audio.pause(); isAudioPlaying = false; btn.innerText = "🎵 MÚSICA: OFF"; }
-            else { audio.play().then(() => { isAudioPlaying = true; btn.innerText = "🔊 MÚSICA: ON"; }).catch(e => console.log(e)); }
+            if(isAudioPlaying) { bgAudio.pause(); isAudioPlaying = false; btn.innerText = "🎵 MÚSICA: OFF"; }
+            else { bgAudio.play().then(() => { isAudioPlaying = true; btn.innerText = "🔊 MÚSICA: ON"; }).catch(e => console.log(e)); }
         }
 
-        const questionBank = [
-            { q: "A la hora de planificar actividades para un usuario, debemos entender a la persona como un ser multidimensional que comprende las siguientes esferas:", options: ["Biológica, psíquica y social.", "Únicamente física y económica.", "Motora, intelectual y laboral.", "Genética, clínica y farmacológica."], correct: 0 },
-            { q: "Cuando en un centro residencial se programan actividades dirigidas a despertar las capacidades motrices y los sentidos, nos referimos a:", options: ["Cuidados de compensación.", "Cuidados de estimulación.", "Cuidados de sosiego.", "Cuidados de autoimagen."], correct: 1 },
-            { q: "Si un profesional aplica intervenciones orientadas a calmar el dolor y aportar serenidad, está prestando:", options: ["Cuidados de estimulación.", "Cuidados de conservación.", "Cuidados de sosiego.", "Cuidados de confirmación."], correct: 2 },
-            { q: "Cuando realizamos actividades asistenciales destinadas a suplir funciones o capacidades que el usuario perdió, empleamos:", options: ["Cuidados de estimulación sensorial.", "Cuidados de conservación de la vida.", "Cuidados de autoimagen.", "Cuidados de compensación."], correct: 3 },
-            { q: "Para mantener las capacidades adquiridas y asegurar la autonomía el mayor tiempo posible, el tipo de cuidado indicado es el de:", options: ["Conservación y continuidad de la vida.", "Compensación total de funciones.", "Estimulación psicomotriz infantil.", "Sosiego y alivio del dolor agudo."], correct: 0 },
-            { q: "Al adecuar el domicilio de una persona mayor con movilidad reducida, ¿cómo deben ser preferiblemente los suelos para prevenir accidentes?", options: ["De parqué muy brillante y pulido.", "Cubiertos de alfombras gruesas.", "Antideslizantes, evitando alfombras que entorpezcan el paso.", "De moqueta suelta."], correct: 2 },
-            { q: "Respecto a la climatización en la vivienda de un usuario dependiente, se desaconseja expresamente el uso de:", options: ["Sistemas de aire acondicionado con control digital.", "Braseros tradicionales, debido al riesgo de intoxicación.", "Radiadores de aceite eléctricos homologados.", "Humidificadores ambientales en estancias secas."], correct: 1 },
-            { q: "En relación con las condiciones de iluminación en el hogar de un usuario anciano, esta debe asegurar que:", options: ["Las bombillas sean de intensidad muy baja.", "Los interruptores estén solo en el exterior.", "Se dependa de la luz natural.", "Exista luz suficiente para ver sin forzar la vista y los interruptores sean accesibles."], correct: 3 },
-            { q: "Dentro de las estrategias para promover los autocuidados, una de las líneas clave consiste en:", options: ["Imponer normas estrictas.", "Sustituir al usuario en todas sus decisiones.", "Desarrollar la autoestima y favorecer la responsabilidad.", "Evitar la participación grupal."], correct: 2 },
-            { q: "Cuál es una de las herramientas fundamentales que utiliza el profesional para orientar, educar y reforzar los hábitos de autocuidado:", options: ["La restricción farmacológica nocturna.", "El aislamiento preventivo domiciliario.", "La simplificación administrativa.", "La educación para la salud."], correct: 3 }
+        function goToScreen2() {
+            document.getElementById('screen-1').classList.add('hidden');
+            document.getElementById('screen-2').classList.remove('hidden');
+        }
+
+        function goToScreen3() {
+            document.getElementById('screen-2').classList.add('hidden');
+            document.getElementById('screen-3').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        const questions = [
+            { q: "La persona como ser multidimensional comprende las esferas:", opts: ["Biológica, psíquica y social.", "Física y económica.", "Motora e intelectual."], correct: 0 },
+            { q: "Las actividades para despertar capacidades motrices y sentidos son:", opts: ["Cuidados de estimulación.", "Cuidados de compensación.", "Cuidados de sosiego."], correct: 0 },
+            { q: "Intervenciones orientadas a calmar el dolor y aportar serenidad:", opts: ["Cuidados de sosiego.", "Cuidados de estimulación.", "Cuidados de conservación."], correct: 0 },
+            { q: "Actividades destinadas a suplir funciones o capacidades perdidas:", opts: ["Cuidados de compensación.", "Cuidados de conservación.", "Cuidados de autoimagen."], correct: 0 },
+            { q: "Para mantener las capacidades y asegurar la autonomía se usa el cuidado de:", opts: ["Conservación y continuidad de la vida.", "Compensación total.", "Sosiego."], correct: 0 }
         ];
 
-        // 1 = Pared, 0 = Camino transitable, 2 = Hito (punto amarillo)
-        // MAPA REDISEÑADO: Pasillos anchos y abiertos sin islas cerradas.
-        const openMapLayout = [
-            [1,1,1,1,1,1,1,1,1,1,1],
-            [1,2,0,0,0,0,0,0,0,2,1],
-            [1,0,1,1,1,1,1,1,1,0,1],
-            [1,0,1,2,0,0,0,0,1,0,1],
-            [1,0,1,0,1,1,1,0,
+        let currentQ = 0, selectedOpt = null;
+
+        function loadQuestion() {
+            selectedOpt = null;
+            document.getElementById('q-btn').classList.add('hidden');
+            if(currentQ >= questions.length) {
+                document.getElementById('screen-3').classList.add('hidden');
+                document.getElementById('screen-4').classList.remove('hidden');
+                return;
+            }
+            let data = questions[currentQ];
+            document.getElementById('q-counter').innerText = `PREGUNTA ${currentQ + 1} / ${questions.length}`;
+            document.getElementById('q-text').innerText = data.q;
+            let container = document.getElementById('q-options');
+            container.innerHTML = '';
+            data.opts.forEach((opt, idx) => {
+                let div = document.createElement('div');
+                div.className = "font-pixel text-xl bg-black/60 border border-cyan-700 p-4 rounded cursor-pointer hover:border-yellow-400 transition";
+                div.innerText = opt;
+                div.onclick = () => selectOption(idx, div);
+                container.appendChild(div);
+            });
+        }
+
+        function selectOption(idx, el) {
+            document.querySelectorAll('#q-options > div').forEach(d => d.classList.remove('border-yellow-400', 'bg-cyan-950'));
+            el.classList.add('border-yellow-400', 'bg-cyan-950');
+            selectedOpt = idx;
+            document.getElementById('q-btn').classList.remove('hidden');
+        }
+
+        function checkAnswer() {
+            if(selectedOpt === questions[currentQ].correct) {
+                currentQ++;
+                loadQuestion();
+            } else {
+                alert("Incorrecto. ¡Prueba otra vez!");
+            }
+        }
+    </script>
+</body>
+</html>
