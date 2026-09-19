@@ -8,6 +8,12 @@
 </head>
 <body class="bg-slate-100 min-h-screen flex flex-col justify-between font-sans">
 
+    <!-- Audio de fondo en bucle (se reproduce automáticamente) -->
+    <audio autoplay loop hidden>
+        <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
     <!-- Header -->
     <header class="bg-emerald-700 text-white shadow-md py-4 px-6">
         <div class="max-w-3xl mx-auto flex justify-between items-center">
@@ -155,8 +161,7 @@
                     "Limpiar la zona previamente con alcohol de 96 grados de forma enérgica."
                 ],
                 correct: 1
-            },
-            // Se pueden añadir más preguntas manteniendo esta misma estructura basada en el temario práctico...
+            }
         ];
 
         let currentQuizQuestions = [];
@@ -164,9 +169,7 @@
         let score = 0;
         let selectedOptionIndex = null;
 
-        // Inicializar el test seleccionando 10 preguntas aleatorias del banco
         function initQuiz() {
-            // Mezclar el banco completo y tomar 10
             const shuffledBank = [...questionBank].sort(() => Math.random() - 0.5);
             currentQuizQuestions = shuffledBank.slice(0, 10);
             currentIndex = 0;
@@ -177,7 +180,6 @@
             loadQuestion();
         }
 
-        // Cargar la pregunta actual y mezclar sus respuestas aleatoriamente
         function loadQuestion() {
             selectedOptionIndex = null;
             document.getElementById('next-btn').classList.add('hidden');
@@ -186,16 +188,13 @@
             document.getElementById('progress-indicator').innerText = `Pregunta ${currentIndex + 1} de ${currentQuizQuestions.length}`;
             document.getElementById('question-text').innerText = qData.q;
 
-            // Crear array de opciones con sus índices originales para rastrear la correcta tras el mezclado
             let indexedOptions = qData.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
-            
-            // REQUISITO 3: Aleatorizar el orden de las respuestas cada vez que se carga la pregunta
             indexedOptions.sort(() => Math.random() - 0.5);
 
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
 
-            indexedOptions.forEach((item, displayIdx) => {
+            indexedOptions.forEach((item) => {
                 const button = document.createElement('button');
                 button.className = "w-full text-left p-4 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition font-medium text-slate-700 cursor-pointer flex items-center justify-between";
                 button.innerHTML = `<span>${item.text}</span>`;
@@ -205,28 +204,18 @@
             });
         }
 
-        // Seleccionar una opción
         function selectOption(buttonElement, originalIdx, correctIdx) {
             const allButtons = document.getElementById('options-container').children;
             
-            // Desmarcar todas visualmente
             for (let btn of allButtons) {
                 btn.classList.remove('border-emerald-600', 'bg-emerald-50', 'ring-2', 'ring-emerald-600');
             }
 
-            // Marcar la seleccionada
             buttonElement.classList.add('border-emerald-600', 'bg-emerald-50', 'ring-2', 'ring-emerald-600');
-            
             selectedOptionIndex = originalIdx;
-            
-            // Comprobar si es correcta de inmediato para sumar puntos
-            buttonElement.dataset.isCorrect = (originalIdx === correctIdx);
-
-            // Mostrar botón siguiente
             document.getElementById('next-btn').classList.remove('hidden');
         }
 
-        // Pasar a la siguiente pregunta (REQUISITO 2: Control estricto para evitar salto prematuro a página final)
         function handleNextQuestion() {
             if (selectedOptionIndex === null) return;
 
@@ -237,7 +226,6 @@
 
             currentIndex++;
 
-            // Verificación estricta de fin de test (Exactamente cuando se completan las 10 preguntas)
             if (currentIndex < currentQuizQuestions.length) {
                 loadQuestion();
             } else {
@@ -245,19 +233,16 @@
             }
         }
 
-        // Mostrar pantalla final de resultados
         function showResults() {
             document.getElementById('quiz-card').classList.add('hidden');
             document.getElementById('result-card').classList.remove('hidden');
             document.getElementById('score-text').innerText = `${score} / ${currentQuizQuestions.length}`;
         }
 
-        // Reiniciar test
         function restartQuiz() {
             initQuiz();
         }
 
-        // Arrancar al cargar la página por primera vez
         window.onload = initQuiz;
     </script>
 </body>
