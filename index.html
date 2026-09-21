@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAPSD Arcade Edition - Tema 1</title>
+    <title>ASISTENCIA-SANITARIA-TEMA-1 - TAPSD Arcade Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
@@ -43,7 +43,6 @@
         .wall { background-color: #1e3a8a; border: 1px solid #3b82f6; border-radius: 2px; }
         .path { background-color: #05050a; }
 
-        /* Fuegos artificiales arcade */
         @keyframes firework {
             0% { transform: translateY(150px); opacity: 0; width: 4px; height: 4px; }
             50% { opacity: 1; }
@@ -57,7 +56,9 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between text-cyan-400 p-4 relative overflow-x-hidden">
 
-    <audio id="bg-audio" loop><source src="Coffee_and_Cartridges.mp3" type="audio/mpeg"></audio>
+    <audio id="bg-audio" loop>
+        <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
+    </audio>
 
     <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow z-30">
         <div class="flex items-center gap-3">
@@ -65,8 +66,7 @@
             <h1 class="font-arcade text-xs sm:text-sm text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
         </div>
         <div class="flex items-center gap-2">
-            <!-- Botón de sonido con onclick directo -->
-            <button id="audio-btn" onclick="toggleAudio()" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-3 py-1 rounded cursor-pointer relative z-40">🎵 MÚSICA: OFF</button>
+            <button id="audio-btn" type="button" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-3 py-1 rounded cursor-pointer relative z-40">🎵 MÚSICA: OFF</button>
             <div class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">TAPSD ARCADE</div>
         </div>
     </header>
@@ -82,12 +82,11 @@
                 </div>
             </div>
             <div>
-                <!-- Botón de comenzar con onclick directo -->
-                <button id="start-btn" onclick="goToScreen2()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition relative z-40">PULSA PARA COMENZAR &gt;&gt;</button>
+                <button id="start-btn" type="button" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition relative z-40">PULSA PARA COMENZAR &gt;&gt;</button>
             </div>
         </div>
 
-        <!-- PANTALLA 2 -->
+        <!-- PANTALLA 2: VENTANA INTERMEDIA -->
         <div id="screen-2" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6">
             <div class="font-arcade text-xs text-cyan-400">MISIÓN 0: PREPARACIÓN</div>
             <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg space-y-4">
@@ -96,21 +95,19 @@
                 <p class="font-pixel text-2xl text-cyan-200">¿Estás preparada?</p>
             </div>
             <div>
-                <button id="ready-btn" onclick="startMazeMission()" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition relative z-40">¡ESTOY PREPARADA! &gt;&gt;</button>
+                <button id="ready-btn" type="button" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition relative z-40">¡ESTOY PREPARADA! &gt;&gt;</button>
             </div>
         </div>
 
-        <!-- PANTALLA 3: LABERINTO COMECOCOS & PREGUNTAS -->
+        <!-- PANTALLA 3: LABERINTO & PREGUNTAS -->
         <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl space-y-4">
-            
-            <!-- Vista del Laberinto -->
             <div id="maze-view" class="space-y-3">
                 <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
                     <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
                     <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITOS: 0 / 8</span>
                 </div>
                 <p class="font-pixel text-lg text-center text-cyan-200">
-                    Usa las <span class="text-yellow-300 font-bold">FLECHAS DE DIRECCIÓN</span> (⬅️ ➡️ ⬆️ ⬇️) para mover a la enfermera 👩‍⚕️ hacia el hito o virus 👾:
+                    Usa las <span class="text-yellow-300 font-bold">FLECHAS DE DIRECCIÓN</span> (⬅️ ➡️ ⬆️ ⬇️) para mover a la enfermera 👩‍⚕️:
                 </p>
                 <div id="pacman-board" class="maze-board"></div>
                 <div class="font-pixel text-lg text-center text-yellow-400" id="maze-status-text">
@@ -118,7 +115,6 @@
                 </div>
             </div>
 
-            <!-- Vista del Panel de Pregunta -->
             <div id="question-panel" class="space-y-6 hidden">
                 <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
                     <span class="text-yellow-300" id="q-counter">PREGUNTA 1 / 8</span>
@@ -127,26 +123,22 @@
                 <h2 id="q-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">Cargando...</h2>
                 <div id="q-options" class="space-y-3"></div>
                 <div class="flex justify-end pt-2">
-                    <button id="q-btn" onclick="checkAnswer()" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn relative z-40">COMPROBAR &gt;&gt;</button>
+                    <button id="q-btn" type="button" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn relative z-40">COMPROBAR &gt;&gt;</button>
                 </div>
             </div>
         </div>
 
-        <!-- PANTALLA 4: VICTORIA CON FUEGOS ARTIFICIALES -->
+        <!-- PANTALLA 4: VICTORIA -->
         <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6 relative overflow-hidden">
-            <!-- Contenedor de fuegos artificiales -->
             <div class="absolute inset-0 pointer-events-none overflow-hidden z-10">
                 <div class="firework-particle" style="left: 20%; top: 60%; animation-delay: 0s;"></div>
                 <div class="firework-particle" style="left: 75%; top: 50%; animation-delay: 0.6s;"></div>
                 <div class="firework-particle" style="left: 45%; top: 70%; animation-delay: 1.2s;"></div>
-                <div class="firework-particle" style="left: 85%; top: 40%; animation-delay: 0.9s;"></div>
-                <div class="firework-particle" style="left: 15%; top: 45%; animation-delay: 1.5s;"></div>
             </div>
-
             <h2 class="font-arcade text-xl text-yellow-400 relative z-20">¡ENHORABUENA!</h2>
             <p class="font-pixel text-2xl text-cyan-100 relative z-20">Has superado todas las cuestiones y demostrado que "Quien quiere, puede, y quien quiere, debe".</p>
             <div class="relative z-20">
-                <button id="restart-btn" onclick="location.reload()" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn relative z-40">REINICIAR &gt;&gt;</button>
+                <button id="restart-btn" type="button" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn relative z-40">REINICIAR &gt;&gt;</button>
             </div>
         </div>
     </main>
@@ -154,50 +146,50 @@
     <footer class="text-center py-3 font-pixel text-lg text-slate-500 z-20">MÓDULO TAPSD &bull; ARCADE EDITION</footer>
 
     <script>
+        // Control de Audio seguro
         let isAudioPlaying = false;
         const bgAudio = document.getElementById('bg-audio');
-        
-        function toggleAudio() {
-            const btn = document.getElementById('audio-btn');
-            if(isAudioPlaying) { 
-                bgAudio.pause(); 
-                isAudioPlaying = false; 
-                btn.innerText = "🎵 MÚSICA: OFF"; 
-            } else { 
-                bgAudio.play().then(() => { 
-                    isAudioPlaying = true; 
-                    btn.innerText = "🔊 MÚSICA: ON"; 
-                }).catch(e => console.log(e)); 
+        const audioBtn = document.getElementById('audio-btn');
+
+        audioBtn.addEventListener('click', () => {
+            if (isAudioPlaying) {
+                bgAudio.pause();
+                isAudioPlaying = false;
+                audioBtn.innerText = "🎵 MÚSICA: OFF";
+            } else {
+                bgAudio.play().then(() => {
+                    isAudioPlaying = true;
+                    audioBtn.innerText = "🔊 MÚSICA: ON";
+                }).catch(e => console.log("Audio play blocked:", e));
             }
-        }
+        });
 
-        function goToScreen2() {
-            document.getElementById('screen-1').classList.add('hidden');
-            document.getElementById('screen-2').classList.remove('hidden');
-        }
+        // Navegación entre pantallas mediante listeners limpios
+        const startBtn = document.getElementById('start-btn');
+        const readyBtn = document.getElementById('ready-btn');
+        const screen1 = document.getElementById('screen-1');
+        const screen2 = document.getElementById('screen-2');
+        const screen3 = document.getElementById('screen-3');
 
-        function startMazeMission() {
-            document.getElementById('screen-2').classList.add('hidden');
-            document.getElementById('screen-3').classList.remove('hidden');
+        startBtn.addEventListener('click', () => {
+            screen1.classList.add('hidden');
+            screen2.classList.remove('hidden');
+        });
+
+        readyBtn.addEventListener('click', () => {
+            screen2.classList.add('hidden');
+            screen3.classList.remove('hidden');
             initMaze();
-        }
+        });
 
-        // Banco de 8 preguntas ampliadas del Tema 1
+        // Banco de preguntas de prueba temporal (hasta separar en JSON)
         const questions = [
             { q: "La persona como ser multidimensional comprende las esferas:", opts: ["Biológica, psíquica y social.", "Física y económica.", "Motora e intelectual."], correctText: "Biológica, psíquica y social." },
-            { q: "Las actividades para despertar capacidades motrices y sentidos son:", opts: ["Cuidados de estimulación.", "Cuidados de compensación.", "Cuidados de sosiego."], correctText: "Cuidados de estimulación." },
-            { q: "Intervenciones orientadas a calmar el dolor y aportar serenidad:", opts: ["Cuidados de sosiego.", "Cuidados de estimulación.", "Cuidados de conservación."], correctText: "Cuidados de sosiego." },
-            { q: "Actividades destinadas a suplir funciones o capacidades perdidas:", opts: ["Cuidados de compensación.", "Cuidados de conservación.", "Cuidados de autoimagen."], correctText: "Cuidados de compensación." },
-            { q: "Para mantener las capacidades y asegurar la autonomía se usa el cuidado de:", opts: ["Conservación y continuidad de la vida.", "Compensación total.", "Sosiego."], correctText: "Conservación y continuidad de la vida." },
-            { q: "El conjunto de atenciones dirigidas a mejorar la calidad de vida en dependencia se denomina:", opts: ["Práctica sociosanitaria.", "Protocolo puramente clínico.", "Asistencia quirúrgica."], correctText: "Práctica sociosanitaria." },
-            { q: "El principio fundamental que fomenta la autonomía personal en dependencia es:", opts: ["La centralidad de la persona y su dignidad.", "La sustitución completa de decisiones.", "La homogenización de cuidados."], correctText: "La centralidad de la persona y su dignidad." },
-            { q: "En la atención sociosanitaria, el trabajo en equipo interdisciplinar busca:", opts: ["Abordar de forma integral las necesidades biopsicosociales.", "Reducir el tiempo de contacto con el usuario.", "Limitar la intervención al diagnóstico médico."], correctText: "Abordar de forma integral las necesidades biopsicosociales."]
+            { q: "Las actividades para despertar capacidades motrices y sentidos son:", opts: ["Cuidados de estimulación.", "Cuidados de compensación.", "Cuidados de sosiego."], correctText: "Cuidados de estimulación." }
         ];
 
         let currentQ = 0, selectedOpt = null, currentShuffledOpts = [], currentCorrectIdx = null;
-
-        // Mapa de 8 posiciones de hitos/pastillas distribuidos (valor 3 y 4)
-        const mapGrid = [
+        let mapGrid = [
             [1,1,1,1,1,1,1,1,1,1,1],
             [1,0,3,0,1,2,1,0,3,0,1],
             [1,0,1,0,1,0,1,0,1,0,1],
@@ -210,7 +202,6 @@
             [1,0,3,0,1,0,1,0,3,0,1],
             [1,1,1,1,1,1,1,1,1,1,1]
         ];
-
         let playerPos = { r: 1, c: 5 };
 
         function initMaze() {
@@ -248,7 +239,7 @@
         }
 
         function handleKeyMove(e) {
-            if(document.getElementById('screen-3').classList.contains('hidden')) return;
+            if(screen3.classList.contains('hidden')) return;
             if(!document.getElementById('question-panel').classList.contains('hidden')) return;
 
             let newR = playerPos.r;
@@ -270,7 +261,7 @@
                     renderMaze();
 
                     if(target === 3 || target === 4) {
-                        mapGrid[newR][newC] = 0; // Consumir hito o activar virus
+                        mapGrid[newR][newC] = 0;
                         triggerQuestion();
                     }
                 }
@@ -281,15 +272,6 @@
             document.getElementById('maze-view').classList.add('hidden');
             document.getElementById('question-panel').classList.remove('hidden');
             loadQuestion();
-        }
-
-        function shuffleArray(array) {
-            let arr = [...array];
-            for (let i = arr.length - 1; i > 0; i--) {
-                let j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
-            }
-            return arr;
         }
 
         function loadQuestion() {
@@ -303,7 +285,7 @@
             document.getElementById('q-counter').innerText = `PREGUNTA ${currentQ + 1} / ${questions.length}`;
             document.getElementById('q-text').innerText = data.q;
 
-            currentShuffledOpts = shuffleArray(data.opts);
+            currentShuffledOpts = [...data.opts].sort(() => Math.random() - 0.5);
             currentCorrectIdx = currentShuffledOpts.indexOf(data.correctText);
 
             let container = document.getElementById('q-options');
@@ -312,19 +294,17 @@
                 let div = document.createElement('div');
                 div.className = "font-pixel text-xl bg-black/60 border border-cyan-700 p-4 rounded cursor-pointer hover:border-yellow-400 transition";
                 div.innerText = opt;
-                div.onclick = () => selectOption(idx, div);
+                div.onclick = () => {
+                    document.querySelectorAll('#q-options > div').forEach(d => d.classList.remove('border-yellow-400', 'bg-cyan-950'));
+                    div.classList.add('border-yellow-400', 'bg-cyan-950');
+                    selectedOpt = idx;
+                    document.getElementById('q-btn').classList.remove('hidden');
+                };
                 container.appendChild(div);
             });
         }
 
-        function selectOption(idx, el) {
-            document.querySelectorAll('#q-options > div').forEach(d => d.classList.remove('border-yellow-400', 'bg-cyan-950'));
-            el.classList.add('border-yellow-400', 'bg-cyan-950');
-            selectedOpt = idx;
-            document.getElementById('q-btn').classList.remove('hidden');
-        }
-
-        function checkAnswer() {
+        document.getElementById('q-btn').onclick = () => {
             if(selectedOpt === currentCorrectIdx) {
                 currentQ++;
                 document.getElementById('maze-progress').innerText = `HITOS: ${currentQ} / ${questions.length}`;
@@ -337,12 +317,14 @@
             } else {
                 alert("Incorrecto. ¡Prueba otra vez!");
             }
-        }
+        };
 
         function finishGame() {
-            document.getElementById('screen-3').classList.add('hidden');
+            screen3.classList.add('hidden');
             document.getElementById('screen-4').classList.remove('hidden');
         }
+
+        document.getElementById('restart-btn').onclick = () => location.reload();
     </script>
 </body>
 </html>
