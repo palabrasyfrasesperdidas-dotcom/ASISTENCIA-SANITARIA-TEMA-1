@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>TAPSD Arcade Edition - Tema 1</title>
-    <meta name="description" content="Pantalla de inicio interactiva estilo videojuego clásico para el módulo de Atención Sociosanitaria.">
     
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     
@@ -99,10 +98,9 @@
             margin-bottom: 25px;
         }
 
-        /* Animación flotante suave estilo arcade */
         @keyframes floatUpDown {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
 
@@ -120,7 +118,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: floatUpDown 3s ease-in-out infinite;
+            animation: floatUpDown 2.5s ease-in-out infinite;
         }
 
         .press-start-btn {
@@ -132,7 +130,6 @@
             padding: 16px 24px;
             border-radius: 8px;
             cursor: pointer;
-            text-shadow: none;
             box-shadow: 0 0 15px rgba(234, 179, 8, 0.5);
             transition: transform 0.2s, background 0.2s;
             text-decoration: none;
@@ -151,7 +148,6 @@
             font-family: 'Press Start 2P', monospace;
         }
 
-        /* Contenido Principal (Pantalla siguiente) */
         #main-content {
             opacity: 0;
             visibility: hidden;
@@ -199,7 +195,6 @@
 </head>
 <body>
 
-    <!-- PANTALLA DE INICIO (SPLASH) -->
     <div id="arcade-splash" onclick="startAdventure()">
         <div class="arcade-splash-content">
             <div class="arcade-title-pixel">ATENCIÓN SOCIOSANITARIA</div>
@@ -214,7 +209,6 @@
         </div>
     </div>
 
-    <!-- CONTENIDO PRINCIPAL (Se muestra al hacer clic) -->
     <div id="main-content">
         <header class="header-box">
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -230,15 +224,15 @@
             <h2 style="font-family: 'Press Start 2P', monospace; font-size: 0.85rem; color: #facc15; text-align: center;">¡PON A PRUEBA TUS CONOCIMIENTOS!</h2>
             
             <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: #e2e8f0; line-height: 1.6; text-align: center;">
-                ¡Bienvenida a la prueba de valoración del tema 1 de Atención Sociosanitaria! Haz que la TAPSD realice todas las tareas asignadas (puntos del laberinto) sin que sea atrapada por el virus.
+                ¡Bienvenida a la simulación del módulo de Atención Sociosanitaria! Aquí aprenderemos los conceptos clave del Tema 1 de forma interactiva. Sigue las instrucciones y supera cada reto.
             </p>
 
             <div style="background: rgba(8, 47, 73, 0.5); border: 1px dashed #0284c7; padding: 15px; border-radius: 8px; text-align: center;">
-                <p style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #facc15;">¿Estás preparada?</p>
+                <p style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #facc15;">"Quien quiere, puede, y quien quiere, debe"</p>
             </div>
 
             <div style="text-align: center; margin-top: 10px;">
-                <button class="press-start-btn" type="button">COMENZAR</button>
+                <button class="press-start-gtn press-start-btn" type="button">SIGUIENTE PASO &gt;&gt;</button>
             </div>
         </section>
     </div>
