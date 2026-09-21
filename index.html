@@ -1,143 +1,256 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YKWEY6WPF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9YKWEY6WPF');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASISTENCIA-SANITARIA-TEMA-1 - TAPSD Arcade Edition</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <title>TAPSD Arcade Edition - Tema 1</title>
+    <meta name="description" content="Pantalla de inicio interactiva estilo videojuego clásico para el módulo de Atención Sociosanitaria.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    
     <style>
-        .font-arcade { font-family: 'Press Start 2P', monospace; }
-        .font-pixel { font-family: 'VT323', monospace; }
-        body { background-color: #05050a; color: #22d3ee; }
-        .arcade-box {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #05050a;
+            color: #22d3ee;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px 20px;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        #arcade-splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 10, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        #arcade-splash::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+            background-size: 100% 4px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .arcade-splash-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 520px;
+            width: 100%;
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+            background-color: rgba(3, 7, 18, 0.95);
+            padding: 30px 20px;
+            border-radius: 14px;
+        }
+
+        .arcade-title-pixel {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.95rem;
+            color: #ffcc00;
+            text-shadow: 2px 2px #d6249f, 0 0 15px rgba(255, 204, 0, 0.6);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .arcade-subtitle-pixel {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin-bottom: 25px;
+        }
+
+        .arcade-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 220px;
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            margin-bottom: 25px;
+            background: rgba(8, 47, 73, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .press-start-btn {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.85rem;
+            color: #000;
+            background: #eab308;
+            border: 2px solid #fef08a;
+            padding: 16px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-shadow: none;
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.5);
+            transition: transform 0.2s, background 0.2s;
+            text-decoration: none;
+        }
+
+        .press-start-btn:hover {
+            background: #facc15;
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(250, 204, 21, 0.8);
+        }
+
+        .arcade-credits {
+            margin-top: 22px;
+            font-size: 0.65rem;
+            color: #64748b;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* Contenido Principal (Pantalla siguiente) */
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease;
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #main-content.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .header-box {
+            width: 100%;
             border: 2px solid #06b6d4;
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
             background-color: rgba(3, 7, 18, 0.95);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .arcade-box-yellow {
+
+        .content-box {
+            width: 100%;
             border: 2px solid #eab308;
             box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
             background-color: rgba(3, 7, 18, 0.95);
-        }
-        .arcade-btn:hover {
-            box-shadow: 0 0 20px rgba(250, 204, 21, 0.8);
-            transform: scale(1.02);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-4">
+<body>
 
-    <!-- AUDIO DE FONDO -->
-    <audio id="bg-audio" loop preload="auto">
-        <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
-    </audio>
+    <!-- PANTALLA DE INICIO (SPLASH) -->
+    <div id="arcade-splash" onclick="startAdventure()">
+        <div class="arcade-splash-content">
+            <div class="arcade-title-pixel">ATENCIÓN SOCIOSANITARIA</div>
+            <div class="arcade-subtitle-pixel">EDICIÓN RETRO ARCADE</div>
+            
+            <div class="arcade-image-container">
+                <div style="font-size: 3rem;">👩‍⚕️ 💊</div>
+                <div style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #facc15;">&gt; NURSE.EXE READY</div>
+            </div>
 
-    <!-- CABECERA -->
-    <header class="w-full max-w-3xl mx-auto arcade-box rounded-lg p-3 flex justify-between items-center my-2">
-        <div class="flex items-center gap-3">
-            <span class="inline-block w-3 h-3 bg-yellow-400 animate-pulse"></span>
-            <h1 class="font-arcade text-xs text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
+            <button class="press-start-btn" type="button">PULSA PARA COMENZAR &gt;&gt;</button>
+            <div class="arcade-credits">MÓDULO TAPSD &bull; ARCADE EDITION</div>
         </div>
-        <div class="flex items-center gap-2">
-            <button id="btn-audio" type="button" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-3 py-1 rounded cursor-pointer">
-                🎵 MÚSICA: OFF
-            </button>
-            <div class="font-pixel text-base bg-cyan-950/60 text-cyan-300 px-3 py-1 border border-cyan-700 rounded">
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL (Se muestra al hacer clic) -->
+    <div id="main-content">
+        <header class="header-box">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="width: 10px; height: 10px; background: #eab308; display: inline-block;"></span>
+                <h1 style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #fef08a;">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
+            </div>
+            <div style="font-family: 'Press Start 2P', monospace; font-size: 0.65rem; background: #082f49; padding: 6px 10px; border: 1px solid #0284c7; border-radius: 4px;">
                 TAPSD ARCADE
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- CONTENEDOR PRINCIPAL -->
-    <main class="w-full max-w-3xl mx-auto my-auto py-4">
-
-        <!-- PANTALLA 1 -->
-        <div id="pantalla-1" class="arcade-box rounded-xl p-8 text-center space-y-8">
-            <div class="space-y-3 pt-2">
-                <h2 class="font-arcade text-base sm:text-lg text-cyan-100">ATENCIÓN SOCIOSANITARIA</h2>
-                <h3 class="font-arcade text-xs sm:text-sm text-yellow-300">EDICIÓN RETRO ARCADE</h3>
+        <section class="content-box">
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 0.85rem; color: #facc15;">FASE DE INTRODUCCIÓN</h2>
+            <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: #e2e8f0; line-height: 1.6;">
+                ¡Bienvenida a la simulación del módulo de <span style="color: #facc15; font-weight: 600;">Atención Sociosanitaria</span>! Aquí exploraremos los contenidos esenciales de forma interactiva.
+            </p>
+            <div style="background: rgba(8, 47, 73, 0.5); border: 1px dashed #0284c7; padding: 15px; border-radius: 8px; text-align: center;">
+                <p style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #38bdf8;">ESTADO DEL SISTEMA: CARGADO CORRECTAMENTE</p>
             </div>
+        </section>
+    </div>
 
-            <div class="flex justify-center py-2">
-                <div class="inline-block border border-cyan-500/80 bg-cyan-950/40 px-6 py-4 rounded-xl space-y-2">
-                    <div class="text-4xl space-x-2"><span>👩‍⚕️</span><span>💊</span></div>
-                    <div class="font-pixel text-xl text-yellow-400">&gt; NURSE.EXE READY</div>
-                </div>
-            </div>
-
-            <div class="pt-2">
-                <button id="btn-comenzar" type="button" class="font-arcade text-xs sm:text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-btn transition">
-                    PULSA PARA COMENZAR &gt;&gt;
-                </button>
-            </div>
-        </div>
-
-        <!-- PANTALLA 2 (Oculta inicialmente) -->
-        <div id="pantalla-2" class="arcade-box-yellow rounded-xl p-8 text-center space-y-6 hidden">
-            <div class="font-arcade text-xs text-yellow-400">FASE DE INTRODUCCIÓN</div>
-            
-            <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg space-y-4 text-left">
-                <p class="font-pixel text-2xl text-cyan-100">
-                    ¡Bienvenida a la simulación del módulo de <span class="text-yellow-300">Atención Sociosanitaria</span>!
-                </p>
-                <p class="font-pixel text-xl text-cyan-300">
-                    Aquí aprenderemos los conceptos clave del Tema 1 de forma interactiva. Sigue las instrucciones y supera cada reto.
-                </p>
-                <div class="bg-cyan-950/50 border border-yellow-500/50 p-4 rounded text-center">
-                    <p class="font-arcade text-xs text-yellow-300">"Quien quiere, puede, y quien quiere, debe"</p>
-                </div>
-            </div>
-
-            <div>
-                <button id="btn-siguiente" type="button" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-btn transition">
-                    SIGUIENTE PASO &gt;&gt;
-                </button>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- PIE DE PÁGINA -->
-    <footer class="text-center font-pixel text-base text-slate-500 py-2">
-        MÓDULO TAPSD &bull; ARCADE EDITION
-    </footer>
-
-    <!-- SCRIPT DE CONTROL DIRECTO -->
     <script>
-        // Funciones directas para evitar fallos de carga del DOM
-        const audio = document.getElementById('bg-audio');
-        const btnAudio = document.getElementById('btn-audio');
-        let reproduciendo = false;
+        function startAdventure() {
+            const splash = document.getElementById('arcade-splash');
+            const mainContent = document.getElementById('main-content');
 
-        btnAudio.onclick = function() {
-            if (reproduciendo) {
-                audio.pause();
-                reproduciendo = false;
-                btnAudio.innerText = "🎵 MÚSICA: OFF";
-                btnAudio.style.background = "#030712";
-            } else {
-                audio.play().then(() => {
-                    reproduciendo = true;
-                    btnAudio.innerText = "🔊 MÚSICA: ON";
-                    btnAudio.style.background = "#eab308";
-                    btnAudio.style.color = "#000";
-                }).catch(e => {
-                    console.log("Error de reproducción:", e);
-                    alert("Haz clic en la página primero para permitir reproducir el audio.");
-                });
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                mainContent.classList.add('active');
+            }, 500);
+        }
+
+        // Soporte también para pulsar cualquier tecla o botón directamente
+        window.addEventListener('keydown', function(e) {
+            const splash = document.getElementById('arcade-splash');
+            if (splash && splash.style.display !== 'none') {
+                startAdventure();
             }
-        };
-
-        const btnComenzar = document.getElementById('btn-comenzar');
-        const pantalla1 = document.getElementById('pantalla-1');
-        const pantalla2 = document.getElementById('pantalla-2');
-
-        btnComenzar.onclick = function() {
-            pantalla1.style.display = 'none';
-            pantalla2.style.display = 'block';
-        };
+        });
     </script>
 </body>
 </html>
