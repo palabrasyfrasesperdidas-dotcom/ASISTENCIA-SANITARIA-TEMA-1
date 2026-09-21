@@ -222,12 +222,18 @@
         </header>
 
         <section class="content-box">
-            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 0.85rem; color: #facc15;">FASE DE INTRODUCCIÓN</h2>
-            <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: #e2e8f0; line-height: 1.6;">
-                ¡Bienvenida a la simulación del módulo de <span style="color: #facc15; font-weight: 600;">Atención Sociosanitaria</span>! Aquí exploraremos los contenidos esenciales de forma interactiva.
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 0.85rem; color: #facc15; text-align: center;">¡PON A PRUEBA TUS CONOCIMIENTOS!</h2>
+            
+            <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: #e2e8f0; line-height: 1.6; text-align: center;">
+                ¡Bienvenida a la prueba de valoración del tema 1 de Atención Sociosanitaria! Haz que la TAPSD realice todas las tareas asignadas (puntos del laberinto) sin que sea atrapada por el virus.
             </p>
+
             <div style="background: rgba(8, 47, 73, 0.5); border: 1px dashed #0284c7; padding: 15px; border-radius: 8px; text-align: center;">
-                <p style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #38bdf8;">ESTADO DEL SISTEMA: CARGADO CORRECTAMENTE</p>
+                <p style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #facc15;">¿Estás preparada?</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 10px;">
+                <button class="press-start-btn" type="button">COMENZAR</button>
             </div>
         </section>
     </div>
@@ -244,7 +250,6 @@
             }, 500);
         }
 
-        // Soporte también para pulsar cualquier tecla o botón directamente
         window.addEventListener('keydown', function(e) {
             const splash = document.getElementById('arcade-splash');
             if (splash && splash.style.display !== 'none') {
