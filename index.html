@@ -3,103 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAPSD - Asistencia Sanitaria (Desde Cero)</title>
-    <!-- Tailwind CSS para diseño rápido -->
+    <title>ASISTENCIA-SANITARIA-TEMA-1 - TAPSD Arcade Edition</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuentes estilo Arcade y Pixel -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
         .font-arcade { font-family: 'Press Start 2P', monospace; }
         .font-pixel { font-family: 'VT323', monospace; }
-        body { background-color: #05050a; color: #22d3ee; }
+        body {
+            background-color: #05050a;
+            color: #22d3ee;
+        }
+        .arcade-box {
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            background-color: rgba(3, 7, 18, 0.95);
+        }
+        .arcade-box-yellow {
+            border: 2px solid #eab308;
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+            background-color: rgba(3, 7, 18, 0.95);
+        }
+        .arcade-btn:hover {
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.8);
+            transform: scale(1.02);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-6">
+<body class="min-h-screen flex flex-col justify-between p-4 selection:bg-cyan-500 selection:text-black">
 
-    <!-- CABECERA -->
-    <header class="max-w-xl mx-auto w-full border-2 border-cyan-500 bg-black p-4 rounded-lg flex justify-between items-center shadow-lg">
-        <h1 class="font-arcade text-xs text-yellow-300">TAPSD ARCADE</h1>
-        <button id="btn-audio" class="font-pixel text-lg bg-cyan-950 border border-cyan-600 px-3 py-1 rounded cursor-pointer">
-            🎵 MÚSICA: OFF
-        </button>
+    <!-- AUDIO DE FONDO -->
+    <audio id="bg-audio" loop>
+        <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- CABECERA FIJA (Idéntica a la imagen) -->
+    <header class="w-full max-w-3xl mx-auto arcade-box rounded-lg p-3 flex flex-wrap justify-between items-center gap-3 my-2">
+        <div class="flex items-center gap-3">
+            <span class="inline-block w-3 h-3 bg-yellow-400 animate-pulse"></span>
+            <h1 class="font-arcade text-xs text-yellow-300 tracking-wider">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <button id="btn-audio" type="button" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-3 py-1 rounded cursor-pointer hover:bg-cyan-950/80 transition">
+                🎵 MÚSICA: OFF
+            </button>
+            <div class="font-pixel text-base bg-cyan-950/60 text-cyan-300 px-3 py-1 border border-cyan-700 rounded tracking-widest">
+                TAPSD ARCADE
+            </div>
+        </div>
     </header>
 
     <!-- CONTENEDOR PRINCIPAL -->
-    <main class="max-w-xl mx-auto w-full my-auto">
+    <main class="w-full max-w-3xl mx-auto my-auto py-4">
 
-        <!-- PANTALLA 1 -->
-        <div id="pantalla-1" class="bg-slate-950 border-2 border-cyan-500 rounded-xl p-8 text-center space-y-6 shadow-2xl">
-            <h2 class="font-arcade text-sm text-cyan-100 leading-relaxed">
-                TEMA 1: PRÁCTICA SOCIOSANITARIA
-            </h2>
-            <div class="text-6xl py-4">👩‍⚕️💊</div>
-            <p class="font-pixel text-xl text-yellow-300">&gt; Sistema listo para iniciar...</p>
-            <div>
-                <button id="btn-comenzar" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-4 rounded border-2 border-yellow-300 cursor-pointer shadow-lg transition transform hover:scale-105">
+        <!-- PANTALLA 1: INICIO (Exacta a la imagen) -->
+        <div id="pantalla-1" class="arcade-box rounded-xl p-8 text-center space-y-8">
+            <div class="space-y-3 pt-2">
+                <h2 class="font-arcade text-base sm:text-lg text-cyan-100 tracking-wide">
+                    ATENCIÓN SOCIOSANITARIA
+                </h2>
+                <h3 class="font-arcade text-xs sm:text-sm text-yellow-300 tracking-wider">
+                    EDICIÓN RETRO ARCADE
+                </h3>
+            </div>
+
+            <!-- Caja interna con enfermera, píldora y comando -->
+            <div class="flex justify-center py-2">
+                <div class="inline-block border border-cyan-500/80 bg-cyan-950/40 px-6 py-4 rounded-xl space-y-2 shadow-inner">
+                    <div class="text-4xl space-x-2">
+                        <span>👩‍⚕️</span>
+                        <span>💊</span>
+                    </div>
+                    <div class="font-pixel text-xl text-yellow-400 tracking-widest pt-1">
+                        &gt; NURSE.EXE READY
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón de comenzar -->
+            <div class="pt-2">
+                <button id="btn-comenzar" type="button" class="font-arcade text-xs sm:text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-btn transition duration-200">
                     PULSA PARA COMENZAR &gt;&gt;
                 </button>
             </div>
         </div>
 
-        <!-- PANTALLA 2 (Oculta inicialmente) -->
-        <div id="pantalla-2" class="bg-slate-950 border-2 border-yellow-500 rounded-xl p-8 text-center space-y-6 shadow-2xl hidden">
-            <h2 class="font-arcade text-xs text-yellow-400">MENSAJE DEL SISTEMA</h2>
-            <div class="bg-black border border-cyan-600 p-6 rounded-lg space-y-4">
-                <p class="font-pixel text-2xl text-cyan-100">Estudiando para ser profesional en <span class="text-yellow-300">TAPSD</span>:</p>
-                <p class="font-arcade text-xs text-yellow-400 bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">
-                    "Quien quiere, puede, y quien quiere, debe"
+        <!-- PANTALLA 2: EXPLICACIÓN DE LA AVENTURA (Oculta inicialmente) -->
+        <div id="pantalla-2" class="arcade-box-yellow rounded-xl p-8 text-center space-y-6 hidden">
+            <div class="font-arcade text-xs text-yellow-400">FASE DE INTRODUCCIÓN</div>
+            
+            <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg space-y-4 text-left sm:text-center">
+                <p class="font-pixel text-xl sm:text-2xl text-cyan-100 leading-relaxed">
+                    ¡Bienvenida a la simulación del módulo de <span class="text-yellow-300">Atención Sociosanitaria</span>!
                 </p>
+                <p class="font-pixel text-lg text-cyan-300 leading-relaxed">
+                    A lo largo de esta aventura interactiva pondrás a prueba tus conocimientos sobre los conceptos clave del Tema 1. Supera los retos para avanzar con éxito.
+                </p>
+                <div class="bg-cyan-950/50 border border-yellow-500/50 p-4 rounded text-center">
+                    <p class="font-arcade text-xs text-yellow-300">
+                        "Quien quiere, puede, y quien quiere, debe"
+                    </p>
+                </div>
             </div>
+
             <div>
-                <button id="btn-preparada" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-4 rounded border-2 border-yellow-300 cursor-pointer shadow-lg transition transform hover:scale-105">
-                    ¡ESTOY PREPARADA! &gt;&gt;
+                <button id="btn-continuar" type="button" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-btn transition">
+                    CONTINUAR AVENTURA &gt;&gt;
                 </button>
             </div>
         </div>
 
-        <!-- PANTALLA 3 (Oculta inicialmente - Zona de Pruebas/Juego) -->
-        <div id="pantalla-3" class="bg-slate-950 border-2 border-green-500 rounded-xl p-8 text-center space-y-6 shadow-2xl hidden">
-            <h2 class="font-arcade text-xs text-green-400">¡MISIÓN INICIADA!</h2>
-            <p class="font-pixel text-2xl text-cyan-100">Aquí cargaremos el laberinto y las preguntas paso a paso.</p>
-            <button id="btn-reiniciar" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 py-3 rounded cursor-pointer">
-                REINICIAR PRUEBA
-            </button>
-        </div>
-
     </main>
 
-    <!-- PIE -->
-    <footer class="text-center font-pixel text-lg text-slate-500">
-        Módulo TAPSD &bull; Edición Desde Cero
+    <!-- PIE DE PÁGINA -->
+    <footer class="text-center font-pixel text-base text-slate-500 py-2">
+        MÓDULO TAPSD &bull; ARCADE EDITION
     </footer>
 
-    <!-- SCRIPT LIMPIO -->
+    <!-- SCRIPT DE CONTROL Y TRANSICIONES -->
     <script>
-        // Verificamos que el DOM cargó por completo antes de asignar nada
         document.addEventListener('DOMContentLoaded', () => {
+            // Control de Audio
+            const bgAudio = document.getElementById('bg-audio');
+            const btnAudio = document.getElementById('btn-audio');
+            let isAudioPlaying = false;
+
+            btnAudio.addEventListener('click', () => {
+                if (isAudioPlaying) {
+                    bgAudio.pause();
+                    isAudioPlaying = false;
+                    btnAudio.innerText = "🎵 MÚSICA: OFF";
+                    btnAudio.classList.remove('bg-yellow-600', 'text-black');
+                    btnAudio.classList.add('bg-cyan-950', 'text-cyan-300');
+                } else {
+                    bgAudio.play().then(() => {
+                        isAudioPlaying = true;
+                        btnAudio.innerText = "🔊 MÚSICA: ON";
+                        btnAudio.classList.remove('bg-cyan-950', 'text-cyan-300');
+                        btnAudio.classList.add('bg-yellow-500', 'text-black');
+                    }).catch(err => {
+                        console.log("Reproducción de audio bloqueada por el navegador:", err);
+                    });
+                }
+            });
+
+            // Transición de Pantallas
             const btnComenzar = document.getElementById('btn-comenzar');
-            const btnPreparada = document.getElementById('btn-preparada');
-            const btnReiniciar = document.getElementById('btn-reiniciar');
-            
+            const btnContinuar = document.getElementById('btn-continuar');
             const pantalla1 = document.getElementById('pantalla-1');
             const pantalla2 = document.getElementById('pantalla-2');
-            const pantalla3 = document.getElementById('pantalla-3');
 
-            // Transición Pantalla 1 a Pantalla 2
             btnComenzar.addEventListener('click', () => {
                 pantalla1.classList.add('hidden');
                 pantalla2.classList.remove('hidden');
             });
 
-            // Transición Pantalla 2 a Pantalla 3
-            btnPreparada.addEventListener('click', () => {
-                pantalla2.classList.add('hidden');
-                pantalla3.classList.remove('hidden');
-            });
-
-            // Reiniciar
-            btnReiniciar.addEventListener('click', () => {
-                pantalla3.classList.add('hidden');
-                pantalla1.classList.remove('hidden');
+            btnContinuar.addEventListener('click', () => {
+                // Aquí prepararemos el siguiente paso cuando me indiques
+                alert("¡Excelente! Pantalla de introducción superada. Dime cuál es el siguiente paso.");
             });
         });
     </script>
