@@ -3,328 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASISTENCIA-SANITARIA-TEMA-1 - TAPSD Arcade Edition</title>
+    <title>TAPSD - Asistencia Sanitaria (Desde Cero)</title>
+    <!-- Tailwind CSS para diseño rápido -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
         .font-arcade { font-family: 'Press Start 2P', monospace; }
         .font-pixel { font-family: 'VT323', monospace; }
-        body {
-            background-color: #05050a;
-            background-image: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03));
-            background-size: 100% 4px, 6px 100%;
-        }
-        .arcade-glow { box-shadow: 0 0 15px rgba(34,211,238,0.4), inset 0 0 15px rgba(34,211,238,0.2); }
-        .arcade-glow-btn:hover { box-shadow: 0 0 20px rgba(250,204,21,1); transform: scale(1.02); }
-        @keyframes nurseWalk {
-            0% { transform: translateX(0px); }
-            50% { transform: translateX(25px) translateY(-3px); }
-            100% { transform: translateX(50px); }
-        }
-        .nurse-anim { animation: nurseWalk 1.5s infinite alternate ease-in-out; }
-        .maze-board {
-            display: grid;
-            grid-template-columns: repeat(11, minmax(0, 1fr));
-            gap: 2px;
-            background-color: #000;
-            border: 3px solid #1d4ed8;
-            padding: 8px;
-            border-radius: 8px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        .maze-cell {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-        .wall { background-color: #1e3a8a; border: 1px solid #3b82f6; border-radius: 2px; }
-        .path { background-color: #05050a; }
-
-        @keyframes firework {
-            0% { transform: translateY(150px); opacity: 0; width: 4px; height: 4px; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-120px); opacity: 0; width: 80px; height: 80px; border-radius: 50%; box-shadow: 0 0 20px #facc15, 0 0 40px #ef4444, 0 0 60px #22d3ee; }
-        }
-        .firework-particle {
-            position: absolute;
-            animation: firework 1.8s infinite ease-out;
-        }
+        body { background-color: #05050a; color: #22d3ee; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between text-cyan-400 p-4 relative overflow-x-hidden">
+<body class="min-h-screen flex flex-col justify-between p-6">
 
-    <audio id="bg-audio" loop>
-        <source src="Coffee_and_Cartridges.mp3" type="audio/mpeg">
-    </audio>
-
-    <header class="w-full max-w-3xl mx-auto border-2 border-cyan-500 bg-black/80 rounded-lg p-4 shadow-lg my-2 flex justify-between items-center arcade-glow z-30">
-        <div class="flex items-center gap-3">
-            <span class="inline-block w-4 h-4 bg-yellow-400 animate-pulse"></span>
-            <h1 class="font-arcade text-xs sm:text-sm text-yellow-300">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
-        </div>
-        <div class="flex items-center gap-2">
-            <button id="audio-btn" type="button" class="font-pixel text-sm bg-cyan-950 text-cyan-300 border border-cyan-600 px-3 py-1 rounded cursor-pointer relative z-40">🎵 MÚSICA: OFF</button>
-            <div class="font-pixel text-xl text-cyan-300 bg-cyan-950/60 px-3 py-1 border border-cyan-700 rounded">TAPSD ARCADE</div>
-        </div>
+    <!-- CABECERA -->
+    <header class="max-w-xl mx-auto w-full border-2 border-cyan-500 bg-black p-4 rounded-lg flex justify-between items-center shadow-lg">
+        <h1 class="font-arcade text-xs text-yellow-300">TAPSD ARCADE</h1>
+        <button id="btn-audio" class="font-pixel text-lg bg-cyan-950 border border-cyan-600 px-3 py-1 rounded cursor-pointer">
+            🎵 MÚSICA: OFF
+        </button>
     </header>
 
-    <main class="max-w-3xl w-full mx-auto my-auto py-2 z-20 relative">
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="max-w-xl mx-auto w-full my-auto">
+
         <!-- PANTALLA 1 -->
-        <div id="screen-1" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-8 text-center arcade-glow shadow-2xl space-y-6">
-            <h2 class="font-arcade text-lg sm:text-xl text-cyan-100 leading-relaxed pt-2">ATENCIÓN SOCIOSANITARIA<br><span class="text-yellow-300 text-sm">EDICIÓN RETRO ARCADE</span></h2>
-            <div class="py-6 flex justify-center">
-                <div class="nurse-anim bg-cyan-950/80 border-2 border-cyan-400 p-6 rounded-xl flex flex-col items-center">
-                    <span class="text-5xl mb-2">👩‍⚕️💊</span>
-                    <span class="font-pixel text-xl text-yellow-300">&gt; NURSE.EXE READY</span>
-                </div>
-            </div>
+        <div id="pantalla-1" class="bg-slate-950 border-2 border-cyan-500 rounded-xl p-8 text-center space-y-6 shadow-2xl">
+            <h2 class="font-arcade text-sm text-cyan-100 leading-relaxed">
+                TEMA 1: PRÁCTICA SOCIOSANITARIA
+            </h2>
+            <div class="text-6xl py-4">👩‍⚕️💊</div>
+            <p class="font-pixel text-xl text-yellow-300">&gt; Sistema listo para iniciar...</p>
             <div>
-                <button id="start-btn" type="button" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition relative z-40">PULSA PARA COMENZAR &gt;&gt;</button>
+                <button id="btn-comenzar" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-4 rounded border-2 border-yellow-300 cursor-pointer shadow-lg transition transform hover:scale-105">
+                    PULSA PARA COMENZAR &gt;&gt;
+                </button>
             </div>
         </div>
 
-        <!-- PANTALLA 2: VENTANA INTERMEDIA -->
-        <div id="screen-2" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6">
-            <div class="font-arcade text-xs text-cyan-400">MISIÓN 0: PREPARACIÓN</div>
-            <div class="bg-black/80 border border-cyan-600 p-6 rounded-lg space-y-4">
-                <p class="font-pixel text-2xl text-cyan-100">Estudiando para ser profesional en <span class="text-yellow-300">TAPSD</span>, demostrarás el lema:</p>
-                <p class="font-arcade text-sm text-yellow-400 bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">"Quien quiere, puede, y quien quiere, debe"</p>
-                <p class="font-pixel text-2xl text-cyan-200">¿Estás preparada?</p>
-            </div>
-            <div>
-                <button id="ready-btn" type="button" class="font-arcade text-sm bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded border-2 border-yellow-300 cursor-pointer arcade-glow-btn transition relative z-40">¡ESTOY PREPARADA! &gt;&gt;</button>
-            </div>
-        </div>
-
-        <!-- PANTALLA 3: LABERINTO & PREGUNTAS -->
-        <div id="screen-3" class="bg-slate-950/95 border-2 border-cyan-500 rounded-xl p-6 hidden arcade-glow shadow-2xl space-y-4">
-            <div id="maze-view" class="space-y-3">
-                <div class="flex justify-between items-center bg-black/60 p-3 border border-cyan-700 rounded">
-                    <span class="font-arcade text-xs text-yellow-300">LABERINTO SOCIOSANITARIO</span>
-                    <span id="maze-progress" class="font-pixel text-xl text-cyan-300">HITOS: 0 / 8</span>
-                </div>
-                <p class="font-pixel text-lg text-center text-cyan-200">
-                    Usa las <span class="text-yellow-300 font-bold">FLECHAS DE DIRECCIÓN</span> (⬅️ ➡️ ⬆️ ⬇️) para mover a la enfermera 👩‍⚕️:
+        <!-- PANTALLA 2 (Oculta inicialmente) -->
+        <div id="pantalla-2" class="bg-slate-950 border-2 border-yellow-500 rounded-xl p-8 text-center space-y-6 shadow-2xl hidden">
+            <h2 class="font-arcade text-xs text-yellow-400">MENSAJE DEL SISTEMA</h2>
+            <div class="bg-black border border-cyan-600 p-6 rounded-lg space-y-4">
+                <p class="font-pixel text-2xl text-cyan-100">Estudiando para ser profesional en <span class="text-yellow-300">TAPSD</span>:</p>
+                <p class="font-arcade text-xs text-yellow-400 bg-cyan-950/50 p-4 border border-yellow-500/50 rounded">
+                    "Quien quiere, puede, y quien quiere, debe"
                 </p>
-                <div id="pacman-board" class="maze-board"></div>
-                <div class="font-pixel text-lg text-center text-yellow-400" id="maze-status-text">
-                    &gt; ¡Muévete por el laberinto!
-                </div>
             </div>
-
-            <div id="question-panel" class="space-y-6 hidden">
-                <div class="flex justify-between items-center bg-black/60 p-2 border border-cyan-700 rounded text-xs font-arcade">
-                    <span class="text-yellow-300" id="q-counter">PREGUNTA 1 / 8</span>
-                    <span class="text-cyan-400">MODO EXAMEN</span>
-                </div>
-                <h2 id="q-text" class="font-pixel text-2xl sm:text-3xl text-cyan-100 leading-relaxed">Cargando...</h2>
-                <div id="q-options" class="space-y-3"></div>
-                <div class="flex justify-end pt-2">
-                    <button id="q-btn" type="button" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded border-2 border-yellow-300 hidden cursor-pointer arcade-glow-btn relative z-40">COMPROBAR &gt;&gt;</button>
-                </div>
+            <div>
+                <button id="btn-preparada" class="font-arcade text-xs bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-4 rounded border-2 border-yellow-300 cursor-pointer shadow-lg transition transform hover:scale-105">
+                    ¡ESTOY PREPARADA! &gt;&gt;
+                </button>
             </div>
         </div>
 
-        <!-- PANTALLA 4: VICTORIA -->
-        <div id="screen-4" class="bg-slate-950/95 border-2 border-yellow-500 rounded-xl p-8 text-center hidden arcade-glow shadow-2xl space-y-6 relative overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none overflow-hidden z-10">
-                <div class="firework-particle" style="left: 20%; top: 60%; animation-delay: 0s;"></div>
-                <div class="firework-particle" style="left: 75%; top: 50%; animation-delay: 0.6s;"></div>
-                <div class="firework-particle" style="left: 45%; top: 70%; animation-delay: 1.2s;"></div>
-            </div>
-            <h2 class="font-arcade text-xl text-yellow-400 relative z-20">¡ENHORABUENA!</h2>
-            <p class="font-pixel text-2xl text-cyan-100 relative z-20">Has superado todas las cuestiones y demostrado que "Quien quiere, puede, y quien quiere, debe".</p>
-            <div class="relative z-20">
-                <button id="restart-btn" type="button" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-8 py-3 rounded border-2 border-cyan-300 cursor-pointer arcade-glow-btn relative z-40">REINICIAR &gt;&gt;</button>
-            </div>
+        <!-- PANTALLA 3 (Oculta inicialmente - Zona de Pruebas/Juego) -->
+        <div id="pantalla-3" class="bg-slate-950 border-2 border-green-500 rounded-xl p-8 text-center space-y-6 shadow-2xl hidden">
+            <h2 class="font-arcade text-xs text-green-400">¡MISIÓN INICIADA!</h2>
+            <p class="font-pixel text-2xl text-cyan-100">Aquí cargaremos el laberinto y las preguntas paso a paso.</p>
+            <button id="btn-reiniciar" class="font-arcade text-xs bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-6 py-3 rounded cursor-pointer">
+                REINICIAR PRUEBA
+            </button>
         </div>
+
     </main>
 
-    <footer class="text-center py-3 font-pixel text-lg text-slate-500 z-20">MÓDULO TAPSD &bull; ARCADE EDITION</footer>
+    <!-- PIE -->
+    <footer class="text-center font-pixel text-lg text-slate-500">
+        Módulo TAPSD &bull; Edición Desde Cero
+    </footer>
 
+    <!-- SCRIPT LIMPIO -->
     <script>
-        // Control de Audio seguro
-        let isAudioPlaying = false;
-        const bgAudio = document.getElementById('bg-audio');
-        const audioBtn = document.getElementById('audio-btn');
+        // Verificamos que el DOM cargó por completo antes de asignar nada
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnComenzar = document.getElementById('btn-comenzar');
+            const btnPreparada = document.getElementById('btn-preparada');
+            const btnReiniciar = document.getElementById('btn-reiniciar');
+            
+            const pantalla1 = document.getElementById('pantalla-1');
+            const pantalla2 = document.getElementById('pantalla-2');
+            const pantalla3 = document.getElementById('pantalla-3');
 
-        audioBtn.addEventListener('click', () => {
-            if (isAudioPlaying) {
-                bgAudio.pause();
-                isAudioPlaying = false;
-                audioBtn.innerText = "🎵 MÚSICA: OFF";
-            } else {
-                bgAudio.play().then(() => {
-                    isAudioPlaying = true;
-                    audioBtn.innerText = "🔊 MÚSICA: ON";
-                }).catch(e => console.log("Audio play blocked:", e));
-            }
-        });
-
-        // Navegación entre pantallas mediante listeners limpios
-        const startBtn = document.getElementById('start-btn');
-        const readyBtn = document.getElementById('ready-btn');
-        const screen1 = document.getElementById('screen-1');
-        const screen2 = document.getElementById('screen-2');
-        const screen3 = document.getElementById('screen-3');
-
-        startBtn.addEventListener('click', () => {
-            screen1.classList.add('hidden');
-            screen2.classList.remove('hidden');
-        });
-
-        readyBtn.addEventListener('click', () => {
-            screen2.classList.add('hidden');
-            screen3.classList.remove('hidden');
-            initMaze();
-        });
-
-        // Banco de preguntas de prueba temporal (hasta separar en JSON)
-        const questions = [
-            { q: "La persona como ser multidimensional comprende las esferas:", opts: ["Biológica, psíquica y social.", "Física y económica.", "Motora e intelectual."], correctText: "Biológica, psíquica y social." },
-            { q: "Las actividades para despertar capacidades motrices y sentidos son:", opts: ["Cuidados de estimulación.", "Cuidados de compensación.", "Cuidados de sosiego."], correctText: "Cuidados de estimulación." }
-        ];
-
-        let currentQ = 0, selectedOpt = null, currentShuffledOpts = [], currentCorrectIdx = null;
-        let mapGrid = [
-            [1,1,1,1,1,1,1,1,1,1,1],
-            [1,0,3,0,1,2,1,0,3,0,1],
-            [1,0,1,0,1,0,1,0,1,0,1],
-            [1,3,1,0,0,0,0,0,1,3,1],
-            [1,0,1,1,1,0,1,1,1,0,1],
-            [1,0,3,0,0,4,0,0,3,0,1],
-            [1,0,1,1,1,0,1,1,1,0,1],
-            [1,3,1,0,0,0,0,0,1,3,1],
-            [1,0,1,0,1,0,1,0,1,0,1],
-            [1,0,3,0,1,0,1,0,3,0,1],
-            [1,1,1,1,1,1,1,1,1,1,1]
-        ];
-        let playerPos = { r: 1, c: 5 };
-
-        function initMaze() {
-            renderMaze();
-            window.removeEventListener('keydown', handleKeyMove);
-            window.addEventListener('keydown', handleKeyMove);
-        }
-
-        function renderMaze() {
-            const board = document.getElementById('pacman-board');
-            if(!board) return;
-            board.innerHTML = '';
-            for(let r=0; r<mapGrid.length; r++) {
-                for(let c=0; c<mapGrid[r].length; c++) {
-                    let cell = document.createElement('div');
-                    cell.className = 'maze-cell ';
-                    let val = mapGrid[r][c];
-                    if(r === playerPos.r && c === playerPos.c) {
-                        cell.classList.add('path');
-                        cell.innerText = "👩‍⚕️";
-                    } else if(val === 1) {
-                        cell.classList.add('wall');
-                    } else if(val === 3) {
-                        cell.classList.add('path');
-                        cell.innerText = "💊";
-                    } else if(val === 4) {
-                        cell.classList.add('path');
-                        cell.innerText = "👾";
-                    } else {
-                        cell.classList.add('path');
-                    }
-                    board.appendChild(cell);
-                }
-            }
-        }
-
-        function handleKeyMove(e) {
-            if(screen3.classList.contains('hidden')) return;
-            if(!document.getElementById('question-panel').classList.contains('hidden')) return;
-
-            let newR = playerPos.r;
-            let newC = playerPos.c;
-
-            if(e.key === 'ArrowUp') newR--;
-            else if(e.key === 'ArrowDown') newR++;
-            else if(e.key === 'ArrowLeft') newC--;
-            else if(e.key === 'ArrowRight') newC++;
-            else return;
-
-            e.preventDefault();
-
-            if(newR >= 0 && newR < mapGrid.length && newC >= 0 && newC < mapGrid[0].length) {
-                let target = mapGrid[newR][newC];
-                if(target !== 1) {
-                    playerPos.r = newR;
-                    playerPos.c = newC;
-                    renderMaze();
-
-                    if(target === 3 || target === 4) {
-                        mapGrid[newR][newC] = 0;
-                        triggerQuestion();
-                    }
-                }
-            }
-        }
-
-        function triggerQuestion() {
-            document.getElementById('maze-view').classList.add('hidden');
-            document.getElementById('question-panel').classList.remove('hidden');
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            selectedOpt = null;
-            document.getElementById('q-btn').classList.add('hidden');
-            if(currentQ >= questions.length) {
-                finishGame();
-                return;
-            }
-            let data = questions[currentQ];
-            document.getElementById('q-counter').innerText = `PREGUNTA ${currentQ + 1} / ${questions.length}`;
-            document.getElementById('q-text').innerText = data.q;
-
-            currentShuffledOpts = [...data.opts].sort(() => Math.random() - 0.5);
-            currentCorrectIdx = currentShuffledOpts.indexOf(data.correctText);
-
-            let container = document.getElementById('q-options');
-            container.innerHTML = '';
-            currentShuffledOpts.forEach((opt, idx) => {
-                let div = document.createElement('div');
-                div.className = "font-pixel text-xl bg-black/60 border border-cyan-700 p-4 rounded cursor-pointer hover:border-yellow-400 transition";
-                div.innerText = opt;
-                div.onclick = () => {
-                    document.querySelectorAll('#q-options > div').forEach(d => d.classList.remove('border-yellow-400', 'bg-cyan-950'));
-                    div.classList.add('border-yellow-400', 'bg-cyan-950');
-                    selectedOpt = idx;
-                    document.getElementById('q-btn').classList.remove('hidden');
-                };
-                container.appendChild(div);
+            // Transición Pantalla 1 a Pantalla 2
+            btnComenzar.addEventListener('click', () => {
+                pantalla1.classList.add('hidden');
+                pantalla2.classList.remove('hidden');
             });
-        }
 
-        document.getElementById('q-btn').onclick = () => {
-            if(selectedOpt === currentCorrectIdx) {
-                currentQ++;
-                document.getElementById('maze-progress').innerText = `HITOS: ${currentQ} / ${questions.length}`;
-                document.getElementById('question-panel').classList.add('hidden');
-                document.getElementById('maze-view').classList.remove('hidden');
-                renderMaze();
-                if(currentQ >= questions.length) {
-                    finishGame();
-                }
-            } else {
-                alert("Incorrecto. ¡Prueba otra vez!");
-            }
-        };
+            // Transición Pantalla 2 a Pantalla 3
+            btnPreparada.addEventListener('click', () => {
+                pantalla2.classList.add('hidden');
+                pantalla3.classList.remove('hidden');
+            });
 
-        function finishGame() {
-            screen3.classList.add('hidden');
-            document.getElementById('screen-4').classList.remove('hidden');
-        }
-
-        document.getElementById('restart-btn').onclick = () => location.reload();
+            // Reiniciar
+            btnReiniciar.addEventListener('click', () => {
+                pantalla3.classList.add('hidden');
+                pantalla1.classList.remove('hidden');
+            });
+        });
     </script>
 </body>
 </html>
