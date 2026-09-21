@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TAPSD Arcade Edition - Tema 1</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -29,10 +29,33 @@
             justify-content: center;
             align-items: center;
             z-index: 100;
-            cursor: pointer;
             transition: opacity 0.5s ease;
             padding: 20px;
         }
+        
+        /* Botón de control de música estilo arcade en la esquina */
+        .audio-control-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            color: #ffcc00;
+            background: rgba(3, 7, 18, 0.9);
+            border: 2px solid #06b6d4;
+            padding: 10px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+            z-index: 110;
+            transition: all 0.2s ease;
+        }
+        .audio-control-btn:hover {
+            background: #06b6d4;
+            color: #000;
+            box-shadow: 0 0 15px #06b6d4;
+        }
+
         .arcade-splash-content {
             position: relative;
             z-index: 2;
@@ -62,7 +85,6 @@
             margin-bottom: 25px;
         }
         
-        /* Animación mejorada para un efecto flotante más suave */
         @keyframes floatUpDown {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-12px); }
@@ -70,7 +92,7 @@
         }
         
         .arcade-image-container {
-            width: 130px; /* Reducido ligeramente para estilizar la zona central */
+            width: 130px;
             height: 110px;
             border-radius: 12px;
             border: 2px solid #06b6d4;
@@ -80,7 +102,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: floatUpDown 3s ease-in-out infinite; /* Movimiento continuo */
+            animation: floatUpDown 3s ease-in-out infinite;
         }
         .press-start-btn {
             font-family: 'Press Start 2P', monospace;
@@ -118,17 +140,24 @@
     </style>
 </head>
 <body>
-    <div id="arcade-splash" onclick="startAdventure()">
+
+    <!-- Elemento de audio en bucle infinito -->
+    <audio id="bg-music" src="Coffee_and_Cartridges.mp3" loop></audio>
+
+    <div id="arcade-splash">
+        <!-- Botón para alternar la música -->
+        <button class="audio-control-btn" onclick="toggleMusic(event)">🔊 MÚSICA: OFF</button>
+
         <div class="arcade-splash-content">
             <div class="arcade-title-pixel">ATENCIÓN SOCIOSANITARIA</div>
             <div class="arcade-subtitle-pixel">EDICIÓN RETRO ARCADE</div>
             
-            <!-- Contenedor central flotante con emojis de enfermera y medicina -->
             <div class="arcade-image-container">
                 <div style="font-size: 2.8rem; display: flex; gap: 8px;">👩‍⚕️ 💊</div>
             </div>
 
-            <button class="press-start-btn" type="button">PULSA PARA COMENZAR &gt;&gt;</button>
+            <!-- El click para empezar se pasa directamente al botón para evitar conflictos con el botón de música -->
+            <button class="press-start-btn" type="button" onclick="startAdventure()">PULSA PARA COMENZAR &gt;&gt;</button>
         </div>
     </div>
 
@@ -142,7 +171,30 @@
     </div>
 
     <script>
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.querySelector('.audio-control-btn');
+
+        function toggleMusic(event) {
+            // Evita que hacer clic en el botón de música active otras funciones del contenedor
+            event.stopPropagation(); 
+            
+            if (music.paused) {
+                music.play().catch(error => console.log("La reproducción automática requiere interacción previa:", error));
+                musicBtn.textContent = "🔊 MÚSICA: ON";
+                musicBtn.style.color = "#22d3ee";
+            } else {
+                music.pause();
+                musicBtn.textContent = "🔇 MÚSICA: OFF";
+                musicBtn.style.color = "#ffcc00";
+            }
+        }
+
         function startAdventure() {
+            // Intenta reproducir la música automáticamente si el usuario no la encendió antes
+            if (music.paused && musicBtn.textContent.includes("ON")) {
+                music.play().catch(() => {});
+            }
+            
             document.getElementById('arcade-splash').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('arcade-splash').style.display = 'none';
@@ -152,4 +204,3 @@
     </script>
 </body>
 </html>
-
