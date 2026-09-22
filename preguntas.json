@@ -1,0 +1,92 @@
+[
+  {
+    "pregunta": "¿Qué significa TAPSD?",
+    "opciones": [
+      "Técnico en Atención a Personas en Situación de Dependencia",
+      "Título Avanzado de Prevención Socio-Doméstica",
+      "Técnico de Apoyo Psicológico y Social Domiciliario"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué es la postura lateral de seguridad?",
+    "opciones": [
+      "Tumbar a la persona boca arriba con las piernas elevadas",
+      "Colocar a la persona de lado para proteger la vía aérea",
+      "Sentar a la persona con las piernas cruzadas"
+    ],
+    "correcta": 1
+  },
+  {
+    "pregunta": "¿Para qué se utiliza la escala de Barthel?",
+    "opciones": [
+      "Para medir la tensión arterial",
+      "Para valorar el nivel de dependencia en actividades básicas",
+      "Para evaluar la memoria a corto plazo"
+    ],
+    "correcta": 1
+  },
+  {
+    "pregunta": "¿Qué es una úlcera por presión?",
+    "opciones": [
+      "Una lesión en la piel causada por presión mantenida sobre una zona",
+      "Una infección respiratoria común en personas encamadas",
+      "Un tipo de alergia cutánea"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué actitud debe tener el/la TAPSD ante una persona con demencia que repite preguntas?",
+    "opciones": [
+      "Ignorarla hasta que deje de preguntar",
+      "Corregirla firmemente cada vez que se equivoque",
+      "Responder con paciencia y calma cada vez"
+    ],
+    "correcta": 2
+  },
+  {
+    "pregunta": "¿Cuál es la frecuencia respiratoria normal en un adulto en reposo?",
+    "opciones": [
+      "12-20 respiraciones por minuto",
+      "40-50 respiraciones por minuto",
+      "5-8 respiraciones por minuto"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué es la movilización pasiva de un paciente?",
+    "opciones": [
+      "El paciente se mueve solo, sin ayuda",
+      "Se mueve al paciente sin que este realice esfuerzo alguno",
+      "Solo se aplica a pacientes conscientes"
+    ],
+    "correcta": 1
+  },
+  {
+    "pregunta": "¿Qué documento recoge las tareas y cuidados personalizados de un usuario?",
+    "opciones": [
+      "El plan de atención individualizado (PAI)",
+      "El contrato laboral del centro",
+      "El horario general del centro"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué se debe hacer ante un atragantamiento leve en el que la persona tose con fuerza?",
+    "opciones": [
+      "Aplicar la maniobra de Heimlich de inmediato",
+      "Animarla a seguir tosiendo, sin intervenir",
+      "Darle agua para que trague el objeto"
+    ],
+    "correcta": 1
+  },
+  {
+    "pregunta": "¿Qué principio ético es fundamental en la atención sociosanitaria?",
+    "opciones": [
+      "La rapidez por encima de todo",
+      "El respeto a la dignidad y autonomía de la persona",
+      "La sustitución total de las decisiones del usuario"
+    ],
+    "correcta": 1
+  }
+]
