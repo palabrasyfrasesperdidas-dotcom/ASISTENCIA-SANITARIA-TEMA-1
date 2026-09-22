@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YKWEY6WPF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9YKWEY6WPF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TAPSD Arcade Edition - Tema 1</title>
+    <meta name="description" content="Pantalla de inicio interactiva estilo videojuego clásico para el módulo de Atención Sociosanitaria.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #05050a;
+            color: #22d3ee;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px 20px;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* ---------- PANTALLA 1: SPLASH ---------- */
+        #arcade-splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 10, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        #arcade-splash::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+            background-size: 100% 4px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .audio-control-btn {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            color: #ffcc00;
+            background: rgba(3, 7, 18, 0.95);
+            border: 2px solid #06b6d4;
+            padding: 12px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+            z-index: 9999;
+            transition: all 0.2s ease;
+        }
+        .audio-control-btn:hover {
+            background: #06b6d4;
+            color: #000;
+            box-shadow: 0 0 15px #06b6d4;
+        }
+
+        .arcade-splash-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 520px;
+            width: 100%;
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+            background-color: rgba(3, 7, 18, 0.95);
+            padding: 30px 20px;
+            border-radius: 14px;
+        }
+
+        .arcade-title-pixel {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.95rem;
+            color: #ffcc00;
+            text-shadow: 2px 2px #d6249f, 0 0 15px rgba(255, 204, 0, 0.6);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .arcade-subtitle-pixel {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin-bottom: 25px;
+        }
+
+        .arcade-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 220px;
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            margin-bottom: 25px;
+            background: rgba(8, 47, 73, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .press-start-btn {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.85rem;
+            color: #000;
+            background: #eab308;
+            border: 2px solid #fef08a;
+            padding: 16px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-shadow: none;
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.5);
+            transition: transform 0.2s, background 0.2s;
+            text-decoration: none;
+        }
+
+        .press-start-btn:hover {
+            background: #facc15;
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(250, 204, 21, 0.8);
+        }
+
+        .arcade-credits {
+            margin-top: 22px;
+            font-size: 0.65rem;
+            color: #64748b;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* ---------- PANTALLA 2: INTRODUCCIÓN / QUIZ ---------- */
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease;
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #main-content.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .header-box {
+            width: 100%;
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            background-color: rgba(3, 7, 18, 0.95);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .content-box {
+            width: 100%;
+            border: 2px solid #eab308;
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+            background-color: rgba(3, 7, 18, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* ---------- PANTALLA 3: LABERINTO ---------- */
+        #maze-screen {
+            display: none;
+            width: 100%;
+            max-width: 700px;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #maze-screen.active {
+            display: flex;
+        }
+
+        #maze-canvas {
+            background: #020617;
+            border-radius: 8px;
+            border: 2px solid #0284c7;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .maze-instructions {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* ---------- MODALES (preguntas / fin de partida) ---------- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: rgba(3, 7, 18, 0.98);
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
+            border-radius: 14px;
+            padding: 28px 22px;
+            max-width: 460px;
+            width: 100%;
+            text-align: center;
+        }
+        .option-btn {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            background: rgba(8, 47, 73, 0.6);
+            border: 2px solid #0284c7;
+            padding: 12px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .option-btn:hover {
+            background: #0284c7;
+            color: #000;
+        }
+        .option-btn:disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Elemento de audio de fondo -->
+    <audio id="bg-music" src="Coffee_and_Cartridges.mp3" loop></audio>
+
+    <!-- ===================== PANTALLA 1: SPLASH ===================== -->
+    <div id="arcade-splash" onclick="startAdventure()">
+        <div class="arcade-splash-content">
+            <div class="arcade-title-pixel">ATENCIÓN SOCIOSANITARIA</div>
+            <div class="arcade-subtitle-pixel">EDICIÓN RETRO ARCADE</div>
+
+            <div class="arcade-image-container">
+                <div style="font-size: 3rem;">👩‍⚕️ 💊</div>
+                <div style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #facc15;">&gt; NURSE.EXE READY</div>
+            </div>
+
+            <button class="press-start-btn" type="button">PULSA PARA COMENZAR &gt;&gt;</button>
+            <div class="arcade-credits">MÓDULO TAPSD &bull; ARCADE EDITION</div>
+        </div>
+
+        <button class="audio-control-btn" onclick="toggleMusic(event)">🔇 MÚSICA: OFF</button>
+    </div>
+
+    <!-- ===================== PANTALLA 2: INTRODUCCIÓN / QUIZ ===================== -->
+    <div id="main-content">
+        <header class="header-box">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="width: 10px; height: 10px; background: #eab308; display: inline-block;"></span>
+                <h1 style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #fef08a;">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
+            </div>
+            <div style="font-family: 'Press Start 2P', monospace; font-size: 0.65rem; background: #082f49; padding: 6px 10px; border: 1px solid #0284c7; border-radius: 4px;">
+                TAPSD ARCADE
+            </div>
+        </header>
+
+        <section class="content-box">
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 0.85rem; color: #facc15; text-align: center;">¡PON A PRUEBA TUS CONOCIMIENTOS!</h2>
+
+            <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: #e2e8f0; line-height: 1.6; text-align: center;">
+                ¡Bienvenida a la prueba de valoración del tema 1 de Atención Sociosanitaria! Haz que la TAPSD realice todas las tareas asignadas (puntos del laberinto) sin que sea atrapada por el virus.
+            </p>
+
+            <div style="background: rgba(8, 47, 73, 0.5); border: 1px dashed #0284c7; padding: 15px; border-radius: 8px; text-align: center;">
+                <p style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #facc15;">¿Estás preparada?</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 10px;">
+                <button class="press-start-btn" type="button" onclick="goToMaze()">COMENZAR</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===================== PANTALLA 3: LABERINTO ===================== -->
+    <div id="maze-screen">
+        <header class="header-box">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="width: 10px; height: 10px; background: #eab308; display: inline-block;"></span>
+                <h1 style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #fef08a;">LABERINTO: EVITA AL VIRUS</h1>
+            </div>
+            <div id="maze-counter" style="font-family: 'Press Start 2P', monospace; font-size: 0.6rem; background: #082f49; padding: 6px 10px; border: 1px solid #0284c7; border-radius: 4px;">
+                PUNTOS: 0/10
+            </div>
+        </header>
+
+        <section class="content-box" style="align-items: center;">
+            <canvas id="maze-canvas" width="440" height="440"></canvas>
+            <p class="maze-instructions">Usa las flechas del teclado ⬆️⬇️⬅️➡️ para mover a la enfermera y recoger los 10 puntos sin que te atrape el virus 🦠</p>
+        </section>
+    </div>
+
+    <!-- ===================== MODAL: PREGUNTA ===================== -->
+    <div id="question-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="question-text" style="font-family: 'Press Start 2P', monospace; font-size: 0.8rem; color: #facc15; margin-bottom: 22px; line-height: 1.6;"></h3>
+            <div id="question-options" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            <p id="question-feedback" style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; margin-top: 18px; min-height: 20px;"></p>
+            <button id="question-continue-btn" class="press-start-btn" style="display: none; margin-top: 15px;" onclick="closeQuestionModal()">CONTINUAR</button>
+        </div>
+    </div>
+
+    <!-- ===================== MODAL: FIN DE PARTIDA ===================== -->
+    <div id="end-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="end-title" style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 15px;"></h3>
+            <p id="end-message" style="font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 22px; line-height: 1.5;"></p>
+            <button class="press-start-btn" type="button" onclick="restartMaze()">VOLVER A INTENTAR</button>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================================
+           MÚSICA
+        ============================================================ */
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.querySelector('.audio-control-btn');
+
+        function toggleMusic(event) {
+            event.stopPropagation();
+            if (music.paused) {
+                music.play().catch(error => console.log("Interacción requerida:", error));
+                musicBtn.textContent = "🔊 MÚSICA: ON";
+                musicBtn.style.color = "#22d3ee";
+            } else {
+                music.pause();
+                musicBtn.textContent = "🔇 MÚSICA: OFF";
+                musicBtn.style.color = "#ffcc00";
+            }
+        }
+
+        /* ============================================================
+           TRANSICIÓN PANTALLA 1 -> PANTALLA 2
+        ============================================================ */
+        function startAdventure() {
+            const splash = document.getElementById('arcade-splash');
+            const mainContent = document.getElementById('main-content');
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                mainContent.classList.add('active');
+            }, 500);
+        }
+
+        window.addEventListener('keydown', function (e) {
+            const splash = document.getElementById('arcade-splash');
+            if (splash && splash.style.display !== 'none') {
+                startAdventure();
+            }
+        });
+
+        /* ============================================================
+           BANCO DE PREGUNTAS (preguntas.json)
+        ============================================================ */
+        let allQuestions = null;
+
+        // Preguntas de emergencia por si preguntas.json no carga (por ejemplo,
+        // al abrir el archivo directamente con doble clic en vez de por un servidor).
+        const preguntasDemo = [
+            { pregunta: "¿Qué significa TAPSD?", opciones: ["Técnico en Atención a Personas en Situación de Dependencia", "Título Avanzado de Prevención Socio-Doméstica", "Técnico de Apoyo Psicológico y Social Domiciliario"], correcta: 0 },
+            { pregunta: "¿Cuál es la postura lateral de seguridad?", opciones: ["Tumbar a la persona boca arriba", "Colocar a la persona de lado para proteger la vía aérea", "Sentar a la persona con las piernas cruzadas"], correcta: 1 },
+            { pregunta: "¿Qué es la escala de Barthel?", opciones: ["Un instrumento para medir la tensión arterial", "Una escala para valorar la dependencia en actividades básicas", "Un test de memoria a corto plazo"], correcta: 1 }
+        ];
+
+        async function cargarPreguntas() {
+            try {
+                const resp = await fetch('preguntas.json');
+                if (!resp.ok) throw new Error('No se pudo leer preguntas.json');
+                allQuestions = await resp.json();
+            } catch (error) {
+                console.warn('No se pudo cargar preguntas.json, usando preguntas de ejemplo.', error);
+                allQuestions = preguntasDemo;
+            }
+        }
+        window.addEventListener('load', cargarPreguntas);
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function elegirPreguntas(n) {
+            if (!allQuestions || allQuestions.length === 0) return [];
+            const copia = shuffleArray([...allQuestions]);
+            return copia.slice(0, n);
+        }
+
+        /* ============================================================
+           LABERINTO
+        ============================================================ */
+        const ROWS = 11;
+        const COLS = 11;
+        const CELL = 40;
+        const TOTAL_PUNTOS = 10;
+        const VELOCIDAD_VIRUS_MS = 650;
+
+        let grid = [];
+        let nurse = { row: 0, col: 0 };
+        let virus = { row: ROWS - 1, col: COLS - 1 };
+        let points = [];
+        let collectedCount = 0;
+        let correctCount = 0;
+        let virusIntervalId = null;
+        let modalOpen = false;
+        let gameEnded = false;
+
+        const canvas = document.getElementById('maze-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function generarLaberinto() {
+            const g = [];
+            for (let r = 0; r < ROWS; r++) {
+                const fila = [];
+                for (let c = 0; c < COLS; c++) {
+                    fila.push(r % 2 === 0 ? 0 : 1);
+                }
+                g.push(fila);
+            }
+            // Conectores en zigzag para que todas las celdas sean alcanzables
+            for (let r = 1; r < ROWS; r += 2) {
+                const banda = (r - 1) / 2;
+                const columnaConector = (banda % 2 === 0) ? COLS - 1 : 0;
+                g[r][columnaConector] = 0;
+            }
+            return g;
+        }
+
+        function celdasAbiertas() {
+            const abiertas = [];
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (grid[r][c] === 0) abiertas.push({ row: r, col: c });
+                }
+            }
+            return abiertas;
+        }
+
+        function goToMaze() {
+            document.getElementById('main-content').classList.remove('active');
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('maze-screen').classList.add('active');
+            initMaze();
+        }
+
+        function initMaze() {
+            grid = generarLaberinto();
+            nurse = { row: 0, col: 0 };
+            virus = { row: ROWS - 1, col: COLS - 1 };
+            gameEnded = false;
+            modalOpen = false;
+            collectedCount = 0;
+            correctCount = 0;
+
+            const libres = celdasAbiertas().filter(c =>
+                !(c.row === nurse.row && c.col === nurse.col) &&
+                !(c.row === virus.row && c.col === virus.col)
+            );
+            shuffleArray(libres);
+
+            const preguntasElegidas = elegirPreguntas(TOTAL_PUNTOS);
+            points = libres.slice(0, TOTAL_PUNTOS).map((celda, i) => ({
+                row: celda.row,
+                col: celda.col,
+                collected: false,
+                question: preguntasElegidas[i] || preguntasDemo[i % preguntasDemo.length]
+            }));
+
+            actualizarContador();
+            dibujarLaberinto();
+            document.getElementById('end-modal').classList.remove('active');
+            document.getElementById('question-modal').classList.remove('active');
+
+            if (virusIntervalId) clearInterval(virusIntervalId);
+            virusIntervalId = setInterval(moverVirus, VELOCIDAD_VIRUS_MS);
+        }
+
+        function restartMaze() {
+            document.getElementById('end-modal').classList.remove('active');
+            initMaze();
+        }
+
+        function actualizarContador() {
+            document.getElementById('maze-counter').textContent = `PUNTOS: ${collectedCount}/${TOTAL_PUNTOS}`;
+        }
+
+        function dibujarLaberinto() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    ctx.fillStyle = grid[r][c] === 1 ? '#0b1220' : '#0f172a';
+                    ctx.fillRect(c * CELL, r * CELL, CELL, CELL);
+                    ctx.strokeStyle = 'rgba(6,182,212,0.15)';
+                    ctx.strokeRect(c * CELL, r * CELL, CELL, CELL);
+                }
+            }
+
+            // Puntos pendientes
+            ctx.fillStyle = '#facc15';
+            points.forEach(p => {
+                if (!p.collected) {
+                    const cx = p.col * CELL + CELL / 2;
+                    const cy = p.row * CELL + CELL / 2;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // Virus
+            ctx.font = `${CELL * 0.75}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🦠', virus.col * CELL + CELL / 2, virus.row * CELL + CELL / 2);
+
+            // Enfermera
+            ctx.fillText('👩‍⚕️', nurse.col * CELL + CELL / 2, nurse.row * CELL + CELL / 2);
+        }
+
+        function moverNurse(dr, dc) {
+            if (modalOpen || gameEnded) return;
+            const nr = nurse.row + dr;
+            const nc = nurse.col + dc;
+            if (nr < 0 || nr >= ROWS || nc < 0 || nc >= COLS) return;
+            if (grid[nr][nc] !== 0) return;
+            nurse.row = nr;
+            nurse.col = nc;
+            dibujarLaberinto();
+            comprobarPunto();
+            comprobarChoqueVirus();
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (!document.getElementById('maze-screen').classList.contains('active')) return;
+            const mapa = {
+                ArrowUp: [-1, 0],
+                ArrowDown: [1, 0],
+                ArrowLeft: [0, -1],
+                ArrowRight: [0, 1]
+            };
+            if (mapa[e.key]) {
+                e.preventDefault();
+                moverNurse(mapa[e.key][0], mapa[e.key][1]);
+            }
+        });
+
+        function comprobarPunto() {
+            const punto = points.find(p => !p.collected && p.row === nurse.row && p.col === nurse.col);
+            if (punto) {
+                mostrarPregunta(punto);
+            }
+        }
+
+        function comprobarChoqueVirus() {
+            if (nurse.row === virus.row && nurse.col === virus.col) {
+                finDePartida(false);
+            }
+        }
+
+        /* ------------------ IA del virus (BFS: camino más corto) ------------------ */
+        function bfsSiguientePaso(inicio, destino) {
+            if (inicio.row === destino.row && inicio.col === destino.col) return inicio;
+            const claveDe = (p) => `${p.row},${p.col}`;
+            const visitado = new Set([claveDe(inicio)]);
+            const previo = {};
+            const cola = [inicio];
+
+            while (cola.length > 0) {
+                const actual = cola.shift();
+                if (actual.row === destino.row && actual.col === destino.col) break;
+
+                const vecinos = [
+                    { row: actual.row - 1, col: actual.col },
+                    { row: actual.row + 1, col: actual.col },
+                    { row: actual.row, col: actual.col - 1 },
+                    { row: actual.row, col: actual.col + 1 }
+                ];
+
+                for (const v of vecinos) {
+                    if (v.row < 0 || v.row >= ROWS || v.col < 0 || v.col >= COLS) continue;
+                    if (grid[v.row][v.col] !== 0) continue;
+                    const clave = claveDe(v);
+                    if (visitado.has(clave)) continue;
+                    visitado.add(clave);
+                    previo[clave] = actual;
+                    cola.push(v);
+                }
+            }
+
+            const claveDestino = claveDe(destino);
+            if (!(claveDestino in previo) && !(inicio.row === destino.row && inicio.col === destino.col)) {
+                return inicio; // no hay camino disponible ahora mismo
+            }
+
+            let paso = destino;
+            let anterior = previo[claveDe(paso)];
+            if (!anterior) return inicio;
+
+            while (anterior && !(anterior.row === inicio.row && anterior.col === inicio.col)) {
+                paso = anterior;
+                anterior = previo[claveDe(paso)];
+            }
+            return paso;
+        }
+
+        function moverVirus() {
+            if (modalOpen || gameEnded) return;
+            virus = bfsSiguientePaso(virus, nurse);
+            dibujarLaberinto();
+            comprobarChoqueVirus();
+        }
+
+        /* ------------------ Modal de preguntas ------------------ */
+        function mostrarPregunta(punto) {
+            modalOpen = true;
+            const q = punto.question;
+
+            document.getElementById('question-text').textContent = q.pregunta;
+            const feedback = document.getElementById('question-feedback');
+            feedback.textContent = '';
+            const continuarBtn = document.getElementById('question-continue-btn');
+            continuarBtn.style.display = 'none';
+
+            const contenedor = document.getElementById('question-options');
+            contenedor.innerHTML = '';
+
+            const indices = shuffleArray([0, 1, 2].filter(i => i < q.opciones.length));
+            indices.forEach(idx => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = q.opciones[idx];
+                btn.onclick = () => responder(idx === q.correcta, punto);
+                contenedor.appendChild(btn);
+            });
+
+            document.getElementById('question-modal').classList.add('active');
+        }
+
+        function responder(esCorrecta, punto) {
+            const feedback = document.getElementById('question-feedback');
+            const botones = document.querySelectorAll('#question-options .option-btn');
+            botones.forEach(b => b.disabled = true);
+
+            if (esCorrecta) {
+                feedback.textContent = '¡Enhorabuena continúa!';
+                feedback.style.color = '#4ade80';
+                correctCount++;
+            } else {
+                feedback.textContent = '¡Lo siento, no es correcto!';
+                feedback.style.color = '#f87171';
+            }
+
+            punto.collected = true;
+            collectedCount++;
+            actualizarContador();
+
+            document.getElementById('question-continue-btn').style.display = 'inline-block';
+        }
+
+        function closeQuestionModal() {
+            document.getElementById('question-modal').classList.remove('active');
+            modalOpen = false;
+            dibujarLaberinto();
+
+            if (collectedCount >= TOTAL_PUNTOS) {
+                finDePartida(true);
+            }
+        }
+
+        /* ------------------ Fin de partida ------------------ */
+        function finDePartida(victoria) {
+            gameEnded = true;
+            clearInterval(virusIntervalId);
+
+            const titulo = document.getElementById('end-title');
+            const mensaje = document.getElementById('end-message');
+
+            if (victoria) {
+                titulo.textContent = '¡MISIÓN COMPLETADA!';
+                titulo.style.color = '#4ade80';
+                mensaje.textContent = `Has recogido los ${TOTAL_PUNTOS} puntos sin ser atrapada. Aciertos: ${correctCount}/${TOTAL_PUNTOS}.`;
+            } else {
+                titulo.textContent = '¡TE HA ATRAPADO EL VIRUS!';
+                titulo.style.color = '#f87171';
+                mensaje.textContent = `Puntos conseguidos: ${collectedCount}/${TOTAL_PUNTOS}. Inténtalo de nuevo.`;
+            }
+
+            document.getElementById('end-modal').classList.add('active');
+        }
+    </script>
+</body>
+</html>
