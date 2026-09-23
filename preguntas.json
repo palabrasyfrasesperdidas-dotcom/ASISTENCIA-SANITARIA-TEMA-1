@@ -81,15 +81,6 @@
     "correcta": 1
   },
   {
-    "pregunta": "¿En qué año se fundó la Organización Mundial de la Salud (OMS) para unificar criterios sanitarios?",
-    "opciones": [
-      "En 1948",
-      "En 1955",
-      "En 1930"
-    ],
-    "correcta": 0
-  },
-  {
     "pregunta": "Según la definición amplia de la OMS, ¿cómo se propuso el concepto de salud?",
     "opciones": [
       "Como la mera ausencia de afecciones físicas",
@@ -572,6 +563,249 @@
       "En atender a las personas en situación de dependencia en el ámbito domiciliario e institucional para mantener y mejorar su calidad de vida",
       "En realizar intervenciones quirúrgicas de alta complejidad bajo supervisión médica",
       "En gestionar de forma exclusiva los recursos económicos de centros residenciales"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué busca acentuar fundamentalmente la humanización en las relaciones con los usuarios dentro del plan de cuidados?",
+    "opciones": [
+      "El valor y la relevancia del trato humano y cercano",
+      "La rigidez en el cumplimiento de los horarios de medicación",
+      "La digitalización total de los expedientes clínicos"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Según la clasificación de cuidados según su finalidad de Colliere, ¿dónde se enmarcan los cuidados de estimulación?",
+    "opciones": [
+      "En aquellas acciones orientadas a despertar sentidos, capacidades motrices y desarrollo psicomotor, especialmente en niños",
+      "En los procedimientos puramente quirúrgicos de urgencia",
+      "En las técnicas de movilización pasiva para personas encamadas crónicas"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Si un profesional realiza una intervención destinada a animar, mejorar la seguridad y fortalecer la autoestima, ¿de qué tipo de cuidados se trata?",
+    "opciones": [
+      "Cuidados de confirmación",
+      "Cuidados de compensación",
+      "Cuidados de sosiego"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cuál es el objetivo principal de los cuidados de conservación y continuidad de la vida?",
+    "opciones": [
+      "Conservar y mantener las capacidades adquiridas para preservar la autonomía",
+      "Sustituir por completo las funciones vitales perdidas de forma irreversible",
+      "Estimular exclusivamente el desarrollo psicomotor en la infancia"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Por qué se consideran los cuidados de autoimagen fundamentales en la interacción con el usuario?",
+    "opciones": [
+      "Porque son el soporte de la comunicación no verbal y contribuyen a construir la imagen de uno mismo",
+      "Porque sustituyen de manera directa la necesidad de comunicación verbal",
+      "Porque garantizan la correcta administración de tratamientos farmacológicos"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Cuando una intervención suple lo que no se tiene porque no se adquirió o se perdió, estamos hablando de:",
+    "opciones": [
+      "Cuidados de compensación",
+      "Cuidados de estimulación",
+      "Cuidados de confirmación"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué efectos prácticos aportan los cuidados de sosiego en la atención sociosanitaria?",
+    "opciones": [
+      "Aportan tranquilidad, serenidad, liberación de tensiones y contribuyen a calmar el dolor",
+      "Generan un estado de alerta y activación motora intensa",
+      "Incrementan la exigencia física de las actividades diarias"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "En el contexto de la planificación asistencial, ¿qué se pretende evitar trabajando con criterios de calidad y sin improvisaciones?",
+    "opciones": [
+      "La aparición de errores e ineficiencias en la prestación de los apoyos",
+      "La necesidad de registrar las actividades realizadas en el turno",
+      "La participación activa de la familia en el proceso de atención"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Dentro de los aspectos fundamentales de la relación profesional, ¿qué implica tener en cuenta la actitud, los valores y las habilidades personales?",
+    "opciones": [
+      "Garantizar un trato basado en el respeto, la autenticidad, la congruencia y la aceptación incondicional",
+      "Mantener una relación estrictamente mercantil y contractual con el usuario",
+      "Aplicar los protocolos técnicos suprimiendo cualquier juicio de valor personal"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué elementos actúan de forma combinada determinando de manera directa la calidad de vida de una persona según el entorno?",
+    "opciones": [
+      "El entorno ambiental y el entorno afectivo",
+      "La capacidad económica y la ubicación geográfica exclusiva",
+      "El nivel de estudios y la experiencia laboral previa"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿A qué colectivos se hace especial hincapié en valorar sus limitaciones físicas, psíquicas o sensoriales respecto al entorno?",
+    "opciones": [
+      "A los usuarios ancianos, discapacitados o con algún tipo de limitaciones",
+      "Exclusivamente a los pacientes jóvenes con patologías agudas transitorias",
+      "Únicamente al personal laboral de los centros residenciales"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué consecuencias negativas señala la literatura científica (como los estudios de De Castro) ante un entorno inadecuado?",
+    "opciones": [
+      "Tensión, alteraciones de salud, insatisfacción, etcétera",
+      "Un incremento repentino de la autonomía y adaptación funcional",
+      "La inmunización automática frente a accidentes domésticos"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Desde el punto de vista de la estructura arquitectónica en la vivienda, ¿qué utilidad principal tienen los pasamanos?",
+    "opciones": [
+      "Sirven de ayuda para la movilidad en algunas zonas concretas como pasillos o escaleras",
+      "Delimitan el espacio visual de las habitaciones individuales",
+      "Sustituyen la necesidad de contar con puertas amplias"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "En relación con los productos de apoyo para la movilidad dentro de una vivienda, se menciona expresamente la utilidad de:",
+    "opciones": [
+      "Las rampas alternativas, las sillas de ruedas y las grúas de transferencia",
+      "Los sistemas de iluminación inteligente por control remoto",
+      "Los revestimientos textiles de suelo de alta densidad"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué riesgo principal se asocia al uso de braseros y determinadas estufas en el domicilio de personas mayores o dependientes?",
+    "opciones": [
+      "Un alto índice de intoxicación por monóxido de carbono",
+      "La congelación de las tuberías de agua contiguas",
+      "La avería eléctrica generalizada en el edificio"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "A la hora de asegurar unas condiciones óptimas de habitabilidad y confort térmico ambiental, ¿qué dispositivo puede resultar útil además de la calefacción adecuada?",
+    "opciones": [
+      "El uso de humidificadores ambientales",
+      "La instalación de ventiladores de techo a máxima potencia",
+      "La eliminación total de sistemas de control de humedad"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Respecto al mobiliario y la distribución en las habitaciones de personas dependientes, ¿qué norma básica de seguridad se debe seguir con los suelos?",
+    "opciones": [
+      "Deben ser antideslizantes y se debe evitar el uso de alfombras y muebles que entorpezcan el paso",
+      "Deben cubrirse enteramente con moquetas mullidas para amortiguar caídas",
+      "Deben encerarse semanalmente para facilitar el deslizamiento de apoyos"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cuál es la diferencia fundamental entre promoción de la salud y prevención de la enfermedad?",
+    "opciones": [
+      "La promoción mejora el bienestar general y desarrolla habilidades, mientras que la prevención busca evitar una enfermedad concreta",
+      "La prevención se centra en la política económica y la promoción en la cirugía",
+      "Son exactamente el mismo concepto aplicado por diferentes profesionales"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué busca fortalecer de manera específica la estrategia de promoción de la salud a nivel social e individual?",
+    "opciones": [
+      "La responsabilidad individual y comunitaria, implantando políticas saludables",
+      "La dependencia exclusiva de los servicios de urgencia hospitalaria",
+      "La reducción de los canales de comunicación entre vecinos"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Cuando se fomenta que los profesionales muestren en ellos mismos comportamientos positivos, ¿qué estrategia de autocuidado se está aplicando?",
+    "opciones": [
+      "Convertirse en agentes de salud cuya enseñanza se realiza desde la propia vivencia",
+      "Imponer un reglamento disciplinario de obligado cumplimiento externo",
+      "Delegar la formación exclusivamente en soportes multimedia"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué se pretende lograr al favorecer la exploración y la reflexión sobre contradicciones entre conocimientos y comportamientos de salud?",
+    "opciones": [
+      "Traducir dicha reflexión en la adopción de conductas saludables reales",
+      "Generar un conflicto psicológico sin resolución práctica",
+      "Aumentar la complejidad burocrática de los planes de intervención"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Dentro del perfil profesional, ¿cómo se define el ámbito de actuación del Técnico en Atención a Personas en Situación de Dependencia?",
+    "opciones": [
+      "Tanto en el ámbito domiciliario como en el institucional",
+      "Exclusivamente en unidades de cuidados intensivos hospitalarios",
+      "Únicamente en consultas médicas ambulatorias de atención primaria"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Además de las actividades asistenciales y de apoyo a la gestión doméstica, ¿qué otro tipo de tareas competen al TAPSD según su título oficial?",
+    "opciones": [
+      "Actividades de carácter no sanitario, psicosociales y de prevención y seguridad",
+      "Intervenciones quirúrgicas menores y prescripción de fármacos",
+      "Dirección económica y administrativa global de los centros sociosanitarios"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué debe hacer el TAPSD cuando una situación concreta sobrepasa sus competencias profesionales establecidas?",
+    "opciones": [
+      "Derivar al usuario a otros servicios especializados cuando sea necesario",
+      "Intentar resolver la incidencia aplicando técnicas experimentales propias",
+      "Ignorar la situación hasta que intervenga de oficio la familia"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué aspecto de la comunicación no verbal se refuerza específicamente mediante los cuidados de autoimagen?",
+    "opciones": [
+      "La construcción y el soporte de la imagen que uno tiene de sí mismo",
+      "La velocidad en la transmisión de órdenes médicas directas",
+      "La regulación de los tonos de voz durante las entrevistas clínicas"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Dentro de las estrategias para promover los autocuidados, ¿qué papel juega el desarrollo de espacios participativos individuales o grupales?",
+    "opciones": [
+      "Poner en práctica la consecución de un mayor control y compromiso con la propia salud",
+      "Sustituir por completo la necesidad de atención domiciliaria especializada",
+      "Agilizar los trámites burocráticos de ingreso en los centros residenciales"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "A la hora de prevenir riesgos en el domicilio de personas en situación de dependencia, ¿qué medida específica se recomienda respecto a los elementos del suelo?",
+    "opciones": [
+      "Asegurar que sean superficies antideslizantes y evitar el uso de alfombras o muebles que entorpezcan el paso",
+      "Instalar moquetas de alta densidad para amortiguar cualquier posible impacto",
+      "Aplicar ceras de alto brillo para facilitar el desplazamiento de ayudas técnicas"
     ],
     "correcta": 0
   }
