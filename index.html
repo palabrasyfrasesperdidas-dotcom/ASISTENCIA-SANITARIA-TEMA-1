@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YKWEY6WPF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9YKWEY6WPF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TAPSD Arcade Edition - Tema 1</title>
+    <meta name="description" content="Pantalla de inicio interactiva estilo videojuego clásico para el módulo de Atención Sociosanitaria.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #05050a;
+            color: #22d3ee;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px 20px;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* ---------- PANTALLA 1: SPLASH ---------- */
+        #arcade-splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 10, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        #arcade-splash::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+            background-size: 100% 4px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .audio-control-btn {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            color: #ffcc00;
+            background: rgba(3, 7, 18, 0.95);
+            border: 2px solid #06b6d4;
+            padding: 12px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+            z-index: 9999;
+            transition: all 0.2s ease;
+        }
+        .audio-control-btn:hover {
+            background: #06b6d4;
+            color: #000;
+            box-shadow: 0 0 15px #06b6d4;
+        }
+
+        .arcade-splash-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 520px;
+            width: 100%;
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+            background-color: rgba(3, 7, 18, 0.95);
+            padding: 30px 20px;
+            border-radius: 14px;
+        }
+
+        .arcade-title-pixel {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.95rem;
+            color: #ffcc00;
+            text-shadow: 2px 2px #d6249f, 0 0 15px rgba(255, 204, 0, 0.6);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .arcade-subtitle-pixel {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin-bottom: 25px;
+        }
+
+        .arcade-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 220px;
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            margin-bottom: 25px;
+            background: rgba(8, 47, 73, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .press-start-btn {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.85rem;
+            color: #000;
+            background: #eab308;
+            border: 2px solid #fef08a;
+            padding: 16px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-shadow: none;
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.5);
+            transition: transform 0.2s, background 0.2s;
+            text-decoration: none;
+        }
+
+        .press-start-btn:hover {
+            background: #facc15;
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(250, 204, 21, 0.8);
+        }
+
+        .press-start-btn:disabled {
+            opacity: 0.5;
+            cursor: default;
+            transform: none;
+        }
+
+        .arcade-credits {
+            margin-top: 22px;
+            font-size: 0.65rem;
+            color: #64748b;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* ---------- PANTALLA 2: INTRODUCCIÓN / QUIZ ---------- */
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease;
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #main-content.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .header-box {
+            width: 100%;
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            background-color: rgba(3, 7, 18, 0.95);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .content-box {
+            width: 100%;
+            border: 2px solid #eab308;
+            box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+            background-color: rgba(3, 7, 18, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* ---------- PANTALLA 3: LABERINTO ---------- */
+        #maze-screen {
+            display: none;
+            width: 100%;
+            max-width: 700px;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #maze-screen.active {
+            display: flex;
+        }
+
+        #maze-canvas {
+            background: #020617;
+            border-radius: 8px;
+            border: 2px solid #0284c7;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .maze-instructions {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* ---------- MODALES (preguntas / fin de partida) ---------- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            position: relative;
+            z-index: 2;
+            background: rgba(3, 7, 18, 0.98);
+            border: 2px solid #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
+            border-radius: 14px;
+            padding: 28px 22px;
+            max-width: 460px;
+            width: 100%;
+            text-align: center;
+        }
+        .option-btn {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            background: rgba(8, 47, 73, 0.6);
+            border: 2px solid #0284c7;
+            padding: 12px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .option-btn:hover:not(:disabled) {
+            background: #0284c7;
+            color: #000;
+        }
+        .option-btn:disabled {
+            cursor: default;
+            opacity: 0.4;
+            text-decoration: line-through;
+        }
+
+        #fireworks-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Elemento de audio de fondo -->
+    <audio id="bg-music" src="Coffee_and_Cartridges.mp3" loop></audio>
+
+    <!-- ===================== PANTALLA 1: SPLASH ===================== -->
+    <div id="arcade-splash" onclick="startAdventure()">
+        <div class="arcade-splash-content">
+            <div class="arcade-title-pixel">ATENCIÓN SOCIOSANITARIA</div>
+            <div class="arcade-subtitle-pixel">EDICIÓN RETRO ARCADE</div>
+
+            <div class="arcade-image-container">
+                <div style="font-size: 3rem;">👩‍⚕️ 💊</div>
+                <div style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #facc15;">&gt; NURSE.EXE READY</div>
+            </div>
+
+            <button class="press-start-btn" type="button">PULSA PARA COMENZAR &gt;&gt;</button>
+            <div class="arcade-credits">MÓDULO TAPSD &bull; ARCADE EDITION</div>
+        </div>
+
+        <button class="audio-control-btn" onclick="toggleMusic(event)">🔇 MÚSICA: OFF</button>
+    </div>
+
+    <!-- ===================== PANTALLA 2: INTRODUCCIÓN / QUIZ ===================== -->
+    <div id="main-content">
+        <header class="header-box">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="width: 10px; height: 10px; background: #eab308; display: inline-block;"></span>
+                <h1 style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #fef08a;">TEMA 1: PRÁCTICA SOCIOSANITARIA</h1>
+            </div>
+            <div style="font-family: 'Press Start 2P', monospace; font-size: 0.65rem; background: #082f49; padding: 6px 10px; border: 1px solid #0284c7; border-radius: 4px;">
+                TAPSD ARCADE
+            </div>
+        </header>
+
+        <section class="content-box">
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 0.85rem; color: #facc15; text-align: center;">¡PON A PRUEBA TUS CONOCIMIENTOS!</h2>
+
+            <p style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: #e2e8f0; line-height: 1.6; text-align: center;">
+                ¡Bienvenida a la prueba de valoración del tema 1 de Atención Sociosanitaria! Haz que la TAPSD realice todas las tareas asignadas (puntos del laberinto) sin que sea atrapada por el virus.
+            </p>
+
+            <div style="background: rgba(8, 47, 73, 0.5); border: 1px dashed #0284c7; padding: 15px; border-radius: 8px; text-align: center;">
+                <p style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #facc15;">¿Estás preparada?</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 10px;">
+                <button class="press-start-btn" type="button" onclick="goToMaze()">COMENZAR</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===================== PANTALLA 3: LABERINTO ===================== -->
+    <div id="maze-screen">
+        <header class="header-box">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="width: 10px; height: 10px; background: #eab308; display: inline-block;"></span>
+                <h1 style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: #fef08a;">LABERINTO: EVITA AL VIRUS</h1>
+            </div>
+            <div id="maze-counter" style="font-family: 'Press Start 2P', monospace; font-size: 0.6rem; background: #082f49; padding: 6px 10px; border: 1px solid #0284c7; border-radius: 4px;">
+                ACIERTOS: 0/10
+            </div>
+        </header>
+
+        <section class="content-box" style="align-items: center;">
+            <canvas id="maze-canvas"></canvas>
+            <p class="maze-instructions">Usa las flechas del teclado ⬆️⬇️⬅️➡️ para mover a la enfermera y recoger los 10 puntos sin que te atrape el virus 🦠</p>
+        </section>
+    </div>
+
+    <!-- ===================== MODAL: PREGUNTA ===================== -->
+    <div id="question-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="question-text" style="font-family: 'Press Start 2P', monospace; font-size: 0.8rem; color: #facc15; margin-bottom: 22px; line-height: 1.6;"></h3>
+            <div id="question-options" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            <p id="question-feedback" style="font-family: 'Press Start 2P', monospace; font-size: 0.75rem; margin-top: 18px; min-height: 20px;"></p>
+            <button id="question-continue-btn" class="press-start-btn" style="display: none; margin-top: 15px;" onclick="closeQuestionModal()">CONTINUAR</button>
+        </div>
+    </div>
+
+    <!-- ===================== MODAL: FIN DE PARTIDA ===================== -->
+    <div id="end-modal" class="modal-overlay">
+        <canvas id="fireworks-canvas"></canvas>
+        <div class="modal-box">
+            <h3 id="end-title" style="font-family: 'Press Start 2P', monospace; font-size: 1.1rem; margin-bottom: 18px;"></h3>
+            <p id="end-message" style="font-family: 'Montserrat', sans-serif; font-size: 0.95rem; color: #e2e8f0; margin-bottom: 22px; line-height: 1.5;"></p>
+            <button class="press-start-btn" type="button" onclick="restartMaze()">VOLVER A EMPEZAR</button>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================================
+           MÚSICA
+        ============================================================ */
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.querySelector('.audio-control-btn');
+
+        function toggleMusic(event) {
+            event.stopPropagation();
+            if (music.paused) {
+                music.play().catch(error => console.log("Interacción requerida:", error));
+                musicBtn.textContent = "🔊 MÚSICA: ON";
+                musicBtn.style.color = "#22d3ee";
+            } else {
+                music.pause();
+                musicBtn.textContent = "🔇 MÚSICA: OFF";
+                musicBtn.style.color = "#ffcc00";
+            }
+        }
+
+        /* ============================================================
+           TRANSICIÓN PANTALLA 1 -> PANTALLA 2
+        ============================================================ */
+        function startAdventure() {
+            const splash = document.getElementById('arcade-splash');
+            const mainContent = document.getElementById('main-content');
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                mainContent.classList.add('active');
+            }, 500);
+        }
+
+        window.addEventListener('keydown', function (e) {
+            const splash = document.getElementById('arcade-splash');
+            if (splash && splash.style.display !== 'none') {
+                startAdventure();
+            }
+        });
+
+        /* ============================================================
+           BANCO DE PREGUNTAS (preguntas.json)
+        ============================================================ */
+        let allQuestions = null;
+
+        const preguntasDemo = [
+            { pregunta: "¿Qué significa TAPSD?", opciones: ["Técnico en Atención a Personas en Situación de Dependencia", "Título Avanzado de Prevención Socio-Doméstica", "Técnico de Apoyo Psicológico y Social Domiciliario"], correcta: 0 },
+            { pregunta: "¿Cuál es la postura lateral de seguridad?", opciones: ["Tumbar a la persona boca arriba", "Colocar a la persona de lado para proteger la vía aérea", "Sentar a la persona con las piernas cruzadas"], correcta: 1 },
+            { pregunta: "¿Qué es la escala de Barthel?", opciones: ["Un instrumento para medir la tensión arterial", "Una escala para valorar la dependencia en actividades básicas", "Un test de memoria a corto plazo"], correcta: 1 }
+        ];
+
+        async function cargarPreguntas() {
+            try {
+                const resp = await fetch('preguntas.json');
+                if (!resp.ok) throw new Error('No se pudo leer preguntas.json');
+                allQuestions = await resp.json();
+            } catch (error) {
+                console.warn('No se pudo cargar preguntas.json, usando preguntas de ejemplo.', error);
+                allQuestions = preguntasDemo;
+            }
+        }
+        window.addEventListener('load', cargarPreguntas);
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function elegirPreguntas(n) {
+            if (!allQuestions || allQuestions.length === 0) return [];
+            const copia = shuffleArray([...allQuestions]);
+            return copia.slice(0, n);
+        }
+
+        /* ============================================================
+           LABERINTO
+        ============================================================ */
+        const ROOMS = 9;                 // habitaciones por lado
+        const ROWS = 2 * ROOMS + 1;      // 19 filas de celdas (habitaciones + paredes)
+        const COLS = 2 * ROOMS + 1;      // 19 columnas
+        const CELL = 28;                 // píxeles por celda
+        const TOTAL_PUNTOS = 10;
+        const VELOCIDAD_VIRUS_MS = 600;
+
+        let grid = [];
+        let nurse = { row: 1, col: 1 };
+        let virus = { row: ROWS - 2, col: COLS - 2 };
+        let points = [];
+        let collectedCount = 0;   // preguntas acertadas
+        let virusIntervalId = null;
+        let modalOpen = false;
+        let gameEnded = false;
+
+        const canvas = document.getElementById('maze-canvas');
+        canvas.width = COLS * CELL;
+        canvas.height = ROWS * CELL;
+        const ctx = canvas.getContext('2d');
+
+        // --- Generación de un laberinto real (backtracking + bucles) ---
+        function generarLaberinto() {
+            const g = Array.from({ length: ROWS }, () => Array(COLS).fill(1));
+
+            // Las habitaciones están en las posiciones impares
+            for (let i = 0; i < ROOMS; i++) {
+                for (let j = 0; j < ROOMS; j++) {
+                    g[2 * i + 1][2 * j + 1] = 0;
+                }
+            }
+
+            // Recursive backtracking para tallar un laberinto perfecto (árbol)
+            const visitado = Array.from({ length: ROOMS }, () => Array(ROOMS).fill(false));
+            const pila = [{ i: 0, j: 0 }];
+            visitado[0][0] = true;
+
+            while (pila.length > 0) {
+                const actual = pila[pila.length - 1];
+                const direcciones = [{ di: -1, dj: 0 }, { di: 1, dj: 0 }, { di: 0, dj: -1 }, { di: 0, dj: 1 }];
+                const vecinos = [];
+
+                for (const d of direcciones) {
+                    const ni = actual.i + d.di;
+                    const nj = actual.j + d.dj;
+                    if (ni >= 0 && ni < ROOMS && nj >= 0 && nj < ROOMS && !visitado[ni][nj]) {
+                        vecinos.push({ ni, nj, di: d.di, dj: d.dj });
+                    }
+                }
+
+                if (vecinos.length === 0) {
+                    pila.pop();
+                    continue;
+                }
+
+                const elegido = vecinos[Math.floor(Math.random() * vecinos.length)];
+                const wallRow = 2 * actual.i + 1 + elegido.di;
+                const wallCol = 2 * actual.j + 1 + elegido.dj;
+                g[wallRow][wallCol] = 0;
+
+                visitado[elegido.ni][elegido.nj] = true;
+                pila.push({ i: elegido.ni, j: elegido.nj });
+            }
+
+            // Añadimos bucles: abrimos algunas paredes extra para crear caminos
+            // alternativos, como en un laberinto arcade real (no un callejón sin salida único)
+            const PROBABILIDAD_BUCLE = 0.14;
+            for (let i = 0; i < ROOMS; i++) {
+                for (let j = 0; j < ROOMS; j++) {
+                    if (j < ROOMS - 1) {
+                        const wr = 2 * i + 1, wc = 2 * j + 2;
+                        if (g[wr][wc] === 1 && Math.random() < PROBABILIDAD_BUCLE) g[wr][wc] = 0;
+                    }
+                    if (i < ROOMS - 1) {
+                        const wr = 2 * i + 2, wc = 2 * j + 1;
+                        if (g[wr][wc] === 1 && Math.random() < PROBABILIDAD_BUCLE) g[wr][wc] = 0;
+                    }
+                }
+            }
+
+            return g;
+        }
+
+        function celdasAbiertas() {
+            const abiertas = [];
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (grid[r][c] === 0) abiertas.push({ row: r, col: c });
+                }
+            }
+            return abiertas;
+        }
+
+        function distanciaManhattan(a, b) {
+            return Math.abs(a.row - b.row) + Math.abs(a.col - b.col);
+        }
+
+        function goToMaze() {
+            document.getElementById('main-content').classList.remove('active');
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('maze-screen').classList.add('active');
+            initMaze();
+        }
+
+        function initMaze() {
+            grid = generarLaberinto();
+            nurse = { row: 1, col: 1 };
+            virus = { row: ROWS - 2, col: COLS - 2 };
+            gameEnded = false;
+            modalOpen = false;
+            collectedCount = 0;
+
+            const libres = celdasAbiertas().filter(c =>
+                distanciaManhattan(c, nurse) >= 2 &&
+                distanciaManhattan(c, virus) >= 5
+            );
+            shuffleArray(libres);
+
+            const preguntasElegidas = elegirPreguntas(TOTAL_PUNTOS);
+            points = libres.slice(0, TOTAL_PUNTOS).map((celda, i) => ({
+                row: celda.row,
+                col: celda.col,
+                collected: false,
+                question: preguntasElegidas[i] || preguntasDemo[i % preguntasDemo.length]
+            }));
+
+            actualizarContador();
+            dibujarLaberinto();
+            document.getElementById('end-modal').classList.remove('active');
+            document.getElementById('question-modal').classList.remove('active');
+            detenerFuegosArtificiales();
+
+            if (virusIntervalId) clearInterval(virusIntervalId);
+            virusIntervalId = setInterval(moverVirus, VELOCIDAD_VIRUS_MS);
+        }
+
+        function restartMaze() {
+            document.getElementById('end-modal').classList.remove('active');
+            detenerFuegosArtificiales();
+            initMaze();
+        }
+
+        function actualizarContador() {
+            document.getElementById('maze-counter').textContent = `ACIERTOS: ${collectedCount}/${TOTAL_PUNTOS}`;
+        }
+
+        // --- Dibujo del virus (vectorial, no depende de fuentes emoji) ---
+        function dibujarVirus(cx, cy) {
+            const r = CELL * 0.34;
+            ctx.save();
+            ctx.translate(cx, cy);
+
+            ctx.fillStyle = '#22c55e';
+            for (let ang = 0; ang < 360; ang += 30) {
+                const rad = (ang * Math.PI) / 180;
+                const sx = Math.cos(rad) * (r + 4);
+                const sy = Math.sin(rad) * (r + 4);
+                ctx.beginPath();
+                ctx.arc(sx, sy, 2.6, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.fillStyle = '#15803d';
+            ctx.beginPath();
+            ctx.arc(0, 0, r, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#052e16';
+            ctx.beginPath(); ctx.arc(-r * 0.3, -r * 0.25, r * 0.2, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(r * 0.28, r * 0.15, r * 0.16, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(-r * 0.05, r * 0.35, r * 0.14, 0, Math.PI * 2); ctx.fill();
+
+            ctx.restore();
+        }
+
+        function dibujarLaberinto() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (grid[r][c] === 1) {
+                        ctx.fillStyle = '#0369a1';
+                        ctx.fillRect(c * CELL, r * CELL, CELL, CELL);
+                        ctx.strokeStyle = '#7dd3fc';
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(c * CELL + 0.5, r * CELL + 0.5, CELL - 1, CELL - 1);
+                    } else {
+                        ctx.fillStyle = '#020617';
+                        ctx.fillRect(c * CELL, r * CELL, CELL, CELL);
+                    }
+                }
+            }
+
+            ctx.fillStyle = '#facc15';
+            points.forEach(p => {
+                if (!p.collected) {
+                    const cx = p.col * CELL + CELL / 2;
+                    const cy = p.row * CELL + CELL / 2;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            dibujarVirus(virus.col * CELL + CELL / 2, virus.row * CELL + CELL / 2);
+
+            ctx.font = `${CELL * 0.85}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('👩‍⚕️', nurse.col * CELL + CELL / 2, nurse.row * CELL + CELL / 2);
+        }
+
+        function moverNurse(dr, dc) {
+            if (modalOpen || gameEnded) return;
+            const nr = nurse.row + dr;
+            const nc = nurse.col + dc;
+            if (nr < 0 || nr >= ROWS || nc < 0 || nc >= COLS) return;
+            if (grid[nr][nc] !== 0) return;
+            nurse.row = nr;
+            nurse.col = nc;
+            dibujarLaberinto();
+            comprobarPunto();
+            comprobarChoqueVirus();
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (!document.getElementById('maze-screen').classList.contains('active')) return;
+            const mapa = {
+                ArrowUp: [-1, 0],
+                ArrowDown: [1, 0],
+                ArrowLeft: [0, -1],
+                ArrowRight: [0, 1]
+            };
+            if (mapa[e.key]) {
+                e.preventDefault();
+                moverNurse(mapa[e.key][0], mapa[e.key][1]);
+            }
+        });
+
+        function comprobarPunto() {
+            const punto = points.find(p => !p.collected && p.row === nurse.row && p.col === nurse.col);
+            if (punto) {
+                mostrarPregunta(punto);
+            }
+        }
+
+        function comprobarChoqueVirus() {
+            if (nurse.row === virus.row && nurse.col === virus.col) {
+                finDePartida(false);
+            }
+        }
+
+        /* ------------------ IA del virus (BFS: camino más corto) ------------------ */
+        function bfsSiguientePaso(inicio, destino) {
+            if (inicio.row === destino.row && inicio.col === destino.col) return inicio;
+            const claveDe = (p) => `${p.row},${p.col}`;
+            const visitado = new Set([claveDe(inicio)]);
+            const previo = {};
+            const cola = [inicio];
+
+            while (cola.length > 0) {
+                const actual = cola.shift();
+                if (actual.row === destino.row && actual.col === destino.col) break;
+
+                const vecinos = [
+                    { row: actual.row - 1, col: actual.col },
+                    { row: actual.row + 1, col: actual.col },
+                    { row: actual.row, col: actual.col - 1 },
+                    { row: actual.row, col: actual.col + 1 }
+                ];
+
+                for (const v of vecinos) {
+                    if (v.row < 0 || v.row >= ROWS || v.col < 0 || v.col >= COLS) continue;
+                    if (grid[v.row][v.col] !== 0) continue;
+                    const clave = claveDe(v);
+                    if (visitado.has(clave)) continue;
+                    visitado.add(clave);
+                    previo[clave] = actual;
+                    cola.push(v);
+                }
+            }
+
+            const claveDestino = claveDe(destino);
+            if (!(claveDestino in previo)) return inicio;
+
+            let paso = destino;
+            let anterior = previo[claveDe(paso)];
+            if (!anterior) return inicio;
+
+            while (anterior && !(anterior.row === inicio.row && anterior.col === inicio.col)) {
+                paso = anterior;
+                anterior = previo[claveDe(paso)];
+            }
+            return paso;
+        }
+
+        function moverVirus() {
+            if (modalOpen || gameEnded) return;
+            virus = bfsSiguientePaso(virus, nurse);
+            dibujarLaberinto();
+            comprobarChoqueVirus();
+        }
+
+        /* ------------------ Modal de preguntas ------------------ */
+        function mostrarPregunta(punto) {
+            modalOpen = true;
+            const q = punto.question;
+
+            document.getElementById('question-text').textContent = q.pregunta;
+            const feedback = document.getElementById('question-feedback');
+            feedback.textContent = '';
+            const continuarBtn = document.getElementById('question-continue-btn');
+            continuarBtn.style.display = 'none';
+
+            const contenedor = document.getElementById('question-options');
+            contenedor.innerHTML = '';
+
+            const indices = shuffleArray([0, 1, 2].filter(i => i < q.opciones.length));
+            indices.forEach(idx => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = q.opciones[idx];
+                btn.onclick = () => responder(idx === q.correcta, punto, btn);
+                contenedor.appendChild(btn);
+            });
+
+            document.getElementById('question-modal').classList.add('active');
+        }
+
+        function responder(esCorrecta, punto, boton) {
+            const feedback = document.getElementById('question-feedback');
+
+            if (esCorrecta) {
+                feedback.textContent = '¡Enhorabuena continúa!';
+                feedback.style.color = '#4ade80';
+
+                punto.collected = true;
+                collectedCount++;
+                actualizarContador();
+
+                document.querySelectorAll('#question-options .option-btn').forEach(b => b.disabled = true);
+                document.getElementById('question-continue-btn').style.display = 'inline-block';
+            } else {
+                feedback.textContent = '¡Lo siento, no es correcto! Inténtalo de nuevo.';
+                feedback.style.color = '#f87171';
+                // Se desactiva solo la opción fallada; puede seguir intentándolo
+                boton.disabled = true;
+            }
+        }
+
+        function closeQuestionModal() {
+            document.getElementById('question-modal').classList.remove('active');
+            modalOpen = false;
+            dibujarLaberinto();
+
+            if (collectedCount >= TOTAL_PUNTOS) {
+                finDePartida(true);
+            }
+        }
+
+        /* ------------------ Fin de partida ------------------ */
+        function finDePartida(victoria) {
+            gameEnded = true;
+            clearInterval(virusIntervalId);
+
+            const titulo = document.getElementById('end-title');
+            const mensaje = document.getElementById('end-message');
+
+            if (victoria) {
+                titulo.textContent = '¡ENHORABUENA!';
+                titulo.style.color = '#4ade80';
+                mensaje.textContent = `Has respondido correctamente las ${TOTAL_PUNTOS} preguntas sin ser atrapada por el virus.`;
+                document.getElementById('end-modal').classList.add('active');
+                iniciarFuegosArtificiales();
+            } else {
+                titulo.textContent = '¡TE HA ATRAPADO EL VIRUS!';
+                titulo.style.color = '#f87171';
+                mensaje.textContent = `Aciertos conseguidos: ${collectedCount}/${TOTAL_PUNTOS}. Inténtalo de nuevo.`;
+                document.getElementById('end-modal').classList.add('active');
+            }
+        }
+
+        /* ------------------ Fuegos artificiales (pantalla de victoria) ------------------ */
+        let fireworksCtx = null;
+        let fireworksAnimId = null;
+        let fireworksLanzamientoId = null;
+        let particulas = [];
+
+        function iniciarFuegosArtificiales() {
+            const fwCanvas = document.getElementById('fireworks-canvas');
+            fwCanvas.width = fwCanvas.clientWidth || window.innerWidth;
+            fwCanvas.height = fwCanvas.clientHeight || window.innerHeight;
+            fireworksCtx = fwCanvas.getContext('2d');
+            particulas = [];
+
+            function crearExplosion(x, y) {
+                const colores = ['#facc15', '#22d3ee', '#f87171', '#4ade80', '#a78bfa', '#fb923c'];
+                const color = colores[Math.floor(Math.random() * colores.length)];
+                const cantidad = 36;
+                for (let i = 0; i < cantidad; i++) {
+                    const ang = (Math.PI * 2 * i) / cantidad;
+                    const vel = 2 + Math.random() * 3;
+                    particulas.push({
+                        x, y,
+                        vx: Math.cos(ang) * vel,
+                        vy: Math.sin(ang) * vel,
+                        vida: 55 + Math.random() * 20,
+                        color
+                    });
+                }
+            }
+
+            fireworksLanzamientoId = setInterval(() => {
+                if (!document.getElementById('end-modal').classList.contains('active')) return;
+                crearExplosion(Math.random() * fwCanvas.width, Math.random() * fwCanvas.height * 0.6 + 20);
+            }, 550);
+
+            crearExplosion(fwCanvas.width / 2, fwCanvas.height / 3);
+
+            function animar() {
+                if (!fireworksCtx) return;
+                fireworksCtx.fillStyle = 'rgba(2,6,23,0.25)';
+                fireworksCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+
+                particulas.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.03;
+                    p.vida--;
+                    fireworksCtx.fillStyle = p.color;
+                    fireworksCtx.beginPath();
+                    fireworksCtx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                    fireworksCtx.fill();
+                });
+                particulas = particulas.filter(p => p.vida > 0);
+
+                if (document.getElementById('end-modal').classList.contains('active')) {
+                    fireworksAnimId = requestAnimationFrame(animar);
+                }
+            }
+            animar();
+        }
+
+        function detenerFuegosArtificiales() {
+            if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
+            if (fireworksLanzamientoId) clearInterval(fireworksLanzamientoId);
+            fireworksAnimId = null;
+            fireworksLanzamientoId = null;
+            particulas = [];
+            const fwCanvas = document.getElementById('fireworks-canvas');
+            if (fwCanvas && fireworksCtx) fireworksCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+            fireworksCtx = null;
+        }
+    </script>
+</body>
+</html>
