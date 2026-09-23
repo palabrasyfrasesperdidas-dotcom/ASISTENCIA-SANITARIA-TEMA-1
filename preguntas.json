@@ -1,92 +1,579 @@
 [
   {
-    "pregunta": "¿Qué significa TAPSD?",
+    "pregunta": "Desde el enfoque sociosanitario, ¿cómo se considera principalmente a la persona?",
     "opciones": [
-      "Técnico en Atención a Personas en Situación de Dependencia",
-      "Título Avanzado de Prevención Socio-Doméstica",
-      "Técnico de Apoyo Psicológico y Social Domiciliario"
-    ],
-    "correcta": 0
-  },
-  {
-    "pregunta": "¿Qué es la postura lateral de seguridad?",
-    "opciones": [
-      "Tumbar a la persona boca arriba con las piernas elevadas",
-      "Colocar a la persona de lado para proteger la vía aérea",
-      "Sentar a la persona con las piernas cruzadas"
+      "Únicamente como un cuerpo físico que podemos ver o palpar",
+      "Como un ser multidimensional que vive, se desarrolla y siente necesidades como una totalidad",
+      "Exclusivamente como un organismo biológico aislado"
     ],
     "correcta": 1
   },
   {
-    "pregunta": "¿Para qué se utiliza la escala de Barthel?",
+    "pregunta": "¿Qué esfera del ser multidimensional constituye la estructura básica de la persona?",
     "opciones": [
-      "Para medir la tensión arterial",
-      "Para valorar el nivel de dependencia en actividades básicas",
-      "Para evaluar la memoria a corto plazo"
-    ],
-    "correcta": 1
-  },
-  {
-    "pregunta": "¿Qué es una úlcera por presión?",
-    "opciones": [
-      "Una lesión en la piel causada por presión mantenida sobre una zona",
-      "Una infección respiratoria común en personas encamadas",
-      "Un tipo de alergia cutánea"
+      "La esfera biológica",
+      "La esfera social",
+      "La esfera psíquica"
     ],
     "correcta": 0
   },
   {
-    "pregunta": "¿Qué actitud debe tener el/la TAPSD ante una persona con demencia que repite preguntas?",
+    "pregunta": "¿Qué aspectos incluye la esfera psíquica o psicológica del ser humano?",
     "opciones": [
-      "Ignorarla hasta que deje de preguntar",
-      "Corregirla firmemente cada vez que se equivoque",
-      "Responder con paciencia y calma cada vez"
+      "Las relaciones con los demás y el lugar que ocupa en el mundo",
+      "La estructura corporal básica y orgánica",
+      "Todos los factores que conforman el comportamiento humano, las funciones psíquicas y las emociones"
     ],
     "correcta": 2
   },
   {
-    "pregunta": "¿Cuál es la frecuencia respiratoria normal en un adulto en reposo?",
+    "pregunta": "¿A qué hace referencia la esfera social de la persona?",
     "opciones": [
-      "12-20 respiraciones por minuto",
-      "40-50 respiraciones por minuto",
-      "5-8 respiraciones por minuto"
+      "A los procesos puramente biológicos y orgánicos",
+      "Al lugar que ocupa en el mundo, sus relaciones y los roles de interacción en diferentes ámbitos",
+      "Únicamente a su estabilidad emocional interna"
+    ],
+    "correcta": 1
+  },
+  {
+    "pregunta": "¿Cómo surge el concepto de cuidado integral en la atención sociosanitaria?",
+    "opciones": [
+      "Como respuesta de los profesionales que prestan cuidados asistenciales bajo criterios de calidad",
+      "Como un protocolo exclusivamente médico y farmacológico",
+      "Como una teoría económica de gestión hospitalaria"
     ],
     "correcta": 0
   },
   {
-    "pregunta": "¿Qué es la movilización pasiva de un paciente?",
+    "pregunta": "¿Cuál es el esquema teórico práctico del que deriva el plan de cuidados en enfermería?",
     "opciones": [
-      "El paciente se mueve solo, sin ayuda",
-      "Se mueve al paciente sin que este realice esfuerzo alguno",
-      "Solo se aplica a pacientes conscientes"
-    ],
-    "correcta": 1
-  },
-  {
-    "pregunta": "¿Qué documento recoge las tareas y cuidados personalizados de un usuario?",
-    "opciones": [
-      "El plan de atención individualizado (PAI)",
-      "El contrato laboral del centro",
-      "El horario general del centro"
+      "El proceso de atención en enfermería (PAE)",
+      "El modelo de asistencia puramente domiciliaria",
+      "La guía de gestión administrativa general"
     ],
     "correcta": 0
   },
   {
-    "pregunta": "¿Qué se debe hacer ante un atragantamiento leve en el que la persona tose con fuerza?",
+    "pregunta": "En el seno del equipo asistencial sociosanitario, ¿qué debe predominar fundamentalmente?",
     "opciones": [
-      "Aplicar la maniobra de Heimlich de inmediato",
-      "Animarla a seguir tosiendo, sin intervenir",
-      "Darle agua para que trague el objeto"
+      "La jerarquía estricta y la independencia individual",
+      "El trabajo en equipo desde la colaboración y la complementariedad",
+      "La separación estricta de funciones sin contacto entre profesionales"
     ],
     "correcta": 1
   },
   {
-    "pregunta": "¿Qué principio ético es fundamental en la atención sociosanitaria?",
+    "pregunta": "En la relación de ayuda con los usuarios, ¿con qué actitud personal debe impregnarse principalmente?",
     "opciones": [
-      "La rapidez por encima de todo",
-      "El respeto a la dignidad y autonomía de la persona",
-      "La sustitución total de las decisiones del usuario"
+      "Con una actitud de respeto, aceptación y comprensión del usuario como persona única",
+      "Con una actitud de distanciamiento técnico y neutralidad fría",
+      "Con una actitud de supervisión directiva y autoritaria"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Tradicionalmente, ¿con qué concepto estuvo ligado el término de salud?",
+    "opciones": [
+      "Con un estado de completo bienestar físico y mental",
+      "Con la ausencia de enfermedad",
+      "Con el equilibrio ecológico dinámico"
     ],
     "correcta": 1
+  },
+  {
+    "pregunta": "¿En qué año se fundó la Organización Mundial de la Salud (OMS) para unificar criterios sanitarios?",
+    "opciones": [
+      "En 1948",
+      "En 1955",
+      "En 1930"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Según la definición amplia de la OMS, ¿cómo se propuso el concepto de salud?",
+    "opciones": [
+      "Como la mera ausencia de afecciones físicas",
+      "Como el estado completo de bienestar físico, psíquico y mental",
+      "Como un proceso exclusivamente adaptativo al medio"
+    ],
+    "correcta": 1
+  },
+  {
+    "pregunta": "En un sentido amplio, la salud debe ser concebida como:",
+    "opciones": [
+      "Una situación estática y permanente en el individuo",
+      "Una situación relativa, variable, dinámica y producto de factores sociales",
+      "Un valor biológico fijo e inalterable"
+    ],
+    "correcta": 1
+  },
+  {
+    "pregunta": "Cuando se concibe la salud como un proceso social en su origen, ¿qué repercusiones produce en el individuo?",
+    "opciones": [
+      "Repercusiones ecológicas en el ambiente de vida de la comunidad",
+      "Alteraciones de tipo exclusivamente genético y hereditario",
+      "Cambios puramente económicos en el entorno familiar"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cómo se define el desequilibrio ecológico que afecta al individuo según las circunstancias?",
+    "opciones": [
+      "Como enfermedad",
+      "Como bienestar absoluto",
+      "Como adaptación social"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Posteriormente, ¿cómo se ha conceptualizado también la salud en relación con las funciones de la persona?",
+    "opciones": [
+      "Como el funcionamiento físico, psicológico, emocional, social y espiritual que permite llevar a cabo responsabilidades y realización personal",
+      "Como la capacidad estricta de resistir infecciones microbianas",
+      "Como la ausencia de síntomas clínicos en exploraciones rutinarias"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cuáles son los componentes principales que forman parte de los determinantes de la salud?",
+    "opciones": [
+      "Estilo de vida, sistema de asistencia sanitaria, biología humana y medio ambiente",
+      "Genética pura, economía nacional, clima y nivel educativo",
+      "Infraestructura hospitalaria, número de médicos, farmacias y edad"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Hoy en día, ¿qué procesos patológicos destacan cada vez más en los países desarrollados debido al estilo de vida?",
+    "opciones": [
+      "El cáncer, los accidentes cardiovasculares y los accidentes de circulación",
+      "Las enfermedades estrictamente infecciosas de transmisión hídrica",
+      "Las deficiencias nutricionales por hambrunas severas"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué papel juega el estrés en relación con la salud y el estilo de vida?",
+    "opciones": [
+      "Es siempre perjudicial y destructivo en cualquier cantidad",
+      "En cierta medida es positivo y sirve de motor, pero en exceso se asocia a alteraciones y enfermedades",
+      "No tiene ninguna influencia demostrable en el organismo"
+    ],
+    "correcta": 1
+  },
+  {
+    "pregunta": "¿Cómo se define conceptualmente la enfermedad?",
+    "opciones": [
+      "Como un desequilibrio físico, mental y social con manifestaciones que disminuyen la capacidad para las tareas habituales",
+      "Como un estado de máxima plenitud vital y autorrealización",
+      "Como un proceso puramente psicológico sin repercusión orgánica"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cuál de las siguientes opciones corresponde a una de las etapas de la enfermedad?",
+    "opciones": [
+      "Estado de salud, periodo prepatogénico y enfermedad manifiesta",
+      "Fase de curación rápida, convalecencia y alta definitiva",
+      "Periodo asintomático total, fase intermedia y recuperación pasiva"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué colectivos principales conforman el tipo de usuarios a los que prestará cuidados el TAPSD?",
+    "opciones": [
+      "Personas mayores, personas que han superado enfermedades o accidentes con secuelas y usuarios dependientes en general",
+      "Únicamente pacientes hospitalizados en unidades de cuidados intensivos",
+      "Exclusivamente jóvenes en edad escolar con patologías agudas"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cuál es la tendencia del colectivo de personas mayores debido al incremento de la esperanza de vida?",
+    "opciones": [
+      "Aumentará progresivamente",
+      "Disminuirá de forma drástica",
+      "Se mantendrá completamente estable"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué dispositivos asistenciales prestan atención sociosanitaria a personas con necesidades especiales fuera de la red sanitaria?",
+    "opciones": [
+      "Residencias, servicios de ayuda domiciliaria, centros de día, pisos tutelados, entre otros",
+      "Exclusivamente hospitales generales y centros de urgencias médicas",
+      "Unidades de cirugía mayor ambulatoria"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Para valorar las necesidades de las personas en situación de dependencia, ¿qué se considera fundamental en los modelos existentes?",
+    "opciones": [
+      "Que existen necesidades básicas o elementales organizadas según una jerarquía de prioridades",
+      "Que todas las necesidades tienen exactamente la misma prioridad simultánea",
+      "Que las necesidades puramente estéticas son las más imprescindibles"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "En el ámbito de los cuidados enfermeros y profesionales afines, ¿cuyo esquema de necesidades básicas ha ganado más seguidores?",
+    "opciones": [
+      "El esquema de necesidades de la autora de Arkansas nacida en 1897",
+      "El modelo exclusivo de gestión económica hospitalaria",
+      "La teoría de las estructuras arquitectónicas sanitarias"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Según el modelo de necesidades básicas, ¿cuánto tiempo puede sobrevivir aproximadamente el ser humano sin oxígeno sin sufrir un daño cerebral irreparable?",
+    "opciones": [
+      "No más de cuatro a cinco minutos",
+      "Entre treinta y cuarenta y cinco minutos",
+      "Varias horas seguidas sin problema"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué función cumple el agua en el organismo según los principios de las necesidades básicas?",
+    "opciones": [
+      "Es el disolvente básico para todas las reacciones químicas que tienen lugar en el organismo",
+      "Actúa exclusivamente como un aislante térmico cutáneo",
+      "No interviene en los procesos metabólicos celulares"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cuáles son algunos de los órganos implicados en el proceso de eliminar los residuos del metabolismo y de la alimentación?",
+    "opciones": [
+      "Los riñones, el intestino grueso, los pulmones y la piel",
+      "El corazón, el bazo y la vesícula biliar",
+      "El páncreas y las glándulas suprarrenales exclusivamente"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Por qué es fundamental la necesidad de moverse y mantener una buena postura?",
+    "opciones": [
+      "Es fundamental para la conservación y promoción del estado de salud y facilita una adecuada vida de relación",
+      "Sirve únicamente para evitar el sedentarismo laboral",
+      "No tiene impacto directo sobre el bienestar general"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué consecuencia inmediata sufre una persona que duerme poco según el bloque teórico?",
+    "opciones": [
+      "Se vuelve irritable y su capacidad de afrontar el estrés psicológico es menor",
+      "Mejora notablemente su resistencia física ante situaciones de alerta",
+      "Incrementa de forma automática sus funciones cognitivas"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Además de mantener la temperatura corporal estable y adaptarse a las condiciones climáticas, ¿qué otra función cumple el vestir ropas adecuadas?",
+    "opciones": [
+      "Permite identificarse con un grupo, definirse y aumentar el bienestar",
+      "Sustituye por completo los mecanismos naturales de termorregulación de la piel",
+      "Elimina la necesidad de realizar cuidados de higiene corporal"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Dado que el calor es producido por el cuerpo de forma constante por medio del metabolismo, ¿qué órganos y mecanismos se encargan de eliminarlo?",
+    "opciones": [
+      "La piel, mediante la evaporación y la respiración",
+      "Los huesos y el tejido adiposo profundo",
+      "El sistema linfático de forma exclusiva"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué procedimiento de atención se relaciona directamente con mantener la piel limpia y protegida?",
+    "opciones": [
+      "Procedimientos de higiene, aseo total o parcial y masajes para prevenir úlceras por presión",
+      "Administración exclusiva de fármacos analgésicos por vía intravenosa",
+      "Técnicas de oxigenoterapia de alto flujo"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "En relación con la necesidad de evitar los peligros, ¿qué abarca este concepto en un sentido amplio?",
+    "opciones": [
+      "Cualquier amenaza a la seguridad física (mecánica, térmica, química, bacteriológica) y emocional",
+      "Únicamente los riesgos de caídas accidentales en la vía pública",
+      "Exclusivamente las crisis financieras personales"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Como medio de promover la salud y el bienestar, ¿cómo se presenta la comunicación interpersonal?",
+    "opciones": [
+      "Como una orientación estratégica cuyo desarrollo formativo debe ser una prioridad",
+      "Como un procedimiento secundario sin relevancia clínica",
+      "Como una barrera para la intimidad del paciente"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Respecto a la necesidad de vivir según sus creencias y valores, ¿de dónde son fruto estos elementos específicos?",
+    "opciones": [
+      "De la historia vital particular y de la elección personal",
+      "De prescripciones médicas obligatorias en centros sanitarios",
+      "De normativas puramente administrativas del Estado"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿A qué se refiere la necesidad de trabajar para realizarse?",
+    "opciones": [
+      "A sacar el mejor partido posible de las propias capacidades físicas, mentales, emocionales y sociales",
+      "A cumplir con una jornada laboral estricta para percibir un salario",
+      "A realizar ejercicios de rehabilitación motora pasiva únicamente"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué comprende la necesidad de recrearse?",
+    "opciones": [
+      "El tiempo y las actividades recreativas, lúdicas, de ocio, etcétera",
+      "El descanso nocturno obligatorio en periodos de convalecencia",
+      "El estudio de contenidos académicos avanzados"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué permite la necesidad de aprender en el desarrollo de la persona?",
+    "opciones": [
+      "Abrirse a conocimientos y habilidades nuevos y al desarrollo como persona",
+      "Memorizar datos técnicos de protocolos sanitarios exclusivamente",
+      "Superar pruebas de evaluación escolar obligatorias"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué procedimientos de enfermería se asocian de forma directa con la necesidad de comer y beber?",
+    "opciones": [
+      "Ingreso de líquidos, control de la ingesta, sueroterapia, alimentación por vía oral, enteral y parenteral, y recogida de peso",
+      "Administración de enemas y colocación de cuñas y cominales",
+      "Técnicas de oxigenoterapia y educación respiratoria"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cómo debe orientarse principalmente el plan de cuidados y los procedimientos asistenciales?",
+    "opciones": [
+      "Para mejorar la calidad profesional, buscar la excelencia y acentuar la humanización en las relaciones",
+      "Únicamente para cumplir con la burocracia administrativa de los centros",
+      "Exclusivamente para reducir costes operativos de las instituciones"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Según la clasificación de cuidados según su finalidad, ¿en qué se centran los cuidados de estimulación?",
+    "opciones": [
+      "En despertar las capacidades en general, los sentidos, las capacidades motrices y el desarrollo psicomotor",
+      "En suplir lo que no se tiene porque no se adquirió o se perdió",
+      "En conservar y mantener las capacidades adquiridas para preservar la autonomía"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué finalidad principal tienen los cuidados de confirmación?",
+    "opciones": [
+      "Animar, mejorar la seguridad, favorecer el cambio, la integración y fortalecer la autoestima y el autoconcepto",
+      "Aportar tranquilidad, serenidad, liberación de tensiones y calmar el dolor",
+      "Servir de soporte a la comunicación no verbal construyendo la imagen de uno mismo"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué tipo de cuidados actúan como el soporte de la comunicación no verbal contribuyendo a construir la imagen de uno mismo?",
+    "opciones": [
+      "Los cuidados de autoimagen",
+      "Los cuidados de compensación",
+      "Los cuidados de sosiego"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cómo se definen los cuidados de compensación?",
+    "opciones": [
+      "Aquellos que suplen lo que no se tiene, porque no se adquirió o se perdió",
+      "Aquellos que conservan las capacidades adquiridas para mantener la autonomía",
+      "Aquellos centrados exclusivamente en el desarrollo psicomotor infantil"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué aportan los denominados cuidados de sosiego?",
+    "opciones": [
+      "Tranquilidad, serenidad, liberación de tensiones y contribuyen a calmar el dolor",
+      "Un estímulo directo de las capacidades motrices del usuario",
+      "La conservación estricta de la autonomía física"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿En qué consiste fundamentalmente el PAE (Proceso de Atención de Enfermería) adoptado por la enfermería?",
+    "opciones": [
+      "En la aplicación del método científico y racional en la prestación de cuidados asistenciales",
+      "En un modelo de gestión económica de recursos sanitarios",
+      "En un protocolo exclusivo de intervención psicológica en crisis"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Dos de los aspectos fundamentales de la relación profesional en la prestación de cuidados son:",
+    "opciones": [
+      "Trabajar buscando la eficiencia y tener en cuenta la actitud, los valores y habilidades personales",
+      "Mantener una distancia fría y evitar cualquier tipo de empatía emocional",
+      "Aplicar de forma rígida los reglamentos sin considerar al usuario"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cómo se caracteriza principalmente la calidad de vida en relación con las condiciones ambientales?",
+    "opciones": [
+      "Por el mantenimiento de la salud y la sensación de bienestar, íntimamente relacionada con el entorno ambiental y afectivo",
+      "Por la ausencia total de estímulos externos en el domicilio",
+      "Por la velocidad en la ejecución de los procedimientos técnicos"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Según diversos estudios sobre el entorno, ¿qué puede originar un entorno inadecuado en las personas?",
+    "opciones": [
+      "Tensión, alteraciones de salud, insatisfacción, etcétera",
+      "Una mejora automática de los mecanismos de adaptación biológica",
+      "Un incremento notable en la capacidad de resiliencia"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "En relación con la estructura arquitectónica de una vivienda adecuada, ¿qué elementos deben existir para favorecer el tránsito?",
+    "opciones": [
+      "Puertas amplias, pasamanos en zonas concretas y rampas alternativas o ascensores si se necesita",
+      "Alfombras gruesas en pasillos y escaleras de caracol",
+      "Umbrales elevados en las puertas para delimitar las habitaciones"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cómo debe realizarse la ventilación en una vivienda para evitar corrientes molestas?",
+    "opciones": [
+      "A diario, de forma que el aire se renueve periódicamente en poco tiempo",
+      "Una vez a la semana manteniendo las ventanas abiertas toda la noche",
+      "Evitando abrir por completo cualquier tipo de ventana o puerta"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué características debe reunir la iluminación en la vivienda del usuario?",
+    "opciones": [
+      "Debe permitir ver sin forzar la vista y contar con iluminación artificial suficiente y fácil de manejar",
+      "Debe ser preferentemente tenue y oscura para favorecer el descanso continuo",
+      "Debe concentrarse únicamente en el centro de las salas de estar"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Respecto a la temperatura en el hogar de personas dependientes, ¿qué práctica se desaconseja expresamente?",
+    "opciones": [
+      "El uso de estufas y emplear braseros (por su alto índice de intoxicación por monóxido de carbono)",
+      "El uso de sistemas de calefacción central regulados",
+      "La utilización de humidificadores ambientales"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué condiciones deben cumplir los suelos de una vivienda para prevenir accidentes?",
+    "opciones": [
+      "Deben ser antideslizantes, evitando el uso de alfombras y muebles que entorpezcan el paso",
+      "Deben estar encerados de forma brillante y contar con múltiples alfombras decorativas",
+      "Deben estar revestidos de materiales textiles mullidos sin fijación"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿En qué se diferencia principalmente la promoción de la salud respecto a la prevención?",
+    "opciones": [
+      "La promoción pone énfasis en mejorar la situación de bienestar y desarrollar habilidades, mientras que la prevención se dirige a evitar una enfermedad en concreto",
+      "La promoción se centra únicamente en la administración de fármacos preventivos",
+      "No existe ninguna diferencia conceptual entre ambos términos"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cuál es una de las funciones principales del TAPSD en relación con los autocuidados?",
+    "opciones": [
+      "Orientar, educar y reforzar a los usuarios estimulándolos para que consigan las habilidades necesarias para realizarlos",
+      "Sustituir por completo al usuario en todas las tareas de su vida diaria sin contar con él",
+      "Limitarse exclusivamente a registrar incidencias médicas en el historial clínico"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué herramienta principal utiliza el TAPSD para fomentar la realización de autocuidados en los usuarios?",
+    "opciones": [
+      "La educación para la salud",
+      "Las restricciones físicas de movilidad",
+      "La imposición de normas estrictas de conducta"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Cómo se define el autocuidado o cultivo de sí mismo según los contenidos del tema?",
+    "opciones": [
+      "Como la actitud y las conductas que uno se da a sí mismo desde su autonomía para mantener la vida y cubrir necesidades indispensables",
+      "Como la asistencia médica obligatoria recibida en un centro hospitalario",
+      "Como el conjunto de cuidados paliativos aplicados en situaciones terminales"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "Dentro de las estrategias para promover los autocuidados, ¿qué se busca al desarrollar la autoestima en las personas?",
+    "opciones": [
+      "Favorecer sus capacidades personales plenas como medio para estimular el control personal sobre los procesos de salud",
+      "Lograr que dependan exclusivamente de las indicaciones del personal técnico",
+      "Evitar que tomen decisiones autónomas sobre su vida cotidiana"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué estrategia promueve que los profesionales se conviertan en agentes de salud?",
+    "opciones": [
+      "Mostrar en ellos mismos aquellos comportamientos positivos para que su enseñanza se realice desde la propia vivencia",
+      "Imponer normativas externas sin aplicarlas en el ámbito laboral",
+      "Mantener una separación estricta entre su vida personal y su labor asistencial"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿Qué finalidad tienen los espacios participativos, tanto individuales como grupales, en la promoción de la salud?",
+    "opciones": [
+      "Poner en práctica la consecución de más control y compromiso en la salud",
+      "Reducir el tiempo dedicado a la atención directa individualizada",
+      "Sustituir las intervenciones de carácter técnico y sanitario"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "En cuanto a la evolución profesional, ¿con qué titulación comparte profundas raíces e importantes similitudes el TAPSD?",
+    "opciones": [
+      "Con el Técnico en Cuidados Auxiliares de Enfermería (TCAE)",
+      "Con la titulación superior en Administración y Finanzas",
+      "Con el grado universitario en Trabajo Social exclusivo"
+    ],
+    "correcta": 0
+  },
+  {
+    "pregunta": "¿En qué consiste la competencia general del título de Técnico en Atención a Personas en Situación de Dependencia?",
+    "opciones": [
+      "En atender a las personas en situación de dependencia en el ámbito domiciliario e institucional para mantener y mejorar su calidad de vida",
+      "En realizar intervenciones quirúrgicas de alta complejidad bajo supervisión médica",
+      "En gestionar de forma exclusiva los recursos económicos de centros residenciales"
+    ],
+    "correcta": 0
   }
 ]
+
